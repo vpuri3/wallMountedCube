@@ -124,6 +124,12 @@ c     implicit none
       include 'SIZE'
       include 'TOTAL'
 
+      integer nt = lx1*ly1*lz1*lelt
+
+      do i=1,nt
+        vx(i,1,1,1) = 1.0
+      enddo
+
       return
       end
 c-----------------------------------------------------------------------
