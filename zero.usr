@@ -14,8 +14,6 @@ c     - usrdat2 : modify mesh coordinates
 c     - usrdat3 : general purpose routine for initialization
 c     
 c-----------------------------------------------------------------------
-c     include 'file.usr'
-c-----------------------------------------------------------------------
       subroutine uservp(ix,iy,iz,eg) ! set variable properties
 
 c      implicit none
@@ -140,11 +138,6 @@ c      implicit none
       include 'SIZE'
       include 'TOTAL'
 
-      common /cdsmag/ ediff(lx1,ly1,lz1,lelv)
-
-      n = nx1*ny1*nz1*nelt 
-      call cfill(ediff,param(2),n)  ! initialize viscosity
-
       return
       end
 c-----------------------------------------------------------------------
@@ -167,4 +160,3 @@ c      implicit none
 
       return
       end
-c-----------------------------------------------------------------------
