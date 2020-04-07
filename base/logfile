@@ -1,0 +1,195 @@
+/----------------------------------------------------------\\
+|      _   __ ______ __ __  ______  ____   ____   ____     |
+|     / | / // ____// //_/ / ____/ / __ \\/ __ \\/ __ \\   |
+|    /  |/ // __/  / ,<   /___ \\ / / / // / / // / / /    |
+|   / /|  // /___ / /| | ____/ / / /_/ // /_/ // /_/ /     |
+|  /_/ |_//_____//_/ |_|/_____/  \\___/ \\___/ \\___/      |
+|                                                          |
+|----------------------------------------------------------|
+|                                                          |
+| COPYRIGHT (c) 2008-2019 UCHICAGO ARGONNE, LLC            |
+| Version:  19.0                                           |
+| Web:      https://nek5000.mcs.anl.gov                    |
+|                                                          |
+\\----------------------------------------------------------/
+
+ Number of MPI ranks :          64
+  
+ Reading /lus/theta-fs0/projects/wall_turb_dd/vpuri/Nek5000-v19/run/wmc/base/wmc.rea                                                         
+ Reading /lus/theta-fs0/projects/wall_turb_dd/vpuri/Nek5000-v19/run/wmc/base/wmc.re2                                                         
+ nelgt/nelgv/lelt:        8424        8424         136
+ lx1  /lx2  /lx3 :           4           4           4
+ 
+ partioning elements to MPI ranks
+ Reading /lus/theta-fs0/projects/wall_turb_dd/vpuri/Nek5000-v19/run/wmc/base/wmc.ma2                                                         
+ Max neighbors: 22 | Min neighbors: 8 | Avg neighbors: 13.250000
+ Max nvolume: 63 | Min nvolume: 1 | Avg nvolume: 20.265625
+ Max volume: 360 | Min volume: 189 | Avg volume: 266.062500
+ Max elements: 132 | Min elements: 131 | Balance: 1.007634
+  
+ done :: partioning   0.46734E-01 sec
+
+  preading mesh 
+  preading bc for ifld           1
+ done :: read .re2 file    0.56E-01 sec
+
+           0  objects found
+ 118   Parameters from file:
+   1      1.00000     p001 DENSITY
+   2     -3900.00   p002 VISCOS
+   8      1.00000     p008 CONDUCT
+  12      1.0e-0       p012 DT
+  15      1.0         p015 IOSTEP
+  18      0.50000E-01 p018 GRID < 0 --> # cells on screen
+  21      0.10000E-06     p021 DIVERGENCE	# after using 0 to see
+  22      0.10000E-08     p022 HELMHOLTZ
+  24     0.100000E-01 p024 TOLREL
+  25     0.100009E-01 p025 TOLABS
+  26      1.000000    p26 COURANT/NTAU
+  27      2.000000    p27 TORDER
+  32      0.00000     p032 #BCs in re2 file, if > 0
+  54     -1.00000     p054 fixed flow rate dir: |p54|=1,2,3=x,y,z
+  55      1.00000     p055 vol.flow rate (p54>0) or Ubar (p54<0)
+  59      1.00000     p059 !=0 --> full Jac. eval. for each el.
+  65      1.00000     p065 #iofiles (eg, 0 or 64); <0 --> sep. dirs
+  66      6.00000     p066 output : <0=ascii, else binary
+  67      6.00000     p067 restart: <0=ascii, else binary
+  93      20.0000     p093 Number of previous pressure solns saved
+  94      3.00000     p094 start projecting velocity after p94 step
+  95      5.00000     p095 start projecting pressure after p95 step
+  99      4.00000     p099 dealiasing: <0--> off/3--> old/4--> new
+ 101      2.00000     p101 Number of additional modes to filter
+ 103      0.01        p103 weight of stabilizing filter (.01)
+  
+ done :: read .rea file   0.16176     sec
+
+ Reset the target Courant number to .5
+ setup mesh topology
+   Right-handed check complete for        8424 elements. OK.
+   setvert3d:   4      169992      237384      169992      169992
+ call usrsetvert
+ done :: usrsetvert
+
+gs_setup: 44408 unique labels shared
+   pairwise times (avg, min, max): 7.42581e-05 7.05957e-05 8.34942e-05
+   crystal router                : 0.000164782 0.000162196 0.000169516
+   all reduce                    : 0.0011662 0.001159 0.0011709
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 107398 99564 117116
+   buffer bytes (avg, min, max): 27463 19728 37504
+   setupds time 6.6337E-02 seconds   0  4      169992        8424
+          16  max multiplicity
+ done :: setup mesh topology
+  
+ call usrdat
+ done :: usrdat
+
+ generate geometry data
+ NOTE: All elements deformed , param(59) ^=0
+ done :: generate geometry data
+  
+ call usrdat2
+ done :: usrdat2
+
+  9.8076E-03  6.6613E-16  9.8076E-03  9.8076E-03  6.6613E-16  9.8076E-03 xyz repair 1
+  8.8818E-16  2.7945E-16  2.8623E-16  8.8818E-16  4.3761E-16  4.4409E-16 xyz repair 2
+  8.8818E-16  2.5271E-16  2.2204E-16  8.8818E-16  3.4939E-16  3.2135E-16 xyz repair 3
+  4.4409E-16  2.2204E-16  1.1102E-16  4.4409E-16  2.2204E-16  1.1102E-16 xyz repair 4
+ regenerate geometry data           1
+ NOTE: All elements deformed , param(59) ^=0
+ done :: regenerate geometry data           1
+  
+ regenerate geometry data           1
+ NOTE: All elements deformed , param(59) ^=0
+ done :: regenerate geometry data           1
+  
+ verify mesh topology
+  -2.50000000000000        5.00000000000000       Xrange
+  0.000000000000000E+000   2.00000000000000       Yrange
+  -1.50000000000000        1.50000000000000       Zrange
+ done :: verify mesh topology
+  
+ mesh metrics:
+ GLL grid spacing min/max    : 4.84E-03 1.85E-01
+ scaled Jacobian  min/max/avg: 4.25E-01 1.00E+00 8.64E-01
+ aspect ratio     min/max/avg: 1.03E+00 1.20E+01 2.72E+00
+ 
+ IFTRAN    = T
+ IFFLOW    = T
+ IFHEAT    = F
+ IFSPLIT   = T
+ IFLOMACH  = F
+ IFUSERVP  = F
+ IFUSERMV  = F
+ IFPERT    = F
+ IFADJ     = F
+ IFSTRS    = F
+ IFCHAR    = F
+ IFCYCLIC  = F
+ IFAXIS    = F
+ IFMVBD    = F
+ IFMELT    = F
+ IFNEKNEK  = F
+ IFNEKNEKC = F
+ IFSYNC    = F
+   
+ IFVCOR    = F
+ IFINTQ    = F
+ IFGEOM    = F
+ IFSURT    = F
+ IFWCNO    = F
+   
+ IFTMSH for field           1    =  F
+ IFADVC for field           1    =  T
+ IFNONL for field           1    =  F
+   
+ Dealiasing enabled, lxd=           4
+ call usrdat3
+ done :: usrdat3
+
+ set initial conditions
+ nekuic (1) for ifld            1
+ call nekuic for vel  
+ xyz min    -2.5000       0.0000      -1.5000    
+ uvwpt min   0.0000       0.0000       0.0000       0.0000       0.0000    
+ PS min     0.99000E+22
+ xyz max     5.0000       2.0000       1.5000    
+ uvwpt max   0.0000       0.0000       0.0000       0.0000       0.0000    
+ PS max    -0.99000E+22
+ done :: set initial conditions
+  
+gridpoints unique/tot:        237384       539136
+dofs vel/pr:                  224208       235872
+  
+ Initialization successfully completed   0.29717     sec
+
+ nsteps=0 -> skip time loop
+ running solver in post processing mode
+
+ call userchk
+ done :: userchk
+
+        0  0.0000E+00 Write checkpoint
+       FILE:
+ /lus/theta-fs0/projects/wall_turb_dd/vpuri/Nek5000-v19/run/wmc/base/wmc0.f00001
+                                                      
+ min/max:  -2.5000       5.0000       0.0000       2.0000      -1.5000       1.5000    
+ min/max:  -1.0000       1.0000      -1.0000       1.0000      -1.0000       1.0000    
+ min/max:   0.0000       4.0000    
+
+        0  0.0000E+00 done :: Write checkpoint
+                              file size =      15.    MB
+                              avg data-throughput =    73.7MB/s
+                              io-nodes =    64
+
+  
+run successful: dying ...
+  
+  
+total elapsed time             :   5.01588E-01 sec
+total solver time w/o IO       :   0.00000E+00 sec
+time/timestep                  :   0.00000E+00 sec
+avg throughput per timestep    :   0.00000E+00 gridpts/CPUs
+total max memory usage         :   1.34044E+00 GB
+
+Application 20451562 resources: utime ~34s, stime ~9s, Rss ~26240, inblocks ~96, outblocks ~30480

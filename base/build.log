@@ -1,0 +1,13 @@
+ar -cr libblasLapack.a *.o
+building libnek5000.a ... 'wmc.usr' -> 'wmc.f'
+done
+ftn  -O2 -fpp -r8 -fpconstant   -DMPI -DUNDERSCORE -DGLOBAL_LONG_LONG -DTIMER -I/projects/wall_turb_dd/vpuri/Nek5000-v19/run/wmc/base -I/projects/wall_turb_dd/vpuri/Nek5000-v19/core -I./ -I /projects/wall_turb_dd/vpuri/Nek5000-v19/core/experimental  -c /projects/wall_turb_dd/vpuri/Nek5000-v19/run/wmc/base/wmc.f
+ftn  -O2 -fpp -r8 -fpconstant   -DMPI -DUNDERSCORE -DGLOBAL_LONG_LONG -DTIMER -I/projects/wall_turb_dd/vpuri/Nek5000-v19/run/wmc/base -I/projects/wall_turb_dd/vpuri/Nek5000-v19/core -I./ -I /projects/wall_turb_dd/vpuri/Nek5000-v19/core/experimental -o nek5000 /projects/wall_turb_dd/vpuri/Nek5000-v19/core/drive.f /projects/wall_turb_dd/vpuri/Nek5000-v19/run/wmc/base/wmc.o libnek5000.a -L/projects/wall_turb_dd/vpuri/Nek5000-v19/3rd_party/blasLapack -lblasLapack -L/projects/wall_turb_dd/vpuri/Nek5000-v19/3rd_party/gslib/lib -lgs -Wl,--allow-multiple-definition
+
+
+#############################################################
+#                  Compilation successful!                  #
+#############################################################
+   text	   data	    bss	    dec	    hex	filename
+10561911	 175548	62695632	73433091	4608003	nek5000
+

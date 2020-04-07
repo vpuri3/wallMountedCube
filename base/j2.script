@@ -1,0 +1,2 @@
+rm logfile
+qsub -n 1 -t 0:05:00 -A wall_turb_dd -q debug-cache-quad theta.script
