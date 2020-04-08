@@ -6,14 +6,13 @@
 Nc  = 15;            // # points on cube side
 No  = 15;            // # points on line from cube to outer box
 Ny  = 15;            // # points (y-dir)
-Ne  =  5;            // # points in entrance (x-dir)
-Nw  =  3;            // # points in wake     (x-dir)
+Ne  =  4;            // # points in entrance (x-dir)
+Nw  =  4;            // # points in wake     (x-dir)
 bfc = 1.2;           //   expansion from cube surface
-Py  = 1.3;           //   expansion from ground (y-dir)
+Py  = 1.2;           //   expansion from ground (y-dir)
 Pc  = 0.05;          //   edge refinement on cube eg. "Nc Using Bump Pc;"
 Nsmooth = 0;         // # mesh smoothing iterations
-
-Nd = 0.5*(Nc+1) - 0;
+Nd = 0.5*(Nc+1);
 
 // fixed due to geom
 Nb = 0.5*(Nc+1);  // # points on side of small quads
@@ -27,15 +26,6 @@ len      = span;
 wake     = 0.5 + 0.5*span;
 height   = 2.0;
 entrance = -(0.5 + 0.5*span);
-
-/********** LES DOMAIN **********/
-
-//h        = 1.0; // cube height
-//span     = 10.0;
-//len      = span;
-//wake     = 20.0 + 0.5*span;
-//height   = 5.0;
-//entrance = -(5.0 + 0.5*span);
 
 lc = 1e-1;
 
