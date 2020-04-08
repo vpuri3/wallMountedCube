@@ -3,11 +3,11 @@
 
 /* at lx1=8, first point at 0.05 for z \in [0,1] */
 
-Nc  = 15;            // # points on cube side
-No  = 15;            // # points on line from cube to outer box
-Ny  = 15;            // # points (y-dir)
+Nc  = 11;            // # points on cube side
+No  = 10;            // # points on line from cube to outer box
+Ny  = 10;            // # points (y-dir)
 Ne  =  4;            // # points in entrance (x-dir)
-Nw  =  4;            // # points in wake     (x-dir)
+Nw  = 10;            // # points in wake     (x-dir)
 bfc = 1.2;           //   expansion from cube surface
 Py  = 1.2;           //   expansion from ground (y-dir)
 Pc  = 0.05;          //   edge refinement on cube eg. "Nc Using Bump Pc;"
