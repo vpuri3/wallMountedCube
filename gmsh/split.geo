@@ -3,16 +3,17 @@
 
 /* at lx1=8, first point at 0.05 for z \in [0,1] */
 
-Nc  = 11;            // # points on cube side
-No  = 10;            // # points on line from cube to outer box
-Ny  = 10;            // # points (y-dir)
-Ne  =  4;            // # points in entrance (x-dir)
-Nw  = 10;            // # points in wake     (x-dir)
-bfc = 1.2;           // expansion from cube surface
-Py  = 1.2;           // expansion from ground (y-dir)
-Pc  = 0.05;          // edge refinement on cube "Nc Using Bump Pc;"
+Nc  = 21;            // # points on cube side
+No  = 20;            // # points on line from cube to outer box
+Ny  = 15;            // # points (y-dir)
+Ne  =  5;            // # points in entrance (x-dir)
+Nw  =  5;            // # points in wake     (x-dir)
+bfc = 1.2;           //   expansion from cube surface
+Py  = 1.3;           //   expansion from ground (y-dir)
+Pc  = 0.05;          //   edge refinement on cube eg. "Nc Using Bump Pc;"
 Nsmooth = 0;         // # mesh smoothing iterations
-Nd = 5;
+
+Nd = 0.5*(Nc+1) - 0;
 
 // fixed due to geom
 Nb = 0.5*(Nc+1);  // # points on side of small quads
@@ -23,7 +24,7 @@ Nz = 2*Nb+2*Nd-3; // # points (z-dir)
 h        = 1.0; // cube height
 span     = 3.0;
 len      = span;
-wake     = 3.5 + 0.5*span;
+wake     = 1.0 + 0.5*span;
 height   = 2.0;
 entrance = -(1.0 + 0.5*span);
 
