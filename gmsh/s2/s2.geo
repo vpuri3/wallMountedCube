@@ -329,10 +329,10 @@ Line Loop(7) = {38,-67,-66,-39,-2}; Plane Surface(7) = {7};
 Line Loop(8) = {39,-76,-75,-40,-3}; Plane Surface(8) = {8};
 Line Loop(9) = {40,-85,-84,-37,-4}; Plane Surface(9) = {9};
 
-Transfinite Surface {6} = {1,2,9 ,11}; Recombine Surface {6};
-Transfinite Surface {7} = {2,3,11,13}; Recombine Surface {7};
-Transfinite Surface {8} = {3,4,13,15}; Recombine Surface {8};
-Transfinite Surface {9} = {4,1,15,9 }; Recombine Surface {9};
+Transfinite Surface {6} = {1,2,11,9 }; Recombine Surface {6};
+Transfinite Surface {7} = {2,3,13,11}; Recombine Surface {7};
+Transfinite Surface {8} = {3,4,15,13}; Recombine Surface {8};
+Transfinite Surface {9} = {4,1,9 ,15}; Recombine Surface {9};
 
 // diag upper (intra-domain surface) - AC from top
 Line Loop(10) = {41,-94 ,-93 ,-42,-5}; Plane Surface(10) = {10};
@@ -340,10 +340,10 @@ Line Loop(11) = {42,-103,-102,-43,-6}; Plane Surface(11) = {11};
 Line Loop(12) = {43,-112,-111,-44,-7}; Plane Surface(12) = {12};
 Line Loop(13) = {44,-121,-120,-41,-8}; Plane Surface(13) = {13};
 
-Transfinite Surface {10} = {5,6,17,19}; Recombine Surface {10};
-Transfinite Surface {11} = {6,7,19,21}; Recombine Surface {11};
-Transfinite Surface {12} = {7,8,21,23}; Recombine Surface {12};
-Transfinite Surface {13} = {8,5,23,17}; Recombine Surface {13};
+Transfinite Surface {10} = {5,6,19,17}; Recombine Surface {10};
+Transfinite Surface {11} = {6,7,21,19}; Recombine Surface {11};
+Transfinite Surface {12} = {7,8,23,21}; Recombine Surface {12};
+Transfinite Surface {13} = {8,5,17,23}; Recombine Surface {13};
 
 // diag top - AC from vol
 Line Loop(14) = {120,121,111,112,102,103,93,94}; Plane Surface(14) = {14};
@@ -511,15 +511,20 @@ Mesh.Smoothing = Nsmooth;
 // surfaces are oriented anti-clockwise when looking from inside the volume
 
 // diag box - sides
-Surface Loop(1) = {6,-10,1,15,19,-16}; Volume(1) = {1};
-Surface Loop(2) = {7,-11,2,16,20,-17}; Volume(2) = {2};
-Surface Loop(3) = {8,-12,3,17,21,-18}; Volume(3) = {3};
-Surface Loop(4) = {9,-13,4,18,22,-15}; Volume(4) = {4};
+Surface Loop(1) = {6,1,15,19,-16,-10}; Volume(1) = {1};
+Surface Loop(2) = {7,2,16,20,-17,-11}; Volume(2) = {2};
+Surface Loop(3) = {8,3,17,21,-18,-12}; Volume(3) = {3};
+Surface Loop(4) = {9,4,18,22,-15,-13}; Volume(4) = {4};
 
-Transfinite Volume {1} = {1,2,9 ,11,5,6,17,19}; Recombine Volume {1};
-Transfinite Volume {2} = {2,3,11,13,6,7,19,21}; Recombine Volume {2};
-Transfinite Volume {3} = {3,4,13,15,7,8,21,23}; Recombine Volume {3};
-Transfinite Volume {4} = {4,1,15,9 ,8,5,23,17}; Recombine Volume {4};
+Transfinite Volume {1}; Recombine Volume {1};
+Transfinite Volume {2}; Recombine Volume {2};
+Transfinite Volume {3}; Recombine Volume {3};
+Transfinite Volume {4}; Recombine Volume {4};
+
+//Transfinite Volume {1} = {1,2,9 ,11,5,6,17,19}; Recombine Volume {1};
+//Transfinite Volume {2} = {2,3,11,13,6,7,19,21}; Recombine Volume {2};
+//Transfinite Volume {3} = {3,4,13,15,7,8,21,23}; Recombine Volume {3};
+//Transfinite Volume {4} = {4,1,15,9 ,8,5,23,17}; Recombine Volume {4};
 
 // diag box - top
 Surface Loop(5) = {5,10,11,12,13,14}; Volume(5) = {5};
