@@ -4,14 +4,15 @@
 /* at lx1=8, first point at 0.05 for z \in [0,1] */
 
 Nc  = 11;            // # points on cube side
-No  = 10;            // # points on line from cube to outer box
-Ny  = 10;            // # points (y-dir)
-Ne  =  4;            // # points in entrance (x-dir)
-Nw  =  4;            // # points in wake     (x-dir)
-bfc = 1.2;           //   expansion from cube surface
-Py  = 1.2;           //   expansion from ground (y-dir)
+No  =  5;            // # points on line from cube to outer box
+Ny  =  5;            // # points (y-dir)
+Ne  =  5;            // # points in entrance (x-dir)
+Nw  =  5;            // # points in wake     (x-dir)
+bfc = 1.0;           //   expansion from cube surface
+Py  = 1.0;           //   expansion from ground (y-dir)
 Pc  = 0.05;          //   edge refinement on cube eg. "Nc Using Bump Pc;"
 Nsmooth = 0;         // # mesh smoothing iterations
+
 Nd = 0.5*(Nc+1);
 
 // fixed due to geom
@@ -23,9 +24,9 @@ Nz = 2*Nb+2*Nd-3; // # points (z-dir)
 h        = 1.0; // cube height
 span     = 3.0;
 len      = span;
-wake     = 0.5 + 0.5*span;
+wake     = 1.0 + 0.5*span;
 height   = 2.0;
-entrance = -(0.5 + 0.5*span);
+entrance = -(1.0 + 0.5*span);
 
 lc = 1e-1;
 
@@ -143,16 +144,16 @@ Point(64) = {wake,height, span/2,lc};
 /******************** LINES ********************/
 
 // cube lower
-Line(1) = {1,2}; Transfinite Curve {1} = Nc Using Bump Pc;
-Line(2) = {2,3}; Transfinite Curve {2} = Nc Using Bump Pc;
-Line(3) = {3,4}; Transfinite Curve {3} = Nc Using Bump Pc;
-Line(4) = {4,1}; Transfinite Curve {4} = Nc Using Bump Pc;
+Line(1) = {1,2}; Transfinite Curve {1} = Nc;// Using Bump Pc;
+Line(2) = {2,3}; Transfinite Curve {2} = Nc;// Using Bump Pc;
+Line(3) = {3,4}; Transfinite Curve {3} = Nc;// Using Bump Pc;
+Line(4) = {4,1}; Transfinite Curve {4} = Nc;// Using Bump Pc;
 
 // cube upper
-Line(5) = {5,6}; Transfinite Curve {5} = Nc Using Bump Pc;
-Line(6) = {6,7}; Transfinite Curve {6} = Nc Using Bump Pc;
-Line(7) = {7,8}; Transfinite Curve {7} = Nc Using Bump Pc;
-Line(8) = {8,5}; Transfinite Curve {8} = Nc Using Bump Pc;
+Line(5) = {5,6}; Transfinite Curve {5} = Nc;// Using Bump Pc;
+Line(6) = {6,7}; Transfinite Curve {6} = Nc;// Using Bump Pc;
+Line(7) = {7,8}; Transfinite Curve {7} = Nc;// Using Bump Pc;
+Line(8) = {8,5}; Transfinite Curve {8} = Nc;// Using Bump Pc;
 
 // cube vert		   									             ^
 Line(9 ) = {1,5}; Transfinite Curve {9 } = Ny;// Using Bump Pc; //  /|\
@@ -203,16 +204,16 @@ Line(43) = {7,21}; Transfinite Curve {43} = No Using Progression bfc;
 Line(44) = {8,23}; Transfinite Curve {44} = No Using Progression bfc;
 
 // diag lower
-Line(45) = {9 ,11}; Transfinite Curve {45} = Nc Using Progression 1;
-Line(46) = {11,13}; Transfinite Curve {46} = Nc Using Progression 1;
-Line(47) = {13,15}; Transfinite Curve {47} = Nc Using Progression 1;
-Line(48) = {15,9 }; Transfinite Curve {48} = Nc Using Progression 1;
+//Line(45) = {9 ,11}; Transfinite Curve {45} = Nc Using Progression 1;
+//Line(46) = {11,13}; Transfinite Curve {46} = Nc Using Progression 1;
+//Line(47) = {13,15}; Transfinite Curve {47} = Nc Using Progression 1;
+//Line(48) = {15,9 }; Transfinite Curve {48} = Nc Using Progression 1;
 
 // diag upper
-Line(49) = {17,19}; Transfinite Curve {49} = Nc Using Progression 1;
-Line(50) = {19,21}; Transfinite Curve {50} = Nc Using Progression 1;
-Line(51) = {21,23}; Transfinite Curve {51} = Nc Using Progression 1;
-Line(52) = {23,17}; Transfinite Curve {52} = Nc Using Progression 1;
+//Line(49) = {17,19}; Transfinite Curve {49} = Nc Using Progression 1;
+//Line(50) = {19,21}; Transfinite Curve {50} = Nc Using Progression 1;
+//Line(51) = {21,23}; Transfinite Curve {51} = Nc Using Progression 1;
+//Line(52) = {23,17}; Transfinite Curve {52} = Nc Using Progression 1;
 
 // splitting triangles lower
 c = 0;
@@ -323,30 +324,30 @@ Line Loop(5) = {5,6,7,8}; Plane Surface(5) = {5}; // AC
 Transfinite Surface {5}; Recombine Surface {5};
 
 // diag bottom - AC from top
-Line Loop(6) = {37,45,-38,-1}; Plane Surface(6) = {6};
-Line Loop(7) = {38,46,-39,-2}; Plane Surface(7) = {7};
-Line Loop(8) = {39,47,-40,-3}; Plane Surface(8) = {8};
-Line Loop(9) = {40,48,-37,-4}; Plane Surface(9) = {9};
+Line Loop(6) = {37,-58,-57,-38,-1}; Plane Surface(6) = {6};
+Line Loop(7) = {38,-67,-66,-39,-2}; Plane Surface(7) = {7};
+Line Loop(8) = {39,-76,-75,-40,-3}; Plane Surface(8) = {8};
+Line Loop(9) = {40,-85,-84,-37,-4}; Plane Surface(9) = {9};
 
-Transfinite Surface {6}; Recombine Surface {6};
-Transfinite Surface {7}; Recombine Surface {7};
-Transfinite Surface {8}; Recombine Surface {8};
-Transfinite Surface {9}; Recombine Surface {9};
+Transfinite Surface {6} = {1,2,9 ,11}; Recombine Surface {6};
+Transfinite Surface {7} = {2,3,11,13}; Recombine Surface {7};
+Transfinite Surface {8} = {3,4,13,15}; Recombine Surface {8};
+Transfinite Surface {9} = {4,1,15,9 }; Recombine Surface {9};
 
 // diag upper (intra-domain surface) - AC from top
-Line Loop(10) = {41,49,-42,-5}; Plane Surface(10) = {10};
-Line Loop(11) = {42,50,-43,-6}; Plane Surface(11) = {11};
-Line Loop(12) = {43,51,-44,-7}; Plane Surface(12) = {12};
-Line Loop(13) = {44,52,-41,-8}; Plane Surface(13) = {13};
+Line Loop(10) = {41,-94 ,-93 ,-42,-5}; Plane Surface(10) = {10};
+Line Loop(11) = {42,-103,-102,-43,-6}; Plane Surface(11) = {11};
+Line Loop(12) = {43,-112,-111,-44,-7}; Plane Surface(12) = {12};
+Line Loop(13) = {44,-121,-120,-41,-8}; Plane Surface(13) = {13};
 
-Transfinite Surface {10}; Recombine Surface {10};
-Transfinite Surface {11}; Recombine Surface {11};
-Transfinite Surface {12}; Recombine Surface {12};
-Transfinite Surface {13}; Recombine Surface {13};
+Transfinite Surface {10} = {5,6,17,19}; Recombine Surface {10};
+Transfinite Surface {11} = {6,7,19,21}; Recombine Surface {11};
+Transfinite Surface {12} = {7,8,21,23}; Recombine Surface {12};
+Transfinite Surface {13} = {8,5,23,17}; Recombine Surface {13};
 
-// diag top - AC from top (CL from bottom)
-Line Loop(14) = {49,50,51,52}; Plane Surface(14) = {14};
-Transfinite Surface {14}; Recombine Surface {14};
+// diag top - AC from vol
+Line Loop(14) = {120,121,111,112,102,103,93,94}; Plane Surface(14) = {14};
+Transfinite Surface {14}={17,19,21,23}; Recombine Surface {14};
 
 // diag connecting vert  (intra-domain surface)
 // AC when viewed from volume in AC direction (when viewed from top)
@@ -361,15 +362,15 @@ Transfinite Surface {17}; Recombine Surface {17};
 Transfinite Surface {18}; Recombine Surface {18};
 
 // diag box vert  (intra-domain surface) - AC when viewed from inside
-Line Loop(19) = {-31,-45,29,49}; Plane Surface(19) = {19};
-Line Loop(20) = {-33,-46,31,50}; Plane Surface(20) = {20};
-Line Loop(21) = {-35,-47,33,51}; Plane Surface(21) = {21};
-Line Loop(22) = {-29,-48,35,52}; Plane Surface(22) = {22};
+Line Loop(19) = {-31,57,58,29,-94 ,-93 }; Plane Surface(19) = {19};
+Line Loop(20) = {-33,66,67,31,-103,-102}; Plane Surface(20) = {20};
+Line Loop(21) = {-35,75,76,33,-112,-111}; Plane Surface(21) = {21};
+Line Loop(22) = {-29,84,85,35,-121,-120}; Plane Surface(22) = {22};
 
-Transfinite Surface {19}; Recombine Surface {19};
-Transfinite Surface {20}; Recombine Surface {20};
-Transfinite Surface {21}; Recombine Surface {21};
-Transfinite Surface {22}; Recombine Surface {22};
+Transfinite Surface {19} = {9 ,11,17,19}; Recombine Surface {19};
+Transfinite Surface {20} = {11,13,19,21}; Recombine Surface {20};
+Transfinite Surface {21} = {13,15,21,23}; Recombine Surface {21};
+Transfinite Surface {22} = {15,9 ,23,17}; Recombine Surface {22};
 
 // outer vert - AC from inside
 //Line Loop(23) = {29,21,-30,-13}; Plane Surface(23) = {23};
@@ -510,18 +511,18 @@ Mesh.Smoothing = Nsmooth;
 // surfaces are oriented anti-clockwise when looking from inside the volume
 
 // diag box - sides
-Surface Loop(1) = {6,1,15,19,-16,-10}; Volume(1) = {1};
-Surface Loop(2) = {7,2,16,20,-17,-11}; Volume(2) = {2};
-Surface Loop(3) = {8,3,17,21,-18,-12}; Volume(3) = {3};
-Surface Loop(4) = {9,4,18,22,-15,-13}; Volume(4) = {4};
+Surface Loop(1) = {6,-10,1,15,19,-16}; Volume(1) = {1};
+Surface Loop(2) = {7,-11,2,16,20,-17}; Volume(2) = {2};
+Surface Loop(3) = {8,-12,3,17,21,-18}; Volume(3) = {3};
+Surface Loop(4) = {9,-13,4,18,22,-15}; Volume(4) = {4};
 
-Transfinite Volume {1}; Recombine Volume {1};
-Transfinite Volume {2}; Recombine Volume {2};
-Transfinite Volume {3}; Recombine Volume {3};
-Transfinite Volume {4}; Recombine Volume {4};
+Transfinite Volume {1} = {1,2,9 ,11,5,6,17,19}; Recombine Volume {1};
+Transfinite Volume {2} = {2,3,11,13,6,7,19,21}; Recombine Volume {2};
+Transfinite Volume {3} = {3,4,13,15,7,8,21,23}; Recombine Volume {3};
+Transfinite Volume {4} = {4,1,15,9 ,8,5,23,17}; Recombine Volume {4};
 
 // diag box - top
-Surface Loop(5) = {5,10,11,12,13,-14}; Volume(5) = {5};
+Surface Loop(5) = {5,10,11,12,13,14}; Volume(5) = {5};
 Transfinite Volume {5}; Recombine Volume {5};
 
 

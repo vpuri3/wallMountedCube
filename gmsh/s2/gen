@@ -20,9 +20,10 @@ $BC
 $vec
 DOF
 
-tol="0.2"
-
-../genmap << DOF
-$case
-$tol
-DOF
+#tol="0.2"
+#tol="0.01"
+#
+#../genmap << DOF
+#$case
+#$tol
+#DOF
