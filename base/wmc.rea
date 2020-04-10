@@ -3,7 +3,7 @@
   3  DIMENSIONAL RUN
          118  PARAMETERS FOLLOW
    1.00000     p001 DENSITY
-  -3900.00   p002 VISCOS
+  -3900.00     p002 VISCOS
    0.00000     p003
    0.00000     p004
    0.00000     p005
@@ -12,19 +12,19 @@
    1.00000     p008 CONDUCT
    0.00000     p009
    0.00000     p010 FINTIME
-   0.0	       p011 NSTEPS
+   1.0E+06     p011 NSTEPS
    1.0e-0       p012 DT
    0.00000     p013 IOCOMM
    0.00000     p014 IOTIME
-   1.0         p015 IOSTEP
+   1.0E+03     p015 IOSTEP
    0.00000     p016 PSSOLVER: 0=default
    0.00000     p017
    0.50000E-01 p018 GRID < 0 --> # cells on screen
    0.00000     p019 INTYPE
    0.00000     p020 NORDER
-   0.10000E-06     p021 DIVERGENCE	# after using 0 to see
-   0.10000E-08     p022 HELMHOLTZ
-  0              p23 NPSCAL
+   0.10E-06    p021 DIVERGENCE	# after using 0 to see
+   0.10E-08    p022 HELMHOLTZ
+  0            p23 NPSCAL
   0.100000E-01 p024 TOLREL
   0.100009E-01 p025 TOLABS
    1.000000    p26 COURANT/NTAU
@@ -138,7 +138,7 @@
  F      IFMODEL
  F      IFKEPS
  F      IFMVBD
- F      IFCHAR
+ T      IFCHAR
    5.00000       5.00000      -2.75000      -2.75000     XFAC,YFAC,XZERO,YZERO
  **MESH DATA** 6 lines are X,Y,Z;X,Y,Z. Columns corners 1-4;5-8
      -131072  3        131072     NELT,NDIM,NELV
@@ -165,7 +165,7 @@ C
  UVWP     H      1    1    1   21
   ***** OUTPUT FIELD SPECIFICATION *****
            6  SPECIFICATIONS FOLLOW
- F       COORDINATES
+ T       COORDINATES
  T       VELOCITY
  T       PRESSURE
  F       TEMPERATURE

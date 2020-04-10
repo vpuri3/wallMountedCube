@@ -1,9 +1,0 @@
-NEK_SOURCE_ROOT=/projects/wall_turb_dd/vpuri/Nek5000-v19
-FC=ftn
-FFLAGS=
-FCPP=-fpp
-FR8=-r8 -fpconstant
-FF77=
-CC=cc
-CFLAGS=
-PPLIST= MPI UNDERSCORE GLOBAL_LONG_LONG TIMER

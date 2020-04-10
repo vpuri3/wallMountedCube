@@ -24,8 +24,8 @@ c     implicit none
       include 'TOTAL'
       include 'NEKUSE'
 
-      integer e
-c     e = gllel(eg)
+      integer ie
+c     ie = gllel(eg)
 
       udiff  = 0.0
       utrans = 0.0
@@ -49,8 +49,8 @@ c      implicit none
       include 'TOTAL'
       include 'NEKUSE'
 
-      integer e
-c     e = gllel(eg)
+      integer ie
+c     ie = gllel(eg)
 
       ffx = 0.0
       ffy = 0.0
@@ -69,31 +69,37 @@ c      implicit none
       include 'TOTAL'
       include 'NEKUSE'
 
-      integer e
-c     e = gllel(eg)
+      integer ie
+c     ie = gllel(eg)
 
       qvol = 0.0
-c     avol = 0.0
 
       return
       end
 c-----------------------------------------------------------------------
       subroutine userbc(ix,iy,iz,iside,eg) ! set up boundary conditions
-c
-c     NOTE ::: This subroutine MAY NOT be called by every process
-c
-c      implicit none
-
-      integer ix,iy,iz,iside,eg
-
+c     implicit none
       include 'SIZE'
       include 'TOTAL'
       include 'NEKUSE'
-
+c
+c     NOTE ::: This subroutine MAY NOT be called by every process
+c
 c     if (cbc(iside,gllel(eg),ifield).eq.'v01')
 c	Empty/no call to with BCs P, W, SYM!
 
-      ux   = 0.0
+      integer ix,iy,iz,iside,eg
+      integer delta99
+
+      ie = gllel(eg)
+
+      x = xm1(ix,iy,iz,ie)
+      y = ym1(ix,iy,iz,ie)
+      z = zm1(ix,iy,iz,ie)
+
+      delta99 = 1 ! 1-> \d_99=0.25, 2 -> \d_99=2.00
+
+      ux   = blasius_ux(x,y,z,delta99)
       uy   = 0.0
       uz   = 0.0
       temp = 0.0
@@ -102,19 +108,31 @@ c	Empty/no call to with BCs P, W, SYM!
       end
 c-----------------------------------------------------------------------
       subroutine useric(ix,iy,iz,eg) ! set up initial conditions
-
-c      implicit none
-
-      integer ix,iy,iz,eg
-
+c     implicit none
       include 'SIZE'
       include 'TOTAL'
       include 'NEKUSE'
 
-      ux   = 0.0
+      integer ix,iy,iz,eg
+      integer delta99
+
+      ie = gllel(eg)
+
+      x = xm1(ix,iy,iz,ie)
+      y = ym1(ix,iy,iz,ie)
+      z = zm1(ix,iy,iz,ie)
+
+      delta99 = 1 ! 1-> \d_99=0.25, 2 -> \d_99=2.00
+
+      ux   = blasius_ux(x,y,z,delta99)
       uy   = 0.0
       uz   = 0.0
       temp = 0.0
+
+c blasius IC -- wd (wall dist)
+c     if(wd(ix,iy,iz,eg).lt.0.1) then
+c        ux = ux * wd(ix,iy,iz,eg)/0.1
+c     endif
 
       return
       end
@@ -124,62 +142,20 @@ c     implicit none
       include 'SIZE'
       include 'TOTAL'
 
-      integer f,ifld
-      character*3 bctyp
+c outflow
+      common /myoutflow/ d(lx1,ly1,lz1,lelt),m1(lx1*ly1*lz1,lelt)
+      real d,m1,rq,uin
 
-      integer e,k,ntot
-      integer idimt,iface,j1,js1,jf1,jskip1,j2,js2,jf2,jskip2
-      real faceid
-
-      ntot = lx1*ly1*lz1*nelv
-c
-      call rzero(vx,ntot)
-      call rzero(vy,ntot)
-      call rzero(vz,ntot)
-c
-c outpost normals
-c
-      call dsset(nx1,ny1,nz1)
-
-      do e=1,nelv
-      do f=1,2*ndim
-        iface  = eface1(f)   ! surface to volume shifts
-        js1    = skpdat(1,iface)
-        jf1    = skpdat(2,iface)
-        jskip1 = skpdat(3,iface)
-        js2    = skpdat(4,iface)
-        jf2    = skpdat(5,iface)
-        jskip2 = skpdat(6,iface)
-
-        if    (cbc(f,e,1).eq.'v  ')then
-          faceid=1
-        elseif(cbc(f,e,1).eq.'O  ')then
-          faceid=2
-        elseif(cbc(f,e,1).eq.'W  ')then
-          faceid=3
-        elseif(cbc(f,e,1).eq.'SYM')then
-          faceid=4
-        elseif(cbc(f,e,1).eq.'p  ')then
-          faceid=5
-        else 
-          faceid=0
-        endif
-
-        k = 0
-        do j2=js2,jf2,jskip2
-        do j1=js1,jf1,jskip1
-          k = k + 1
+c outflow
+      rq  = 2.0 ! 1.5
+      uin = 0.0
+      call turb_outflow(d,m1,rq,uin)
  
-          vx(j1,j2,1,e) = unx(k,1,f,e)      ! face normal X-comp
-          vy(j1,j2,1,e) = uny(k,1,f,e)      !             Y
-          vz(j1,j2,1,e) = unz(k,1,f,e)      !             Z
-          pr(j1,j2,1,e) = faceid
- 
-        enddo
-        enddo
-
-      enddo
-      enddo
+c stats
+      ifto = .true.
+      if(istep.eq.0)         call chks
+      if(iostep.eq.1)        call lambda2(t)
+      if(mod(istep,10).eq.0) call e2_out
 
       return
       end
@@ -223,10 +199,10 @@ c     implicit none
       param(99) = 4.0
 
       filterType = 1
-      param(101) = 1.0
-      param(103) = 0.0001
-c     param(101) = 2.0
-c     param(103) = 0.2
+c     param(101) = 1.0
+c     param(103) = 0.0001
+      param(101) = 2.0
+      param(103) = 0.2
 
 c
 c from gmsh2nek
@@ -258,9 +234,9 @@ c	   ******************************************************
           elseif (id_face.eq.4) then           ! symmetry
              cbc(ifc,iel,1) = 'SYM'
           elseif (id_face.eq.5) then           ! pm - do nothing
-c             !cbc(ifc,iel,1) = 'p  '          
+c            cbc(ifc,iel,1) = 'p  '          
           elseif (id_face.eq.6) then           ! pp - do nothing
-c             !cbc(ifc,iel,1) = 'p  '          
+c            cbc(ifc,iel,1) = 'p  '          
 c         elseif (id_face.eq.7) then           ! interpolate (for neknek)
 c            cbc(ifc,iel,1) = 'int'
           endif
@@ -321,6 +297,167 @@ c     prints out uvwp abs max and volume average/rms
       endif
     1 format(i7,1p13e16.7,' e2')
     2 format(i7,1p10e16.7,' e2')
+
+      return
+      end
+c-----------------------------------------------------------------------
+      function blasius_ux(x,y,z,delta99)
+
+      real blasius_ux
+      real x,y,z
+      integer delta99
+
+      real y_in,y_out,y_buf,ux_in,ux_mid,ux_out,ux,w0,w1
+
+      if(delta99.eq.1) then
+        y_in  = 0.095
+        y_out = 0.32
+        y_buf = 0.02
+
+        ux_in  = (-5.2443*y**2 + 6.7224*y )
+        ux_mid = ( 35.401*y**4 + 16.752*y**3 - 32.97*y**2 
+     &           + 11.484*y - 0.2193 )
+        ux_out = 1.0
+
+      elseif(delta99.eq.2) then
+        y_in  = 0.79
+        y_out = 2.59
+        y_buf = 0.02
+  
+        ux_in = -0.0817*y**2 + 0.8391*y
+        ux_mid = 0.0086*y**4 + 0.0326*y**3 
+     &         - 0.5137*y**2 + 1.4335*y - 0.2193
+        ux_out = 1.0
+  
+      else
+        y_in  = 0.79
+        y_out = 2.59
+        y_buf = 0.02
+  
+        ux_in  = 1.0
+        ux_mid = 1.0
+        ux_out = 1.0
+  
+      endif
+
+      if(y .LE. y_in-y_buf) then
+         ux = ux_in
+      elseif(y .LE. y_in+y_buf) then
+         w0 = ( y - (y_in-y_buf) )
+     &      / ((y_in+y_buf) - (y_in-y_buf))
+         w1 = 1.0 - w0
+         ux = w0*ux_in + w1*ux_mid
+      elseif(y .LE. y_out-y_buf) then       
+         ux = ux_mid
+      elseif(y .LE. y_out+y_buf) then
+         w0 = ( y - (y_out-y_buf) )
+     &      / ((y_out+y_buf) - (y_out-y_buf))
+         w1 = 1.0 - w0
+         ux = w0*ux_mid + w1*ux_out
+      else
+         ux = ux_out
+      endif
+
+      blasius_ux = ux
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine chks
+      include 'SIZE'
+      include 'TOTAL'
+
+c mass mat
+      integer nt1,nt2,ntd
+      real b1max,b1min,b1vol
+      real b2max,b2min,b2vol
+      real bdmax,bdmin,bdvol
+
+c outpost normals, BC
+      real tmp1(lx1,ly1,lz1,lelv)
+     $    ,tmp2(lx1,ly1,lz1,lelv)
+     $    ,tmp3(lx1,ly1,lz1,lelv)
+     $    ,tmp4(lx2,ly2,lz2,lelv)
+      integer f,e,k
+      integer idimt,iface,j1,js1,jf1,jskip1,j2,js2,jf2,jskip2
+      real faceid
+
+      nt1 = lx1*ly1*lz1*nelv
+      nt2 = lx2*ly2*lz2*nelv
+      ntd = lxd*lyd*lzd*nelv
+
+c mass mat
+      b1max = glmax(bm1,nt1)
+      b1min = glmin(bm1,nt1)
+      b1vol = glsum(bm1,nt1)
+
+      b2max = glmax(bm2,nt2)
+      b2min = glmin(bm2,nt2)
+      b2vol = glsum(bm2,nt2)
+
+c     bdmax = glmax(bmd,ntd)
+c     bdmin = glmin(bmd,ntd)
+c     bdvol = glsum(bmd,ntd)
+
+      if(nid.eq.0) then
+        write(6,*) 'b1max,b1min,b1vol',b1max,b1min,b1vol
+        write(6,*) 'b2max,b2min,b2vol',b2max,b2min,b2vol
+c       write(6,*) 'bdmax,bdmin,bdvol',bdmax,bdmin,bdvol
+      endif
+
+c outpost normals, BC
+      call rzero(tmp1,nt1)
+      call rzero(tmp2,nt1)
+      call rzero(tmp3,nt1)
+      call rzero(tmp4,nt2)
+ 
+      call dsset(nx1,ny1,nz1)
+
+      do e=1,nelv
+      do f=1,2*ndim
+        iface  = eface1(f)   ! surface to volume shifts
+        js1    = skpdat(1,iface)
+        jf1    = skpdat(2,iface)
+        jskip1 = skpdat(3,iface)
+        js2    = skpdat(4,iface)
+        jf2    = skpdat(5,iface)
+        jskip2 = skpdat(6,iface)
+
+        if    (cbc(f,e,1).eq.'v  ')then ! inflow
+          faceid=1
+        elseif(cbc(f,e,1).eq.'O  ')then ! outflow
+          faceid=2
+        elseif(cbc(f,e,1).eq.'W  ')then ! wall
+          faceid=3
+        elseif(cbc(f,e,1).eq.'SYM')then ! symmetric
+          faceid=4
+        elseif(cbc(f,e,1).eq.'P  ')then ! periodic
+          faceid=5
+        elseif(cbc(f,e,1).eq.'E  ')then ! interior boundary
+          faceid=6
+        else 
+          faceid=0
+        endif
+
+        k = 0
+        do j2=js2,jf2,jskip2
+        do j1=js1,jf1,jskip1
+          k = k + 1
+ 
+          tmp1(j1,j2,1,e) = unx(k,1,f,e)      ! face normal X-comp
+          tmp2(j1,j2,1,e) = uny(k,1,f,e)      !             Y
+          tmp3(j1,j2,1,e) = unz(k,1,f,e)      !             Z
+          tmp4(j1,j2,1,e) = faceid
+ 
+        enddo
+        enddo
+
+      enddo
+      enddo
+
+      ifxyo = .true.
+      ifto  = .false.
+      call outpost(tmp1,tmp2,tmp3,tmp4,t,'bbc')
 
       return
       end
