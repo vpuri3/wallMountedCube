@@ -2,13 +2,13 @@
 
 /* at lx1=8, first point at 0.05 for z \in [0,1] */
 
-Nc  = 15;            // # points on cube side
+Nc  = 13;            // # points on cube side
 No  = 10;            // # points on line from cube to outer box
-Ny  = 10;            // # points (y-dir)
+Ny  = 20;            // # points (y-dir)
 Ne  =  5;            // # points in entrance (x-dir)
 Nw  =  5;            // # points in wake     (x-dir)
 bfc = 1.2;           //   expansion from cube surface
-Py  = 1.2;           //   expansion from ground (y-dir)
+Py  = 1.1;           //   expansion from ground (y-dir)
 Pc  = 0.05;          //   edge refinement on cube eg. "Nc Using Bump Pc;"
 Nsmooth = 0;         // # mesh smoothing iterations
 
@@ -23,7 +23,8 @@ Nz = 2*Nb+2*Nd-3; // # points (z-dir)
 h        =  1.0; // cube height
 span     = 10.0;
 len      = span;
-wake     = 15.0 + 0.5*span;
+//wake     = 15.0 + 0.5*span;
+wake     = 5.0 + 0.5*span;
 height   = 5.0;
 entrance = -(5.0 + 0.5*span);
 
@@ -556,7 +557,7 @@ Transfinite Volume {19}; Recombine Volume {19};
 
 
 /******************** BOUNDARY CONDITIONS ********************/
-Physical Surface("inlet")  = {95};
+Physical Surface("inlet")  = {57,58,64,65};
 Physical Surface("outlet") = {100};
 Physical Surface("wall")   = {91,96,1:4,5,6:9,31:42};
 Physical Surface("sym")    = {92,97,14,43:54};
@@ -564,6 +565,8 @@ Physical Surface("pm")     = {93,56,55,85,84,99};
 Physical Surface("pp")     = {94,66,67,73,74,98};
 
 Physical Volume("fluid")   = {1:17,19};
+
+//Physical Surface("inlet")  = {95};
 //Physical Volume("fluid")   = {1:19};
 
 // mesh order

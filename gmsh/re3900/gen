@@ -21,7 +21,7 @@ $vec
 DOF
 
 tol="0.2"
-tol="0.01"
+#tol="0.01"
 
 ./gmp << DOF
 $case
