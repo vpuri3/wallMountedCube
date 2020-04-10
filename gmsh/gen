@@ -12,7 +12,7 @@ numBC=1
 BC="5 6"
 vec="0 0 3"
 
-../g2n << DOF
+g2n << DOF
 $dim
 $case
 $numBC
@@ -23,7 +23,7 @@ DOF
 #tol="0.2"
 #tol="0.01"
 #
-#../genmap << DOF
+#genmap << DOF
 #$case
 #$tol
 #DOF
