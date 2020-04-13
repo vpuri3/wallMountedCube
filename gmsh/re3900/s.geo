@@ -2,17 +2,17 @@
 
 /* at lx1=8, first point at 0.05 for z \in [0,1] */
 
-Nc  = 13;            // # points on cube side
-No  = 10;            // # points on line from cube to outer box
-Ny  = 20;            // # points (y-dir)
-Ne  =  5;            // # points in entrance (x-dir)
+Nc  = 15;            // # points on cube side
+No  = 20;            // # points on line from cube to outer box
+Ny  = 15;            // # points (y-dir)
+Ne  =  3;            // # points in entrance (x-dir)
 Nw  =  5;            // # points in wake     (x-dir)
 bfc = 1.2;           //   expansion from cube surface
-Py  = 1.1;           //   expansion from ground (y-dir)
+Py  = 1.2;           //   expansion from ground (y-dir)
 Pc  = 0.05;          //   edge refinement on cube eg. "Nc Using Bump Pc;"
 Nsmooth = 0;         // # mesh smoothing iterations
 
-Nd = 0.5*(Nc+1) - 2;
+Nd = 0.5*(Nc+1) - 4;
 
 // fixed due to geom
 Nb = 0.5*(Nc+1);  // # points on side of small quads
@@ -24,9 +24,9 @@ h        =  1.0; // cube height
 span     = 10.0;
 len      = span;
 //wake     = 15.0 + 0.5*span;
-wake     = 5.0 + 0.5*span;
+wake     = 3.0 + 0.5*span;
 height   = 5.0;
-entrance = -(5.0 + 0.5*span);
+entrance = -(3.0 + 0.5*span);
 
 lc = 1e-1;
 
@@ -155,7 +155,7 @@ Line(6) = {6,7}; Transfinite Curve {6} = Nc Using Bump Pc;
 Line(7) = {7,8}; Transfinite Curve {7} = Nc Using Bump Pc;
 Line(8) = {8,5}; Transfinite Curve {8} = Nc Using Bump Pc;
 
-// cube vert		   									             ^
+// cube vert  	   									              ^
 Line(9 ) = {1,5}; Transfinite Curve {9 } = Ny Using Bump Pc; //  /|\
 Line(10) = {2,6}; Transfinite Curve {10} = Ny Using Bump Pc; //   |  
 Line(11) = {3,7}; Transfinite Curve {11} = Ny Using Bump Pc; //   |

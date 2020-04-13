@@ -1,68 +1,50 @@
-
 /* MESH PARAMS */
 
 /* at lx1=8, first point at 0.05 for z \in [0,1] */
 
 Nc  = 15;            // # points on cube side
-No  = 10;            // # points on line from cube to outer box
-Ny  = 10;            // # points (y-dir)
-Ne  =  5;            // # points in entrance (x-dir)
+No  = 20;            // # points on line from cube to outer box
+Ny  = 15;            // # points (y-dir)
+Ne  =  3;            // # points in entrance (x-dir)
 Nw  =  5;            // # points in wake     (x-dir)
 bfc = 1.2;           //   expansion from cube surface
 Py  = 1.2;           //   expansion from ground (y-dir)
 Pc  = 0.05;          //   edge refinement on cube eg. "Nc Using Bump Pc;"
 Nsmooth = 0;         // # mesh smoothing iterations
 
-Nd = 0.5*(Nc+1) - 2;
+Nd = 0.5*(Nc+1) - 4;
 
 // fixed due to geom
 Nb = 0.5*(Nc+1);  // # points on side of small quads
 Nz = 2*Nb+2*Nd-3; // # points (z-dir)
 
-/********** DNS DOMAIN **********/
+/********** DOMAIN **********/
 
-h        = 1.0; // cube height
-span     = 3.0;
+h        =  1.0; // cube height
+span     = 10.0;
 len      = span;
-wake     = 1.0 + 0.5*span;
-height   = 2.0;
-entrance = -(1.0 + 0.5*span);
-
-/********** DNS DOMAIN **********/
-
-//h        = 1.0; // cube height
-//span     = 3.0;
-//len      = span;
-//wake     = 1.0 + 0.5*span;
-//height   = 2.0;
-//entrance = -(1.0 + 0.5*span);
-
-/********** LES DOMAIN **********/
-
-//h        = 1.0; // cube height
-//span     = 10.0;
-//len      = span;
-//wake     = 20.0 + 0.5*span;
-//height   = 5.0;
-//entrance = -(5.0 + 0.5*span);
-
+wake     = 3.0 + 0.5*span;
+//wake     = 15.0 + 0.5*span;
+height   = 5.0;
+entrance = -(3.0 + 0.5*span);
 
 lc = 1e-1;
 
 /********** CREATE DOMAIN **********/
 
 // Triangle Splitting
-x = 0.30;
-y = 0.40;
-y2 = y + x/Sqrt(3);
-x3 = x + (1-x-y)*Sqrt(3)/(Sqrt(3)+1);
-y3 = y + (x3-x)/Sqrt(3);
+r = 0.50;
+x = r/Sqrt(2);
+y = r/Sqrt(2);
+y2 = r/Sqrt(2)*(1+Sin(Pi/8));
+x3 = 0.50;
+y3 = 0.50;
 
 ll = len/2;
 
 xx0 = ll*(1-x);
 zz0 = ll*(1-y);
-xx1 = xx0;
+xx1 = ll*(1-y2);
 zz1 = ll;
 xx2 = ll;
 zz2 = ll*(1-y2);
@@ -149,10 +131,10 @@ Point(56) = { xx0,height,-zz0,lc};
 
 
 // entrance
-Point(57) = {entrance,0     ,-span/2,lc};
-Point(58) = {entrance,0     , span/2,lc};
-Point(59) = {entrance,height,-span/2,lc};
-Point(60) = {entrance,height, span/2,lc};
+//Point(57) = {entrance,0     ,-span/2,lc};
+//Point(58) = {entrance,0     , span/2,lc};
+//Point(59) = {entrance,height,-span/2,lc};
+//Point(60) = {entrance,height, span/2,lc};
 
 // Wake
 Point(61) = {wake,0     ,-span/2,lc};
@@ -174,7 +156,7 @@ Line(6) = {6,7}; Transfinite Curve {6} = Nc Using Bump Pc;
 Line(7) = {7,8}; Transfinite Curve {7} = Nc Using Bump Pc;
 Line(8) = {8,5}; Transfinite Curve {8} = Nc Using Bump Pc;
 
-// cube vert		   									             ^
+// cube vert  	   									              ^
 Line(9 ) = {1,5}; Transfinite Curve {9 } = Ny Using Bump Pc; //  /|\
 Line(10) = {2,6}; Transfinite Curve {10} = Ny Using Bump Pc; //   |  
 Line(11) = {3,7}; Transfinite Curve {11} = Ny Using Bump Pc; //   |
@@ -297,17 +279,17 @@ For i In {0:3}
 EndFor
 
 // entrance
-Line(141) = {57,10}; Transfinite Curve {141} = Ne Using Progression 1;
-Line(142) = {58,12}; Transfinite Curve {142} = Ne Using Progression 1;
-Line(143) = {59,18}; Transfinite Curve {143} = Ne Using Progression 1;
-Line(144) = {60,20}; Transfinite Curve {144} = Ne Using Progression 1;
-
-
-Line(145) = {57,58}; Transfinite Curve {145} = Nz;
-Line(146) = {59,60}; Transfinite Curve {146} = Nz;
-
-Line(147) = {58,60}; Transfinite Curve {147} = Ny Using Progression Py;
-Line(148) = {57,59}; Transfinite Curve {148} = Ny Using Progression Py;
+//Line(141) = {57,10}; Transfinite Curve {141} = Ne Using Progression 1;
+//Line(142) = {58,12}; Transfinite Curve {142} = Ne Using Progression 1;
+//Line(143) = {59,18}; Transfinite Curve {143} = Ne Using Progression 1;
+//Line(144) = {60,20}; Transfinite Curve {144} = Ne Using Progression 1;
+//
+//
+//Line(145) = {57,58}; Transfinite Curve {145} = Nz;
+//Line(146) = {59,60}; Transfinite Curve {146} = Nz;
+//
+//Line(147) = {58,60}; Transfinite Curve {147} = Ny Using Progression Py;
+//Line(148) = {57,59}; Transfinite Curve {148} = Ny Using Progression Py;
 
 // wake
 Line(149) = {14,62}; Transfinite Curve {149} = Nw Using Progression 1;
@@ -485,19 +467,19 @@ EndFor
 
 // entrance  -- AC from inside entrance volume
 
-Line Loop(91)={-141,145,142,-63,-62,-56,-55}; Plane Surface(91) = {91};
-Line Loop(92)={143,91,92,98,99,-144,-146}; Plane Surface(92) = {92};
-
-Transfinite Surface {91} = {57,58,12,10}; Recombine Surface {91};
-Transfinite Surface {92} = {59,60,20,18}; Recombine Surface {92};
-
-Line Loop(93) = {141,30,-143,-148};  Plane Surface(93) = {93};
-Line Loop(94) = {147,144,-32,-142};  Plane Surface(94) = {94};
-Line Loop(95) = {-145,148,146,-147}; Plane Surface(95) = {95};
-
-Transfinite Surface {93}; Recombine Surface {93};
-Transfinite Surface {94}; Recombine Surface {94};
-Transfinite Surface {95}; Recombine Surface {95};
+//Line Loop(91)={-141,145,142,-63,-62,-56,-55}; Plane Surface(91) = {91};
+//Line Loop(92)={143,91,92,98,99,-144,-146}; Plane Surface(92) = {92};
+//
+//Transfinite Surface {91} = {57,58,12,10}; Recombine Surface {91};
+//Transfinite Surface {92} = {59,60,20,18}; Recombine Surface {92};
+//
+//Line Loop(93) = {141,30,-143,-148};  Plane Surface(93) = {93};
+//Line Loop(94) = {147,144,-32,-142};  Plane Surface(94) = {94};
+//Line Loop(95) = {-145,148,146,-147}; Plane Surface(95) = {95};
+//
+//Transfinite Surface {93}; Recombine Surface {93};
+//Transfinite Surface {94}; Recombine Surface {94};
+//Transfinite Surface {95}; Recombine Surface {95};
 
 // wake  -- AC from inside wake volume
 
@@ -517,10 +499,10 @@ Transfinite Surface {100}; Recombine Surface {100};
 
 // Entrance-box interface, wake-box interface - AC from vol POV
 
-Line Loop(101)={55,56,62,63,32,-99,-98,-92,-91,-30};    Plane Surface(101)={101};
+//Line Loop(101)={55,56,62,63,32,-99,-98,-92,-91,-30};  Plane Surface(101)={101};
 Line Loop(102)={-34,73,74,80,81,36,-117,-116,-110,-109};Plane Surface(102)={102};
 
-Transfinite Surface {101} = {10,12,18,20}; Recombine Surface {101};
+//Transfinite Surface {101} = {10,12,18,20}; Recombine Surface {101};
 Transfinite Surface {102} = {22,24,14,16}; Recombine Surface {102};
 
 Mesh.Smoothing = Nsmooth;
@@ -568,42 +550,26 @@ Transfinite Volume {8+c}; Recombine Volume {8+c};
 EndFor
 
 // entrance, wake
-Surface Loop(18)={91:95 ,101}; Volume(18)={18};
+//Surface Loop(18)={91:95 ,101}; Volume(18)={18};
 Surface Loop(19)={96:100,102}; Volume(19)={19};
 
-Transfinite Volume {18}; Recombine Volume {18};
+//Transfinite Volume {18}; Recombine Volume {18};
 Transfinite Volume {19}; Recombine Volume {19};
 
 
 /******************** BOUNDARY CONDITIONS ********************/
-Physical Surface("inlet")  = {95};
+Physical Surface("inlet")  = {57,58,64,65};
 Physical Surface("outlet") = {100};
 Physical Surface("wall")   = {91,96,1:4,5,6:9,31:42};
 Physical Surface("sym")    = {92,97,14,43:54};
 Physical Surface("pm")     = {93,56,55,85,84,99};
 Physical Surface("pp")     = {94,66,67,73,74,98};
 
-//Physical Surface("pmEnt") = {93};
-//Physical Surface("ppEnt") = {94};
-//
-//Physical Surface("pmT1") = {56};
-//Physical Surface("ppT1") = {66};
-//
-//Physical Surface("pmT2") = {55};
-//Physical Surface("ppT2") = {67};
-//
-//Physical Surface("pmT3") = {85};
-//Physical Surface("ppT3") = {73};
-//
-//Physical Surface("pmT4") = {84};
-//Physical Surface("ppT4") = {74};
-//
-//Physical Surface("pmWke") = {99};
-//Physical Surface("ppWke") = {98};
+Physical Volume("fluid")   = {1:17,19};
 
-Physical Volume("fluid")   = {1:19};
+//Physical Surface("inlet")  = {95};
+//Physical Volume("fluid")   = {1:19};
 
 // mesh order
 Mesh.ElementOrder = 2;
 Mesh.SecondOrderLinear = 0;
-
