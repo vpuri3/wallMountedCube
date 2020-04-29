@@ -14,24 +14,43 @@ c     - usrdat2 : modify mesh coordinates
 c     - usrdat3 : general purpose routine for initialization
 c     
 c-----------------------------------------------------------------------
-c     include 'file.usr'
+      include 'budgets.usr'
+      include 'wall.usr'
+c-----------------------------------------------------------------------
+c budgets
+# define tSTATSTART param(3)
+# define tSTATFREQ  param(4)
+# define readSTAT   param(5)
 c-----------------------------------------------------------------------
       subroutine uservp(ix,iy,iz,eg) ! set variable properties
 c     implicit none
+
       integer ix,iy,iz,eg
      
       include 'SIZE'
       include 'TOTAL'
       include 'NEKUSE'
 
+c budgets
+      include 'REFERENCE'
+      include 'FLUIDPROP'
+
       integer ie
 c     ie = gllel(eg)
 
-      udiff  = 0.0
-      utrans = 0.0
+      udiff  = cpfld(ifield,1)
+      utrans = cpfld(ifield,2)
 
-c     udiff  = cpfld(ifield,1)
-c     utrans = cpfld(ifield,2)
+c
+c budgets
+c
+c     if(ifield.eq.1) then !momentum
+c       utrans=dens0
+c       udiff=visc0
+c     elseif(ifield.eq.ifld_h) then !enthalpy
+c       utrans=dens0*thcap0
+c       udiff=thcond0
+c     endif
 
       return
       end
@@ -60,9 +79,7 @@ c     ie = gllel(eg)
       end
 c-----------------------------------------------------------------------
       subroutine userq(ix,iy,iz,eg) ! set source term
-
-c      implicit none
-
+c     implicit none
       integer ix,iy,iz,eg
 
       include 'SIZE'
@@ -72,23 +89,26 @@ c      implicit none
       integer ie
 c     ie = gllel(eg)
 
-      qvol = 0.0
+      qvol   = 0.0
 
       return
       end
 c-----------------------------------------------------------------------
       subroutine userbc(ix,iy,iz,iside,eg) ! set up boundary conditions
-c     implicit none
-      include 'SIZE'
-      include 'TOTAL'
-      include 'NEKUSE'
 c
 c     NOTE ::: This subroutine MAY NOT be called by every process
 c
-c     if (cbc(iside,gllel(eg),ifield).eq.'v01')
-c	Empty/no call to with BCs P, W, SYM!
+c      implicit none
 
       integer ix,iy,iz,iside,eg
+
+      include 'SIZE'
+      include 'TOTAL'
+      include 'NEKUSE'
+
+c     if (cbc(iside,gllel(eg),ifield).eq.'v01')
+
+      integer ie
       integer delta99
 
       ie = gllel(eg)
@@ -108,13 +128,16 @@ c	Empty/no call to with BCs P, W, SYM!
       end
 c-----------------------------------------------------------------------
       subroutine useric(ix,iy,iz,eg) ! set up initial conditions
-c     implicit none
+
+c      implicit none
+
+      integer ix,iy,iz,eg
+
       include 'SIZE'
       include 'TOTAL'
       include 'NEKUSE'
 
-      integer ix,iy,iz,eg
-      integer delta99
+      integer ie,delta99
 
       ie = gllel(eg)
 
@@ -129,11 +152,6 @@ c     implicit none
       uz   = 0.0
       temp = 0.0
 
-c blasius IC -- wd (wall dist)
-c     if(wd(ix,iy,iz,eg).lt.0.1) then
-c        ux = ux * wd(ix,iy,iz,eg)/0.1
-c     endif
-
       return
       end
 c-----------------------------------------------------------------------
@@ -142,20 +160,39 @@ c     implicit none
       include 'SIZE'
       include 'TOTAL'
 
+      integer ntot
+      real l2_temp(lx1,ly1,lz1,lelv)
+
 c outflow
       common /myoutflow/ d(lx1,ly1,lz1,lelt),m1(lx1*ly1*lz1,lelt)
       real d,m1,rq,uin
+
+      ntot = lx1*ly1*lz1*nelv
 
 c outflow
       rq  = 2.0 ! 1.5
       uin = 0.0
       call turb_outflow(d,m1,rq,uin)
  
+c init
+      if(istep.eq.0) then
+c       call gfldr('restart0.f00001')
+c       call outpost(vx,vy,vz,pr,t,'icc')
+c       call gmsh_chks
+        ifto  = .true.
+        ifxyo = .true.
+      endif
+
 c stats
-      ifto = .true.
-      if(istep.eq.0)         call chks
-      if(iostep.eq.1)        call lambda2(t)
+c     call standard_incomp_avg(tSTATFREQ,tSTATSTART,int(readSTAT))
       if(mod(istep,10).eq.0) call e2_out
+
+c outpost
+      if(ifoutfld) then
+c       call standard_incomp_calc(readSTAT,0)
+        call lambda2(l2_temp)
+        call copy(t(1,1,1,1,1),l2_temp,ntot)
+      endif
 
       return
       end
@@ -168,16 +205,24 @@ c-----------------------------------------------------------------------
       end
 c-----------------------------------------------------------------------
       subroutine usrdat()   ! This routine to modify element vertices
-
-c      implicit none
-
+c     implicit none
       include 'SIZE'
       include 'TOTAL'
+
+c budgets
+      include 'REFERENCE'  
+      include 'FLUIDPROP'  
 
       common /cdsmag/ ediff(lx1,ly1,lz1,lelv)
 
       n = nx1*ny1*nz1*nelt 
       call cfill(ediff,param(2),n)  ! initialize viscosity
+
+c budgets
+      dens0   = param(1)
+      visc0   = param(2)
+      thcap0  = 1.
+      thcond0 = 1.
 
       return
       end
@@ -193,32 +238,20 @@ c     implicit none
 
       n=nx1*ny1*nz1*nelv
 
-      param(93) = 20.0
-      param(94) = 3.0
-      param(95) = 5.0
-      param(99) = 4.0
-
-      filterType = 1
-c     param(101) = 1.0
-c     param(103) = 0.0001
-      param(101) = 2.0
-      param(103) = 0.2
-
-c
 c from gmsh2nek
 c
-c	   total quad element number is         2736
-c	   total hex element number is         8424
-c	   ******************************************************
-c	   Boundary info summary
-c	   BoundaryName     BoundaryID
-c	   inlet           1
-c	   outlet           2
-c	   wall           3
-c	   sym           4
-c	   pm           5
-c	   pp           6
-c	   ******************************************************
+c     total quad element number is         8184
+c     total hex element number is        41412
+c     ******************************************************
+c     Boundary info summary
+c     BoundaryName     BoundaryID
+c     inlet           1
+c     outlet           2
+c     wall           3
+c     sym           4
+c     pm           5
+c     pp           6
+c     ******************************************************
 
       do iel=1,nelv
         do ifc=1,2*ndim
@@ -234,9 +267,9 @@ c	   ******************************************************
           elseif (id_face.eq.4) then           ! symmetry
              cbc(ifc,iel,1) = 'SYM'
           elseif (id_face.eq.5) then           ! pm - do nothing
-c            cbc(ifc,iel,1) = 'p  '          
+c            cbc(ifc,iel,1) = 'P  '          
           elseif (id_face.eq.6) then           ! pp - do nothing
-c            cbc(ifc,iel,1) = 'p  '          
+c            cbc(ifc,iel,1) = 'P  '          
 c         elseif (id_face.eq.7) then           ! interpolate (for neknek)
 c            cbc(ifc,iel,1) = 'int'
           endif
@@ -248,9 +281,7 @@ c            cbc(ifc,iel,1) = 'int'
       end
 c-----------------------------------------------------------------------
       subroutine usrdat3()
-
-c      implicit none
-
+c     implicit none
       include 'SIZE'
       include 'TOTAL'
 
@@ -363,7 +394,7 @@ c-----------------------------------------------------------------------
       return
       end
 c-----------------------------------------------------------------------
-      subroutine chks
+      subroutine gmsh_chks
       include 'SIZE'
       include 'TOTAL'
 
