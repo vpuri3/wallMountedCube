@@ -75,8 +75,8 @@ y = [y;yy];
 z = [z;zz];
 
 % horizontal surface y = 0.3
-xmn = -2; xmx = 2; n2 = 200;
-zmn = -2; zmx = 2; n2 = 200;
+xmn = -0.0; xmx = 1; n2 = 300;
+zmn = -0.0; zmx = 1; n2 = 300;
 
 x0 = linspace(xmn,xmx,n2);
 z0 = linspace(zmn,zmx,n2);
@@ -94,7 +94,9 @@ n = nx*nz + 4*nl*nv + nl*nl + n2*n2;
 casename=[casename,'.his'];
 fID = fopen(casename,'w');
 fprintf(fID, [num2str(n) ' !=',num2str(nx),'x',num2str(nz)...
-                           'x',num2str(nl),'x',num2str(nv)...
+                         '+4x',num2str(nl),'x',num2str(nv)...
+                           '+',num2str(nl),'x',num2str(nl)...
+                           '+',num2str(n2),'x',num2str(n2)...
                                  ,' monitoring points\n']);
 dlmwrite(casename,A,'delimiter',' ','-append');
 type(casename)
