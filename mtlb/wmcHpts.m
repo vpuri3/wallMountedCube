@@ -73,18 +73,31 @@ end
 x = [x;xx];
 y = [y;yy];
 z = [z;zz];
+
+% horizontal surface y = 0.3
+xmn = -2; xmx = 2; n2 = 200;
+zmn = -2; zmx = 2; n2 = 200;
+
+x0 = linspace(xmn,xmx,n2);
+z0 = linspace(zmn,zmx,n2);
+[x0,z0] = meshgrid(x0,z0);
+
+x = [x;      reshape(x0,[n2*n2,1])];
+y = [y;0.3+0*reshape(x0,[n2*n2,1])];
+z = [z;      reshape(z0,[n2*n2,1])];
+
 %-----------------------------------------------------%
 % create file casename.his
-%format long
-%A = [x,y,z];
-%n = nx*nz + 4*nl*nv + nl*nl;
-%casename=[casename,'.his'];
-%fID = fopen(casename,'w');
-%fprintf(fID, [num2str(n) ' !=',num2str(nx),'x',num2str(nz)...
-%                           'x',num2str(nl),'x',num2str(nv)...
-%                                 ,' monitoring points\n']);
-%dlmwrite(casename,A,'delimiter',' ','-append');
-%type(casename)
+format long
+A = [x,y,z];
+n = nx*nz + 4*nl*nv + nl*nl + n2*n2;
+casename=[casename,'.his'];
+fID = fopen(casename,'w');
+fprintf(fID, [num2str(n) ' !=',num2str(nx),'x',num2str(nz)...
+                           'x',num2str(nl),'x',num2str(nv)...
+                                 ,' monitoring points\n']);
+dlmwrite(casename,A,'delimiter',' ','-append');
+type(casename)
 %-----------------------------------------------------%
 scatter3(x,y,z);
 xlabel('x');
