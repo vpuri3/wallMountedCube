@@ -1,0 +1,168 @@
+###################################################
+###################################################
+using script ./gen
+###################################################
+###################################################
+using g2n (gmsh2nek) in /Users/vp/Nek5000/run/wmc/gmsh/re40k-2/notworking
+###################################################
+###################################################
+Enter mesh dimension: Input .msh file name:  total node number is      2376301
+ total quad element number is        29504
+ total hex element number is       286520
+ ******************************************************
+ Boundary info summary
+ BoundaryName     BoundaryID
+ inlet           1
+ outlet           2
+ wall           3
+ sym           4
+ pm           5
+ pp           6
+ ******************************************************
+ Enter number of periodic boundary surface pairs:
+ input surface 1 and  surface 2  BoundaryID
+ input translation vector (surface 1 -> surface 2)
+ ******************************************************
+ Please set boundary conditions to all non-periodic boundaries
+ in .usr file usrdat2() subroutine
+ ******************************************************
+
+writing wmc.re2                                                                         
+###################################################
+###################################################
+using gmp (genmap) in /Users/vp/Nek5000/run/wmc/gmsh/re40k-2/notworking
+###################################################
+###################################################
+Input .rea / .re2 name:
+ reading wmc.re2                                                                         
+Input mesh tolerance (default 0.2):
+NOTE: smaller is better, but generous is more forgiving for bad meshes.
+ reading mesh data ...
+ start locglob_lexico:           8      286520     2292160  0.20000000000000001     
+ locglob:           1           1     2292160
+ locglob:           2         409     2292160
+ locglob:           3       15742     2292160
+ locglob:           1      229778     2292160
+ locglob:           2      279112     2292160
+ locglob:           3      294509     2292160
+ locglob:           1      300222     2292160
+ locglob:           2      301456     2292160
+ locglob:           3      301456     2292160
+ done locglob_lexico:      301470      301470     2292160          12
+ start periodic vtx:      286520      301470
+      146580 4  5  3  2.33432147E-14     1000 shift
+      170084 4  5  3  9.72334567E-13     2000 shift
+      188020 1  5  3  1.98602732E-15     3000 shift
+      201548 4  5  3  0.00000000E+00     4000 shift
+      202548 4  5  3  1.12346671E-14     5000 shift
+      285676 3  5  3  9.44146611E-15     6000 shift
+ done periodic vtx
+ start rec_bisect:      286520
+ done:    0.0% 
+ done:    1.0% 
+ done:    2.0% 
+ done:    3.0% 
+ done:    4.0% 
+ done:    5.0% 
+ done:    6.0% 
+ done:    7.0% 
+ done:    8.0% 
+ done:    9.0% 
+ done:   10.0% 
+ done:   11.0% 
+ done:   12.0% 
+ done:   13.0% 
+ done:   14.0% 
+ done:   15.0% 
+ done:   16.0% 
+ done:   17.0% 
+ done:   18.0% 
+ done:   19.0% 
+ done:   20.0% 
+ done:   21.0% 
+ done:   22.0% 
+ done:   23.0% 
+ done:   24.0% 
+ done:   25.0% 
+ done:   26.0% 
+ done:   27.0% 
+ done:   28.0% 
+ not connected           1           2           1           0
+ done:   29.0% 
+ done:   30.0% 
+ done:   31.0% 
+ done:   32.0% 
+ done:   33.0% 
+ done:   34.0% 
+ done:   35.0% 
+ done:   36.0% 
+ done:   37.0% 
+ done:   38.0% 
+ done:   39.0% 
+ done:   40.0% 
+ done:   41.0% 
+ done:   42.0% 
+ done:   43.0% 
+ done:   44.0% 
+ done:   45.0% 
+ done:   46.0% 
+ done:   47.0% 
+ done:   48.0% 
+ done:   49.0% 
+ done:   50.0% 
+ done:   51.0% 
+ done:   52.0% 
+ done:   53.0% 
+ done:   54.0% 
+ done:   55.0% 
+ done:   56.0% 
+ done:   57.0% 
+ done:   58.0% 
+ done:   59.0% 
+ done:   60.0% 
+ done:   61.0% 
+ done:   62.0% 
+ done:   63.0% 
+ done:   64.0% 
+ done:   65.0% 
+ not connected           1           2           2           0
+ done:   66.0% 
+ done:   67.0% 
+ done:   68.0% 
+ done:   69.0% 
+ not connected           1           2           3           0
+ done:   70.0% 
+ done:   71.0% 
+ done:   72.0% 
+ done:   73.0% 
+ done:   74.0% 
+ done:   75.0% 
+ done:   76.0% 
+ done:   77.0% 
+ done:   78.0% 
+ done:   79.0% 
+ done:   80.0% 
+ done:   81.0% 
+ done:   82.0% 
+ done:   83.0% 
+ done:   84.0% 
+ done:   85.0% 
+ done:   86.0% 
+ done:   87.0% 
+ not connected           1           2           4           0
+ done:   88.0% 
+ done:   89.0% 
+ done:   90.0% 
+ done:   91.0% 
+ done:   92.0% 
+ done:   93.0% 
+ done:   94.0% 
+ done:   95.0% 
+ done:   96.0% 
+ done:   97.0% 
+ done:   98.0% 
+ done:   99.0% 
+ done:  100.0% 
+  
+ done rec_bisect
+writing wmc.ma2                                                                         

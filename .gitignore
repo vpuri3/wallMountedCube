@@ -6,4 +6,7 @@ obj/
 *.o
 *~
 *.map
+*.msh
+*.re2
+*.ma2
 makefile
