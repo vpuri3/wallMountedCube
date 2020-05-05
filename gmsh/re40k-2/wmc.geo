@@ -2,17 +2,17 @@
 
 /* at lx1=8, first point at 0.05 for z \in [0,1] */
 
-Nc  = 31;            // # points on cube side
-No  = 30;            // # points on line from cube to outer box
+Nc  = 29;            // # points on cube side
+No  = 55;            // # points on line from cube to outer box
 Ny  = 30;            // # points (y-dir)
 Ne  = 10;            // # points in entrance (x-dir)
 Nw  = 40;            // # points in wake     (x-dir)
 bfc = 1.05;          //   expansion from cube surface
-Py  = 1.15;          //   expansion from ground (y-dir)
-Pc  = 0.20;          //   edge refinement on cube eg. "Nc Using Bump Pc;"
+Py  = 1.20;          //   expansion from ground (y-dir)
+Pc  = 0.05;          //   edge refinement on cube
 Nsmooth = 0;         // # mesh smoothing iterations
 
-Nd = 0.5*(Nc+1) - 5;
+Nd = 0.5*(Nc+1) - 6;
 
 // fixed due to geom
 Nb = 0.5*(Nc+1);  // # points on side of small quads
@@ -144,18 +144,18 @@ Point(64) = {wake,height, span/2,lc};
 /******************** LINES ********************/
 
 // cube lower
-Line(1) = {1,2}; Transfinite Curve {1} = Nc Using Bump Pc;
-Line(2) = {2,3}; Transfinite Curve {2} = Nc Using Bump Pc;
-Line(3) = {3,4}; Transfinite Curve {3} = Nc Using Bump Pc;
-Line(4) = {4,1}; Transfinite Curve {4} = Nc Using Bump Pc;
+Line(1) = {1,2}; Transfinite Curve {1}   = Nc Using Bump Pc;
+Line(2) = {2,3}; Transfinite Curve {2}   = Nc Using Bump Pc;
+Line(3) = {3,4}; Transfinite Curve {3}   = Nc Using Bump Pc;
+Line(4) = {4,1}; Transfinite Curve {4}   = Nc Using Bump Pc;
 
 // cube upper
-Line(5) = {5,6}; Transfinite Curve {5} = Nc Using Bump Pc;
-Line(6) = {6,7}; Transfinite Curve {6} = Nc Using Bump Pc;
-Line(7) = {7,8}; Transfinite Curve {7} = Nc Using Bump Pc;
-Line(8) = {8,5}; Transfinite Curve {8} = Nc Using Bump Pc;
+Line(5) = {5,6}; Transfinite Curve {5}   = Nc Using Bump Pc;
+Line(6) = {6,7}; Transfinite Curve {6}   = Nc Using Bump Pc;
+Line(7) = {7,8}; Transfinite Curve {7}   = Nc Using Bump Pc;
+Line(8) = {8,5}; Transfinite Curve {8}   = Nc Using Bump Pc;
 
-// cube vert  	   									              ^
+// cube vert  	   							    	              ^
 Line(9 ) = {1,5}; Transfinite Curve {9 } = Ny Using Bump Pc; //  /|\
 Line(10) = {2,6}; Transfinite Curve {10} = Ny Using Bump Pc; //   |  
 Line(11) = {3,7}; Transfinite Curve {11} = Ny Using Bump Pc; //   |
