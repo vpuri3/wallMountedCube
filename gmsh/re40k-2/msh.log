@@ -3,12 +3,12 @@
 using script ./gen
 ###################################################
 ###################################################
-using g2n (gmsh2nek) in /Users/vp/Nek5000/run/wmc/gmsh/re40k-2
+using g2n (gmsh2nek) in /Users/vp/Nek5000/run/wmc/gmsh/re40k-3
 ###################################################
 ###################################################
-Enter mesh dimension: Input .msh file name:  total node number is      2697079
- total quad element number is        26336
- total hex element number is       327696
+Enter mesh dimension: Input .msh file name:  total node number is      3641293
+ total quad element number is        36116
+ total hex element number is       443092
  ******************************************************
  Boundary info summary
  BoundaryName     BoundaryID
@@ -30,7 +30,7 @@ Enter mesh dimension: Input .msh file name:  total node number is      2697079
 writing wmc.re2                                                                         
 ###################################################
 ###################################################
-using gmp (genmap) in /Users/vp/Nek5000/run/wmc/gmsh/re40k-2
+using gmp (genmap) in /Users/vp/Nek5000/run/wmc/gmsh/re40k-3
 ###################################################
 ###################################################
 Input .rea / .re2 name:
@@ -38,25 +38,28 @@ Input .rea / .re2 name:
 Input mesh tolerance (default 0.2):
 NOTE: smaller is better, but generous is more forgiving for bad meshes.
  reading mesh data ...
- start locglob_lexico:           8      327696     2621568  0.20000000000000001     
- locglob:           1           1     2621568
- locglob:           2         677     2621568
- locglob:           3       28379     2621568
- locglob:           1      219043     2621568
- locglob:           2      265972     2621568
- locglob:           3      331961     2621568
- locglob:           1      339262     2621568
- locglob:           2      341055     2621568
- locglob:           3      341055     2621568
- done locglob_lexico:      341055      341055     2621568          12
- start periodic vtx:      327696      341055
-      235171 4  5  3  2.54189253E-14     1000 shift
-      255485 4  5  3  1.53654905E-12     2000 shift
-      277858 2  5  3  1.54012185E-15     3000 shift
-      278858 4  5  3  8.88178420E-16     4000 shift
-      327360 3  5  3  9.39959687E-15     5000 shift
+ start locglob_lexico:           8      443092     3544736  0.10000000000000001     
+ locglob:           1           1     3544736
+ locglob:           2         421     3544736
+ locglob:           3       20145     3544736
+ locglob:           1      346408     3544736
+ locglob:           2      436956     3544736
+ locglob:           3      461352     3544736
+ locglob:           1      461400     3544736
+ locglob:           2      461400     3544736
+ locglob:           3      461400     3544736
+ done locglob_lexico:      461400      461400     3544736          12
+ start periodic vtx:      443092      461400
+      277110 4  5  3  1.35358450E-12     1000 shift
+      298874 4  5  3  1.30567779E-12     2000 shift
+      312692 1  5  3  2.81743019E-15     3000 shift
+      337936 4  5  3  1.98602732E-15     4000 shift
+      338936 4  5  3  3.55964581E-15     5000 shift
+      339936 4  5  3  1.28094913E-14     6000 shift
+      441740 3  5  3  9.39959687E-15     7000 shift
+      442740 3  5  3  7.10542736E-15     8000 shift
  done periodic vtx
- start rec_bisect:      327696
+ start rec_bisect:      443092
  done:    0.0% 
  done:    1.0% 
  done:    2.0% 

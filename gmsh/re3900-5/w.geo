@@ -64,6 +64,7 @@ Point(7) = {  0,0,-hh,lc};
 Point(8) = { hm,0,-hm,lc};
        
 // inner middle
+Point(10) = {  0,h,  0,lc};
 Point(11) = { hh,h,  0,lc};
 Point(12) = { hm,h, hm,lc};
 Point(13) = {  0,h, hh,lc};
@@ -85,48 +86,16 @@ Point(26) = {-ss,0,-ss,lc};
 Point(27) = {  0,0,-ss,lc};
 Point(28) = { ss,0,-ss,lc};
 
-// outer middle
-h2 = 0.5 * height;
-Point(31) = { ss,h2,  0,lc};
-Point(32) = { ss,h2, ss,lc};
-Point(33) = {  0,h2, ss,lc};
-Point(34) = {-ss,h2, ss,lc};
-Point(35) = {-ss,h2,  0,lc};
-Point(36) = {-ss,h2,-ss,lc};
-Point(37) = {  0,h2,-ss,lc};
-Point(38) = { ss,h2,-ss,lc};
-
 // outer top
-Point(41) = { ss,height,  0,lc};
-Point(42) = { ss,height, ss,lc};
-Point(43) = {  0,height, ss,lc};
-Point(44) = {-ss,height, ss,lc};
-Point(45) = {-ss,height,  0,lc};
-Point(46) = {-ss,height,-ss,lc};
-Point(47) = {  0,height,-ss,lc};
-Point(48) = { ss,height,-ss,lc};
-
-// inner middle
-//Point(51) = { hh,h2,  0,lc};
-//Point(52) = { hm,h2, hm,lc};
-//Point(53) = {  0,h2, hh,lc};
-//Point(54) = {-hm,h2, hm,lc};
-//Point(55) = {-hh,h2,  0,lc};
-//Point(56) = {-hm,h2,-hm,lc};
-//Point(57) = {  0,h2,-hh,lc};
-//Point(58) = { hm,h2,-hm,lc};
-
-// inner top
-h3 = 0.5  * ss;
-h4 = 0.25 * ss;
-Point(61) = { h3,height,  0,lc};
-Point(62) = { h4,height, h4,lc};
-Point(63) = {  0,height, h3,lc};
-Point(64) = {-h4,height, h4,lc};
-Point(65) = {-h3,height,  0,lc};
-Point(66) = {-h4,height,-h4,lc};
-Point(67) = {  0,height,-h3,lc};
-Point(68) = { h4,height,-h4,lc};
+Point(30) = {  0,height,  0,lc};
+Point(31) = { ss,height,  0,lc};
+Point(32) = { ss,height, ss,lc};
+Point(33) = {  0,height, ss,lc};
+Point(34) = {-ss,height, ss,lc};
+Point(35) = {-ss,height,  0,lc};
+Point(36) = {-ss,height,-ss,lc};
+Point(37) = {  0,height,-ss,lc};
+Point(38) = { ss,height,-ss,lc};
 
 /******************** LINES ********************/
 
@@ -210,55 +179,11 @@ Line(76) = {16,36}; Transfinite Curve {76} = No;
 Line(77) = {17,37}; Transfinite Curve {77} = No;
 Line(78) = {18,38}; Transfinite Curve {78} = No;
 
-// outer middle-top (vert)
-Line(81) = {31,41}; Transfinite Curve {81} = 5;
-Line(82) = {32,42}; Transfinite Curve {82} = 5;
-Line(83) = {33,43}; Transfinite Curve {83} = 5;
-Line(84) = {34,44}; Transfinite Curve {84} = 5;
-Line(85) = {35,45}; Transfinite Curve {85} = 5;
-Line(86) = {36,46}; Transfinite Curve {86} = 5;
-Line(87) = {37,47}; Transfinite Curve {87} = 5;
-Line(88) = {38,48}; Transfinite Curve {88} = 5;
-
-// outer top
-Line(91) = {41,42}; Transfinite Curve {91} = Nb;
-Line(92) = {42,43}; Transfinite Curve {92} = Nb;
-Line(93) = {43,44}; Transfinite Curve {93} = Nb;
-Line(94) = {44,45}; Transfinite Curve {94} = Nb;
-Line(95) = {45,46}; Transfinite Curve {95} = Nb;
-Line(96) = {46,47}; Transfinite Curve {96} = Nb;
-Line(97) = {47,48}; Transfinite Curve {97} = Nb;
-Line(98) = {48,41}; Transfinite Curve {98} = Nb;
-
-// connect (inner-outer) top
-Line(101) = {61,41}; Transfinite Curve {101} = No;
-Line(102) = {62,42}; Transfinite Curve {102} = No;
-Line(103) = {63,43}; Transfinite Curve {103} = No;
-Line(104) = {64,44}; Transfinite Curve {104} = No;
-Line(105) = {65,45}; Transfinite Curve {105} = No;
-Line(106) = {66,46}; Transfinite Curve {106} = No;
-Line(107) = {67,47}; Transfinite Curve {107} = No;
-Line(108) = {68,48}; Transfinite Curve {108} = No;
-
-// inner top
-Line(111) = {61,62}; Transfinite Curve {111} = Nb;
-Line(112) = {62,63}; Transfinite Curve {112} = Nb;
-Line(113) = {63,64}; Transfinite Curve {113} = Nb;
-Line(114) = {64,65}; Transfinite Curve {114} = Nb;
-Line(115) = {65,66}; Transfinite Curve {115} = Nb;
-Line(116) = {66,67}; Transfinite Curve {116} = Nb;
-Line(117) = {67,68}; Transfinite Curve {117} = Nb;
-Line(118) = {68,61}; Transfinite Curve {118} = Nb;
-
-// inner middle-top (vert)
-Line(121) = {11,61}; Transfinite Curve {121} = 5;
-Line(122) = {12,62}; Transfinite Curve {122} = 5;
-Line(123) = {13,63}; Transfinite Curve {123} = 5;
-Line(124) = {14,64}; Transfinite Curve {124} = 5;
-Line(125) = {15,65}; Transfinite Curve {125} = 5;
-Line(126) = {16,66}; Transfinite Curve {126} = 5;
-Line(127) = {17,67}; Transfinite Curve {127} = 5;
-Line(128) = {18,68}; Transfinite Curve {128} = 5;
+// connect (inner-outer) middle
+Line(81) = {31,33}; Transfinite Curve {85} = Nc;
+Line(82) = {33,35}; Transfinite Curve {86} = Nc;
+Line(83) = {35,37}; Transfinite Curve {87} = Nc;
+Line(84) = {37,31}; Transfinite Curve {88} = Nc;
 
 /******************** SURFACES ********************/
 
@@ -319,10 +244,13 @@ For i In {0:7}
 EndFor
 
 
-
 // center bottom
-Line Loop(9)={11:18}; Plane Surface(9)={9};
-Transfinite Surface {9}={11,13,15,17}; Recombine Surface {9};
+Line Loop(50)={11:18}; Plane Surface(50)={50};
+Transfinite Surface {50}={11,13,15,17}; Recombine Surface {50};
+
+//// top
+//Line Loop(51)={41:48}; Plane Surface(51)={51};
+//Transfinite Surface {51}={32,34,36,38}; Recombine Surface {51};
 
 Mesh.Smoothing = Nsmooth;
 

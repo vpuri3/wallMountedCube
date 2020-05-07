@@ -2,17 +2,17 @@
 
 /* at lx1=8, first point at 0.05 for z \in [0,1] */
 
-Nc  = 29;            // # points on cube side
-No  = 55;            // # points on line from cube to outer box
+Nc  = 31;            // # points on cube side
+No  = 60;            // # points on line from cube to outer box
 Ny  = 30;            // # points (y-dir)
-Ne  = 10;            // # points in entrance (x-dir)
-Nw  = 40;            // # points in wake     (x-dir)
+Ne  = 20;            // # points in entrance (x-dir)
+Nw  = 80;            // # points in wake     (x-dir)
 bfc = 1.05;          //   expansion from cube surface
-Py  = 1.20;          //   expansion from ground (y-dir)
-Pc  = 0.05;          //   edge refinement on cube
+Py  = 1.10;          //   expansion from ground (y-dir)
+Pc  = 0.50;          //   edge refinement on cube
 Nsmooth = 0;         // # mesh smoothing iterations
 
-Nd = 0.5*(Nc+1) - 6;
+Nd = 0.5*(Nc+1) - 7;
 
 // fixed due to geom
 Nb = 0.5*(Nc+1);  // # points on side of small quads
@@ -155,11 +155,11 @@ Line(6) = {6,7}; Transfinite Curve {6}   = Nc Using Bump Pc;
 Line(7) = {7,8}; Transfinite Curve {7}   = Nc Using Bump Pc;
 Line(8) = {8,5}; Transfinite Curve {8}   = Nc Using Bump Pc;
 
-// cube vert  	   							    	              ^
-Line(9 ) = {1,5}; Transfinite Curve {9 } = Ny Using Bump Pc; //  /|\
-Line(10) = {2,6}; Transfinite Curve {10} = Ny Using Bump Pc; //   |  
-Line(11) = {3,7}; Transfinite Curve {11} = Ny Using Bump Pc; //   |
-Line(12) = {4,8}; Transfinite Curve {12} = Ny Using Bump Pc; //   |  
+// cube vert
+Line(9 ) = {1,5}; Transfinite Curve {9 } = Ny Using Bump Pc;
+Line(10) = {2,6}; Transfinite Curve {10} = Ny Using Bump Pc; 
+Line(11) = {3,7}; Transfinite Curve {11} = Ny Using Bump Pc;
+Line(12) = {4,8}; Transfinite Curve {12} = Ny Using Bump Pc; 
 
 // outer lower
 //Line(13) = {9 ,10}; Transfinite Curve {13} = Nb Using Progression 1;
@@ -181,11 +181,11 @@ Line(12) = {4,8}; Transfinite Curve {12} = Ny Using Bump Pc; //   |
 //Line(27) = {23,24}; Transfinite Curve {27} = Nb Using Progression 1;
 //Line(28) = {24,17}; Transfinite Curve {28} = Nb Using Progression 1;
 
-// outer vert                                                              ^
-Line(29) = {9 ,17}; Transfinite Curve {29} = Ny Using Progression Py; //  /|\
-Line(30) = {10,18}; Transfinite Curve {30} = Ny Using Progression Py; //   |  
-Line(31) = {11,19}; Transfinite Curve {31} = Ny Using Progression Py; //   |
-Line(32) = {12,20}; Transfinite Curve {32} = Ny Using Progression Py; //   |  
+// outer vert
+Line(29) = {9 ,17}; Transfinite Curve {29} = Ny Using Progression Py;
+Line(30) = {10,18}; Transfinite Curve {30} = Ny Using Progression Py; 
+Line(31) = {11,19}; Transfinite Curve {31} = Ny Using Progression Py;
+Line(32) = {12,20}; Transfinite Curve {32} = Ny Using Progression Py; 
 Line(33) = {13,21}; Transfinite Curve {33} = Ny Using Progression Py;
 Line(34) = {14,22}; Transfinite Curve {34} = Ny Using Progression Py;
 Line(35) = {15,23}; Transfinite Curve {35} = Ny Using Progression Py;
