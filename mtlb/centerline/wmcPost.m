@@ -46,13 +46,18 @@ vz= reshape(vz,[nx,ny]);
 pr= reshape(pr,[nx,ny]);
 
 %=============================================================
-%figure; fig=gcf;ax=gca;
-%plot(x(:,4),vx(:,4));
-%=============================================================
-figure; fig=gcf;ax=gca;
-surf(x,y,vx); colorbar; view(2); shading interp
-title(['$$v_x$$'],'fontsize',14); xlabel('x'); ylabel('y');
-hcb=colorbar; title(hcb,'$$v_x$$','interpreter','latex','fontsize',14);
+clf;fig=gcf;ax=gca;
+plot(x(:,4),vx(:,4),'-k','linewidth',2.0);
+title([' Time Averaged $$v_x,$$ at y=0.3'],'fontsize',10);
+xlabel('$$x$$'  ,'fontsize',10);
+ylabel('$$v_x$$','fontsize',10);
 figname=['u'];
 saveas(fig,figname,'jpeg');
+%=============================================================
+%figure; fig=gcf;ax=gca;
+%surf(x,y,vx); colorbar; view(2); shading interp
+%title(['$$v_x$$'],'fontsize',14); xlabel('x'); ylabel('y');
+%hcb=colorbar; title(hcb,'$$v_x$$','interpreter','latex','fontsize',14);
+%figname=['u'];
+%saveas(fig,figname,'jpeg');
 
