@@ -1,21 +1,19 @@
 
 /* MESH PARAMS */
 
-// y1 0.0007 (lx1 8) and X00k elements
-Ny = 34;     // cube height elements
-Nz = 29;     // cube side elements
-Nout = 80;   // elements out from cube
-Nwake = 41;  // wake elements
-Nfor = 12;   // front box elements
-bfc = 1.081; // expansion from cube surface
-Pw = 1.2;    // expansion from ground
-Pc = 0.05;   // edge refinement of cube
+Ny    = 25;     // cube height elements
+Nz    = 25;     // cube side elements
+Nout  = 40;     // elements out from cube
+Nwake = 40;     // wake elements
+Nfor  = 10;     // front box elements
+bfc   = 1.08;   // expansion from cube surface
+Pw    = 1.20;   // expansion from ground
+Pc    = 0.05;   // edge refinement of cube
 
 // old, keep but doesnt change anything
 Nsmooth = 0;
 din = 0.1;
 dout = 2.0;
-
 
 
 /* DOMAIN SIZE */
@@ -253,7 +251,9 @@ Transfinite Surface {32}; Recombine Surface {32};
 Surface Loop(7) = {28, 29, 30, 31, 32, 5}; Volume(7) = {7};
 Transfinite Volume {7}; Recombine Volume {7};
 
-
+// mesh order
+Mesh.ElementOrder = 2;
+Mesh.SecondOrderLinear = 0;
 
 /* BOUNDARY CONDITIONS */
 Physical Surface("inlet") = {32};

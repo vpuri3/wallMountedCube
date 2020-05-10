@@ -3,21 +3,21 @@
 using script ./gen
 ###################################################
 ###################################################
-using g2n (gmsh2nek) in /Users/vp/Nek5000/run/wmc/gmsh/re40k-3
+using g2n (gmsh2nek) in /Users/vp/Nek5000/run/wmc/gmsh/90/re40k
 ###################################################
 ###################################################
-Enter mesh dimension: Input .msh file name:  total node number is      7971603
- total quad element number is        59516
- total hex element number is       975932
+Enter mesh dimension: Input .msh file name:  total node number is      1148239
+ total quad element number is        14112
+ total hex element number is       139968
  ******************************************************
  Boundary info summary
  BoundaryName     BoundaryID
  inlet           1
  outlet           2
- wall           3
- sym           4
- pm           5
- pp           6
+ sym           3
+ pm           4
+ pp           5
+ wall           6
  ******************************************************
  Enter number of periodic boundary surface pairs:
  input surface 1 and  surface 2  BoundaryID
@@ -30,7 +30,7 @@ Enter mesh dimension: Input .msh file name:  total node number is      7971603
 writing wmc.re2                                                                         
 ###################################################
 ###################################################
-using gmp (genmap) in /Users/vp/Nek5000/run/wmc/gmsh/re40k-3
+using gmp (genmap) in /Users/vp/Nek5000/run/wmc/gmsh/90/re40k
 ###################################################
 ###################################################
 Input .rea / .re2 name:
@@ -38,32 +38,23 @@ Input .rea / .re2 name:
 Input mesh tolerance (default 0.2):
 NOTE: smaller is better, but generous is more forgiving for bad meshes.
  reading mesh data ...
- start locglob_lexico:           8      975932     7807456  0.10000000000000001     
- locglob:           1           1     7807456
- locglob:           2         710     7807456
- locglob:           3       48511     7807456
- locglob:           1      623134     7807456
- locglob:           2      814987     7807456
- locglob:           3     1002277     7807456
- locglob:           1     1005994     7807456
- locglob:           2     1005995     7807456
- locglob:           3     1005995     7807456
- done locglob_lexico:     1005995     1005995     7807456          12
- start periodic vtx:      975932     1005995
-      610566 4  5  3  8.88178420E-13     1000 shift
-      630832 4  5  3  6.07519241E-13     2000 shift
-      667166 2  5  3  6.43930426E-13     3000 shift
-      690903 4  5  3  9.71889933E-13     4000 shift
-      713392 2  5  3  8.98281508E-13     5000 shift
-      771956 2  5  3  0.00000000E+00     6000 shift
-      772956 4  5  3  3.21006162E-15     7000 shift
-      773956 4  5  3  9.39960968E-15     8000 shift
-      774956 4  5  3  9.39959687E-15     9000 shift
-      973140 3  5  3  1.98602732E-15    10000 shift
-      974140 3  5  3  0.00000000E+00    11000 shift
-      975140 3  5  3  9.39959687E-15    12000 shift
+ start locglob_lexico:           8      139968     1119744  0.10000000000000001     
+ locglob:           1           1     1119744
+ locglob:           2         852     1119744
+ locglob:           3       23695     1119744
+ locglob:           1      146704     1119744
+ locglob:           2      146704     1119744
+ locglob:           3      147160     1119744
+ locglob:           1      147160     1119744
+ locglob:           2      147160     1119744
+ locglob:           3      147160     1119744
+ done locglob_lexico:      147160      147160     1119744           8
+ start periodic vtx:      139968      147160
+       61426 5  5  1  0.00000000E+00     1000 shift
+      122606 4  5  3  1.14750573E-13     2000 shift
+      134760 4  5  3  1.20792265E-13     3000 shift
  done periodic vtx
- start rec_bisect:      975932
+ start rec_bisect:      139968
  done:    0.0% 
  done:    1.0% 
  done:    2.0% 
@@ -83,11 +74,14 @@ NOTE: smaller is better, but generous is more forgiving for bad meshes.
  done:   16.0% 
  done:   17.0% 
  done:   18.0% 
+ not connected           1           2           1           0
  done:   19.0% 
  done:   20.0% 
  done:   21.0% 
  done:   22.0% 
+ not connected           1           2           2           0
  done:   23.0% 
+ not connected           1           2           3           0
  done:   24.0% 
  done:   25.0% 
  done:   26.0% 
