@@ -1,13 +1,13 @@
 
 /* MESH PARAMS */
 
-Ny    = 25;     // cube height elements
-Nz    = 25;     // cube side elements
-Nout  = 40;     // elements out from cube
+Ny    = 30;     // cube height elements
+Nz    = 30;     // cube side elements
+Nout  = 60;     // elements out from cube
 Nwake = 40;     // wake elements
 Nfor  = 10;     // front box elements
-bfc   = 1.08;   // expansion from cube surface
-Pw    = 1.20;   // expansion from ground
+bfc   = 1.05;   // expansion from cube surface
+Pw    = 1.10;   // expansion from ground
 Pc    = 0.05;   // edge refinement of cube
 
 // old, keep but doesnt change anything
@@ -73,16 +73,18 @@ Line(9) = {3,7}; Transfinite Curve {9} = Ny Using Progression 1;
 Line(10) = {4,8}; Transfinite Curve {10} = Ny Using Progression 1;
 */
 
-Line(1) = {1,2}; Transfinite Curve {1} = Nz Using Bump Pc;
-Line(2) = {2,3}; Transfinite Curve {2} = Nz Using Bump Pc;
-Line(3) = {3,4}; Transfinite Curve {3} = Nz Using Bump Pc;
-Line(4) = {5,6}; Transfinite Curve {4} = Nz Using Bump Pc;
-Line(5) = {6,7}; Transfinite Curve {5} = Nz Using Bump Pc;
-Line(6) = {7,8}; Transfinite Curve {6} = Nz Using Bump Pc;
-Line(7) = {1,5}; Transfinite Curve {7} = Ny Using Bump Pc;
-Line(8) = {2,6}; Transfinite Curve {8} = Ny Using Bump Pc;
-Line(9) = {3,7}; Transfinite Curve {9} = Ny Using Bump Pc;
-Line(10) = {4,8}; Transfinite Curve {10} = Ny Using Bump Pc;
+Line( 1) = {1,2}; Transfinite Curve { 1} = Nz;// Using Bump Pc;
+Line( 2) = {2,3}; Transfinite Curve { 2} = Nz;// Using Bump Pc;
+Line( 3) = {3,4}; Transfinite Curve { 3} = Nz;// Using Bump Pc;
+Line( 4) = {5,6}; Transfinite Curve { 4} = Nz;// Using Bump Pc;
+Line( 5) = {6,7}; Transfinite Curve { 5} = Nz;// Using Bump Pc;
+Line( 6) = {7,8}; Transfinite Curve { 6} = Nz;// Using Bump Pc;
+Line( 7) = {1,5}; Transfinite Curve { 7} = Ny;// Using Bump Pc;
+Line( 8) = {2,6}; Transfinite Curve { 8} = Ny;// Using Bump Pc;
+Line( 9) = {3,7}; Transfinite Curve { 9} = Ny;// Using Bump Pc;
+Line(10) = {4,8}; Transfinite Curve {10} = Ny;// Using Bump Pc;
+Line(30) = {5,8}; Transfinite Curve {30} = Nz;// Using Bump Pc;
+Line(32) = {1,4}; Transfinite Curve {32} = Nz;// Using Bump Pc;
 
 // define outer box lines
 Line(11) = {9,10}; Transfinite Curve {11} = Nz Using Progression 1;
@@ -108,11 +110,7 @@ Line(27) = {7,15}; Transfinite Curve {27} = Nout Using Progression bfc;
 Line(28) = {8,16}; Transfinite Curve {28} = Nout Using Progression bfc;
 
 Line(29) = {13,16}; Transfinite Curve {29} = Nz Using Progression 1;
-//Line(30) = {5,8}; Transfinite Curve {30} = Nz Using Progression 1;
-Line(30) = {5,8}; Transfinite Curve {30} = Nz Using Bump Pc;
-Line(31) = {9,12}; Transfinite Curve {31} = Nz Using Progression 1;
-//Line(32) = {1,4}; Transfinite Curve {32} = Nz Using Progression 1;
-Line(32) = {1,4}; Transfinite Curve {32} = Nz Using Bump Pc;
+Line(31) = {9,12}; Transfinite Curve {31}  = Nz Using Progression 1;
 
 
 //define box surface
