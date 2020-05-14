@@ -17,7 +17,7 @@ z = [];
 
 % volume
 xmn = -5; xmx = 5; nx = 51; % n* odd
-ymn =  0; zmx = 2; ny = 21;
+ymn =  0; ymx = 2; ny = 21;
 zmn = -2; zmx = 2; nz = 41;
 
 x0 = linspace(xmn,xmx,nx);
@@ -80,20 +80,19 @@ z = [z;zz];
 % create file casename.his
 format long
 A = [x,y,z];
-n = nx*ny*nz + 4*nl*nv + nl*nl + n2*n2;
+n = nx*ny*nz + 4*nl*nv + nl*nl;
 casename=[casename,'.his'];
 fID = fopen(casename,'w');
 fprintf(fID, [num2str(n)...
              ,' !=',num2str(nx),'x',num2str(ny),'x',num2str(nz)...
              ,'+4x',num2str(nl),'x',num2str(nv)...
              ,'+'  ,num2str(nl),'x',num2str(nl)...
-             ,'+'  ,num2str(n2),'x',num2str(n2)...
                       ,' monitoring points\n']);
 dlmwrite(casename,A,'delimiter',' ','-append');
 type(casename)
 %-----------------------------------------------------%
-scatter3(x,y,z);
-xlabel('x');
-ylabel('y');
-zlabel('z');
-daspect([1 1 1]);
+%scatter3(x,y,z);
+%xlabel('x');
+%ylabel('y');
+%zlabel('z');
+%daspect([1 1 1]);
