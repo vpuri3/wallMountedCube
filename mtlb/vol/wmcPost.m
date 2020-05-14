@@ -1,6 +1,8 @@
 %=============================================================
 function wmcPost(al,Re)
 
+format compact; format shorte;
+
 dsty=1;
 visc=1/Re;
 
@@ -68,60 +70,64 @@ nl=10;
 nv=10;
 n = nx*ny*nz + 4*nl*nv + nl*nl;
 
-I0 =           (1:nx*ny*nz); I0 = reshape(I0,[nx,nz]); % volume
-I1 = I0(end) + (1:nl*nv);    I1 = reshape(I1,[nl,nv]); % lateral surf
+I0 =           (1:nx*ny*nz); I0 = reshape(I0,[nx,ny,nz]); % volume
+I1 = I0(end) + (1:nl*nv);    I1 = reshape(I1,[nl,nv]);    % lateral surf
 I2 = I1(end) + (1:nl*nv);    I2 = reshape(I2,[nl,nv]);
 I3 = I2(end) + (1:nl*nv);    I3 = reshape(I3,[nl,nv]);
 I4 = I3(end) + (1:nl*nv);    I4 = reshape(I4,[nl,nv]);
-I5 = I4(end) + (1:nl*nl);    I5 = reshape(I5,[nl,nl]); % cube top
+I5 = I4(end) + (1:nl*nl);    I5 = reshape(I5,[nl,nl]);    % cube top
+
+II = I0(:,0,:);              II = reshape(II,[nx,nz]);    % ground
 
 %=============================================================
 % cube surfaces
 
-wmc_wall(Tm,'$$|\tau|$$',x,y,z,I0,I1,I2,I3,I4,I5);
-wmc_wall(uf,'$$u_f$$'   ,x,y,z,I0,I1,I2,I3,I4,I5);
+wmc_wall(Tm,'$$|\tau|$$',x,y,z,II,I1,I2,I3,I4,I5);
+wmc_wall(uf,'$$u_f$$'   ,x,y,z,II,I1,I2,I3,I4,I5);
 
 %=============================================================
 % discard surface data - reshape to volume
 
-x  =reshape(x  (I0),[nx,ny,nz]);
-y  =reshape(y  (I0),[nx,ny,nz]);
-z  =reshape(z  (I0),[nx,ny,nz]);
-u  =reshape(u  (I0),[nx,ny,nz]);
-v  =reshape(v  (I0),[nx,ny,nz]);
-w  =reshape(w  (I0),[nx,ny,nz]);
-p  =reshape(p  (I0),[nx,ny,nz]);
+x = x(I0);
+y = y(I0);
+z = z(I0);
+u = u(I0);
+v = v(I0);
+w = w(I0);
+p = p(I0);
 
-cn =reshape(cn (I0),[nx,ny,nz,3]);
-pr =reshape(pr (I0),[nx,ny,nz,3]);
-pt =reshape(pt (I0),[nx,ny,nz,3]);
-pd =reshape(pd (I0),[nx,ny,nz,3]);
-ps =reshape(ps (I0),[nx,ny,nz,3]);
-td =reshape(td (I0),[nx,ny,nz,3]);
-ep =reshape(ep (I0),[nx,ny,nz,3]);
-vd =reshape(vd (I0),[nx,ny,nz,3]);
-tk =reshape(tk (I0),[nx,ny,nz,3]);
-im =reshape(im (I0),[nx,ny,nz,3]);
-
-cnK=reshape(cnK(I0),[nx,ny,nz]);
-prK=reshape(prK(I0),[nx,ny,nz]);
-ptK=reshape(ptK(I0),[nx,ny,nz]);
-pdK=reshape(pdK(I0),[nx,ny,nz]);
-psK=reshape(psK(I0),[nx,ny,nz]);
-tdK=reshape(tdK(I0),[nx,ny,nz]);
-epK=reshape(epK(I0),[nx,ny,nz]);
-vdK=reshape(vdK(I0),[nx,ny,nz]);
-tkK=reshape(tkK(I0),[nx,ny,nz]);
-imK=reshape(imK(I0),[nx,ny,nz]);
+cn = cn(I0); cnK = cnK(I0);
+pr = pr(I0); prK = prK(I0);
+pt = pt(I0); ptK = ptK(I0);
+pd = pd(I0); pdK = pdK(I0);
+ps = ps(I0); psK = psK(I0);
+td = td(I0); tdK = tdK(I0);
+ep = ep(I0); epK = epK(I0);
+vd = vd(I0); vdK = vdK(I0);
+tk = tk(I0); tkK = tkK(I0);
+im = im(I0); imK = imK(I0);
 
 %=============================================================
 % geometry
 
+xw = x(:,0,:);
+zw = z(:,0,:);
+
+yw = cube(al,xw,zw); % heaviside functions
 
 
 %=============================================================
 % profile plots along centerline
 
+iz= 0.5 * (nx+1); % centerline
 
+xR=reshape(xR,[ny,nx]);
+yR=reshape(yR,[ny,nx]);
+zR=reshape(zR,[ny,nx]);
+uR=reshape(uR,[ny,nx]);
+vR=reshape(vR,[ny,nx]);
+wR=reshape(wR,[ny,nx]);
+pR=reshape(pR,[ny,nx]);
 
+prof(xsw,ysw,xrw,yrw,xS,yS,-uvS,xR,yR,-uvR,2,'uv','$$-\eta_{12}$$');
 
