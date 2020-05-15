@@ -1,5 +1,8 @@
 %=============================================================
-function wmcPost(al,Re)
+%function wmcPost(al,Re)
+
+al=90;
+Re=3900;
 
 format compact; format shorte;
 
@@ -7,22 +10,42 @@ dsty=1;
 visc=1/Re;
 
 %=============================================================
+% numbering
+
+nx=51; % parse wmc.his
+ny=21;
+nz=41;
+nl=50;
+nv=50;
+n = nx*ny*nz + 4*nl*nv + nl*nl;
+
+I0 =           (1:nx*ny*nz); I0 = reshape(I0,[nx,ny,nz]); % volume
+I1 = I0(end) + (1:nl*nv);    I1 = reshape(I1,[nl,nv]);    % lateral surf
+I2 = I1(end) + (1:nl*nv);    I2 = reshape(I2,[nl,nv]);
+I3 = I2(end) + (1:nl*nv);    I3 = reshape(I3,[nl,nv]);
+I4 = I3(end) + (1:nl*nv);    I4 = reshape(I4,[nl,nv]);
+I5 = I4(end) + (1:nl*nl);    I5 = reshape(I5,[nl,nl]);    % cube top
+
+II = I0(:,1,:);              II = reshape(II,[nx,nz]);    % ground
+
+%=============================================================
 % reading data
 
+time = dlmread('wsh.dat','',[1 0 1 0]);
 
 C=dlmread('wmc.his',' ',[1 0 n 2]); % X,Y,Z
 U=dlmread('ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
 W=dlmread('wsh.dat','' ,[1 1 n 2]); % Tm,uf
 
-tk=dlmread('var.dat','',[N0 1 N1 3]); % < u' * u' >
-cn=dlmread('cn1.dat','',[N0 1 N1 3]); % convective term
-pr=dlmread('pr1.dat','',[N0 1 N1 3]); % production
-pt=dlmread('pt1.dat','',[N0 1 N1 3]); % pressure transport
-pd=dlmread('pd1.dat','',[N0 1 N1 3]); % pressure diffusion
-ps=dlmread('ps1.dat','',[N0 1 N1 3]); % pressure strain
-td=dlmread('td1.dat','',[N0 1 N1 3]); % turbulent diffusion
-ep=dlmread('ep1.dat','',[N0 1 N1 3]); % dissipation
-vd=dlmread('vd1.dat','',[N0 1 N1 3]); % viscous diffusion
+tk=dlmread('var.dat','',[1 1 n 3]); % < u' * u' >
+cn=dlmread('cn1.dat','',[1 1 n 3]); % convective term
+pr=dlmread('pr1.dat','',[1 1 n 3]); % production
+pt=dlmread('pt1.dat','',[1 1 n 3]); % pressure transport
+pd=dlmread('pd1.dat','',[1 1 n 3]); % pressure diffusion
+ps=dlmread('ps1.dat','',[1 1 n 3]); % pressure strain
+td=dlmread('td1.dat','',[1 1 n 3]); % turbulent diffusion
+ep=dlmread('ep1.dat','',[1 1 n 3]); % dissipation
+vd=dlmread('vd1.dat','',[1 1 n 3]); % viscous diffusion
 
 im = - cn + pr + pt + td + ep + vd;
 
@@ -35,8 +58,6 @@ im = - cn + pr + pt + td + ep + vd;
 %area=str2num(area(6:end));
 %['area=' ,num2str(area) ];
 %=============================================================
-
-time = dlmread(W,'' ,[1 0 1 0]);
 
 x=C(:,1);
 y=C(:,2);
@@ -61,30 +82,10 @@ tkK = 0.5 * sum(tk')';
 imK = 0.5 * sum(im')';
 
 %=============================================================
-% numbering
-
-nx=20; % parse wmc.his
-ny=20;
-nz=20;
-nl=10;
-nv=10;
-n = nx*ny*nz + 4*nl*nv + nl*nl;
-
-I0 =           (1:nx*ny*nz); I0 = reshape(I0,[nx,ny,nz]); % volume
-I1 = I0(end) + (1:nl*nv);    I1 = reshape(I1,[nl,nv]);    % lateral surf
-I2 = I1(end) + (1:nl*nv);    I2 = reshape(I2,[nl,nv]);
-I3 = I2(end) + (1:nl*nv);    I3 = reshape(I3,[nl,nv]);
-I4 = I3(end) + (1:nl*nv);    I4 = reshape(I4,[nl,nv]);
-I5 = I4(end) + (1:nl*nl);    I5 = reshape(I5,[nl,nl]);    % cube top
-
-II = I0(:,0,:);              II = reshape(II,[nx,nz]);    % ground
-
-%=============================================================
 % cube surfaces
 
-wmc_wall(Tm,'$$|\tau|$$',x,y,z,II,I1,I2,I3,I4,I5);
+%wmc_wall(Tm,'$$|\tau|$$',x,y,z,II,I1,I2,I3,I4,I5);
 wmc_wall(uf,'$$u_f$$'   ,x,y,z,II,I1,I2,I3,I4,I5);
-
 %=============================================================
 % discard surface data - reshape to volume
 
@@ -110,24 +111,32 @@ im = im(I0); imK = imK(I0);
 %=============================================================
 % geometry
 
-xw = x(:,0,:);
-zw = z(:,0,:);
-
-yw = cube(al,xw,zw); % heaviside functions
+[x,y,z,xw,yw,zw] = cube(al,x,y,z)
 
 
 %=============================================================
-% profile plots along centerline
+% profile
 
-iz= 0.5 * (nx+1); % centerline
+iz= 0.5 * (nz+1); % centerline
+iy= 0.5 * (ny+1);
 
-xR=reshape(xR,[ny,nx]);
-yR=reshape(yR,[ny,nx]);
-zR=reshape(zR,[ny,nx]);
-uR=reshape(uR,[ny,nx]);
-vR=reshape(vR,[ny,nx]);
-wR=reshape(wR,[ny,nx]);
-pR=reshape(pR,[ny,nx]);
+xC=x(:,:,iz);
+yC=y(:,:,iz);
+uC=u(:,:,iz);
+vC=v(:,:,iz);
+wC=w(:,:,iz);
+pC=p(:,:,iz);
 
-prof(xsw,ysw,xrw,yrw,xS,yS,-uvS,xR,yR,-uvR,2,'uv','$$-\eta_{12}$$');
+%clf;
+%surf(x(:,:,iz),y(:,:,iz),u(:,:,iz))
+%daspect([2,1,1]); view(2); shading interp
+%set(gcf,'position',[585,1e3,1000,500])
+
+%figure;
+%plot(x(:,iy,iz),u(:,iy,iz),'k-o')
+%daspect([2,1,1]); view(2); shading interp
+%set(gcf,'position',[585,1e3,1000,500])
+
+prof(xw,yw,xC,yC,uC,0.2,'u','$$v_x$$');
+
 

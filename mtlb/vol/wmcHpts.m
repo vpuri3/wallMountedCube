@@ -5,8 +5,8 @@
 clear;
 
 %-----------------------------------------------------%
-al = '90';
-al = '45';
+al = 90;
+%al = 45;
 
 casename = 'wmc';
 
@@ -25,11 +25,17 @@ y0 = linspace(ymn,ymx,ny);
 z0 = linspace(zmn,zmx,nz);
 [x0,y0,z0] = ndgrid(x0,y0,z0);
 
+[x0,y0,z0,~,~,~]=cube(al,x0,y0,z0);
+
 x = [x;reshape(x0,[nx*ny*nz,1])];
-y = [y;reshape(x0,[nx*ny*nz,1])];
+y = [y;reshape(y0,[nx*ny*nz,1])];
 z = [z;reshape(z0,[nx*ny*nz,1])];
 
 % cube sides
+%
+% surface 1(x=0.5),2(z=0.5),3(x=-0.5),4(z=-0.5)
+% if 45 degree, then rotate counterclockwise by 45 deg
+%
 nl = 50; % lateral  (xz)
 nv = 50; % vertical (y )
 
@@ -57,13 +63,13 @@ end
 % cube top
 x5 = linspace(-0.5,0.5,nl);
 z5 = linspace(-0.5,0.5,nl);
-[x5,z5] = meshgrid(x5,z5);
+[x5,z5] = ndgrid(x5,z5);
 
 xx = [xx;    reshape(x5,[nl*nl,1])];
 yy = [yy;1+0*reshape(x5,[nl*nl,1])];
 zz = [zz;    reshape(z5,[nl*nl,1])];
 
-if(al=='45')
+if(al==45)
 	a=pi/4;
 	M=[cos(a),-sin(a);sin(a),cos(a)];
 	xz=[xx,zz]*M';
@@ -91,8 +97,11 @@ fprintf(fID, [num2str(n)...
 dlmwrite(casename,A,'delimiter',' ','-append');
 type(casename)
 %-----------------------------------------------------%
-%scatter3(x,y,z);
-%xlabel('x');
-%ylabel('y');
-%zlabel('z');
+scatter3(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+xlim([xmn-2,xmx+2]);
+ylim([ymn-2,ymx+2]);
+zlim([zmn-2,zmx+2]);
 %daspect([1 1 1]);
