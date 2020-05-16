@@ -85,7 +85,7 @@ imK = 0.5 * sum(im')';
 % cube surfaces
 
 %wmc_wall(Tm,'$$|\tau|$$',x,y,z,II,I1,I2,I3,I4,I5);
-wmc_wall(uf,'$$u_f$$'   ,x,y,z,II,I1,I2,I3,I4,I5);
+%wmc_wall(uf,'$$u_f$$'   ,x,y,z,II,I1,I2,I3,I4,I5);
 %=============================================================
 % discard surface data - reshape to volume
 
@@ -110,22 +110,21 @@ im = im(I0); imK = imK(I0);
 
 %=============================================================
 % geometry
-
-[x,y,z,xw,yw,zw] = cube(al,x,y,z)
+xmn=min(min(min(x))); xmx=max(max(max(x)));
+zmn=min(min(min(z))); zmx=max(max(max(z)));
+xw=linspace(xmn,xmx,999);
+zw=linspace(zmn,zmx,999);
+[xw,yw,zw]=ndgrid(xw,0,zw);
+[~,~,~,xw,yw,zw] = cube(al,xw,yw,zw);
 
 
 %=============================================================
 % profile
 
-iz= 0.5 * (nz+1); % centerline
-iy= 0.5 * (ny+1);
+iz = 0.5 * (nz+1); izw= 0.5 * (999+1); % centerline
+iy = 0.5 * (ny+1);
 
-xC=x(:,:,iz);
-yC=y(:,:,iz);
-uC=u(:,:,iz);
-vC=v(:,:,iz);
-wC=w(:,:,iz);
-pC=p(:,:,iz);
+profXY(u,iz,izw,0.5,'u','$$v_x$$',xw,yw,x,y)
 
 %clf;
 %surf(x(:,:,iz),y(:,:,iz),u(:,:,iz))
@@ -136,7 +135,4 @@ pC=p(:,:,iz);
 %plot(x(:,iy,iz),u(:,iy,iz),'k-o')
 %daspect([2,1,1]); view(2); shading interp
 %set(gcf,'position',[585,1e3,1000,500])
-
-prof(xw,yw,xC,yC,uC,0.2,'u','$$v_x$$');
-
 

@@ -25,12 +25,13 @@ Ix = abs(xx) < 0.50;
 Iz = abs(zz) < 0.50;
 
 yw = min(Ix,Iz);
-clf;mesh(xw,zw,yw);
+%clf;mesh(xw,zw,yw);pause
 
 H=max(max(max(y)));
 yy=reshape(yw,[nx,1,nz]);
-y=(1-yy/H).*y+yy;
+%y=yy+(1-yy/H).*y;
+%y=y+yy;
 
-%yy=y(:,100,:);yy=reshape(yy,[nx,nz]);
+%yy=y(:,1,:);yy=reshape(yy,[nx,nz]);
 %mesh(xw,zw,yy);
 
