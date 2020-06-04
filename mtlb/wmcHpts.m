@@ -2,10 +2,10 @@
 % history points for Wall-Mounted Cube
 %
 
-clear;
+function wmcHpts(al)
 
 %-----------------------------------------------------%
-al = 90;
+%al = 90;
 %al = 45;
 
 casename = 'wmc';
@@ -16,12 +16,12 @@ y = [];
 z = [];
 
 % volume
-xmn = -5; xmx = 5; nx = 51; % n* odd
-ymn =  0; ymx = 2; ny = 21;
-zmn = -2; zmx = 2; nz = 41;
+xmn = -5; xmx = 5; nx =  51; % n* odd
+ymn =  0; ymx = 5; ny = 100;
+zmn = -2; zmx = 2; nz =  11;
 
 x0 = linspace(xmn,xmx,nx);
-y0 = linspace(ymn,ymx,ny);
+y0 = geomspace(ymn,ymx,ny,1.05);
 z0 = linspace(zmn,zmx,nz);
 [x0,y0,z0] = ndgrid(x0,y0,z0);
 
@@ -83,6 +83,15 @@ y = [y;yy];
 z = [z;zz];
 
 %-----------------------------------------------------%
+scatter3(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+xlim([xmn-2,xmx+2]);
+ylim([ymn-2,ymx+2]);
+zlim([zmn-2,zmx+2]);
+daspect([1 1 1]);
+%-----------------------------------------------------%
 % create file casename.his
 format long
 A = [x,y,z];
@@ -97,11 +106,3 @@ fprintf(fID, [num2str(n)...
 dlmwrite(casename,A,'delimiter',' ','-append');
 type(casename)
 %-----------------------------------------------------%
-scatter3(x,y,z);
-xlabel('x');
-ylabel('y');
-zlabel('z');
-xlim([xmn-2,xmx+2]);
-ylim([ymn-2,ymx+2]);
-zlim([zmn-2,zmx+2]);
-%daspect([1 1 1]);

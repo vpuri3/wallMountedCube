@@ -1,5 +1,9 @@
 %
-function profXY(q,iz,izw,scale,qty,qtyname,xw,yw,x,y)
+function profXY(q,iz,izw,scale,qty,qtyname,xw,yw,x,y,I0)
+
+x=x(I0);
+y=y(I0);
+q=q(I0);
 
 x=x(:,:,iz);
 y=y(:,:,iz);
@@ -25,7 +29,7 @@ xlabel('$$x$$');
 ylabel('$$y$$');
 
 daspect([1,1,1]);
-set(fig,'position',[585,1e3,1000,200])
+set(fig,'position',[585,1e3,1000,500])
 
 % legend
 %lgd=legend('location','southeast');lgd.FontSize=14;
@@ -34,15 +38,15 @@ set(fig,'position',[585,1e3,1000,200])
 p=plot(xw,yw,'k-.','linewidth',1.5);
 p.HandleVisibility='off';
 
-for i=1:2:size(x,1)
-	p=plot(xq(i,:),y(i,:),'g-','linewidth',1.0);
+for i=1:1:size(x,1)
+	p=plot(xq(i,:),y(i,:),'r-','linewidth',1.0);
 	p.HandleVisibility='off';
 end
 p.HandleVisibility='on';
 p.DisplayName='RWW';
 
 %------------------------------
-%figname=['ww','-',qty];
-%saveas(fig,figname,'jpeg');
+figname=['wmc','-',qty];
+saveas(fig,figname,'jpeg');
 %------------------------------
 end

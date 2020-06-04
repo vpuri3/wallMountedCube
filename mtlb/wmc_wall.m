@@ -8,7 +8,7 @@ hold on;grid on;
 %------------------------------
 subplot(4,2,[1,2]);
 surf(x(I0),z(I0),f(I0)); shading interp; colorbar; view(2);
-title(['bed - surface 0'],'fontsize',14); xlabel('x'); ylabel('z');
+title(['ground - surface 0'],'fontsize',14); xlabel('x'); ylabel('z');
 hcb=colorbar; title(hcb,qty,'interpreter','latex','fontsize',14);
 %------------------------------
 subplot(4,2,3);

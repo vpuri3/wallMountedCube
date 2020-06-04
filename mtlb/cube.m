@@ -27,11 +27,9 @@ Iz = abs(zz) < 0.50;
 yw = min(Ix,Iz);
 %clf;mesh(xw,zw,yw);pause
 
-H=max(max(max(y)));
+H=max(y,[],2);
 yy=reshape(yw,[nx,1,nz]);
-%y=yy+(1-yy/H).*y;
-%y=y+yy;
+y=yy+(1-yy./H).*y;
 
-%yy=y(:,1,:);yy=reshape(yy,[nx,nz]);
-%mesh(xw,zw,yy);
+%yy=y(:,1,:);yy=reshape(yy,[nx,nz]); mesh(xw,zw,yy); pause
 
