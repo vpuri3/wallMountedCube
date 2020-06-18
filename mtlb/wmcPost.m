@@ -11,9 +11,9 @@ visc=1/Re;
 %=============================================================
 % numbering
 
-nx=51; % parse wmc.his
-ny=100;
-nz=11;
+nx=301; % parse wmc.his
+ny=50;
+nz=3;
 nl=50;
 nv=50;
 n = nx*ny*nz + 4*nl*nv + nl*nl;
@@ -97,8 +97,8 @@ tkK = 0.5 * sum(tk')';
 % geometry
 xmn=min(min(min(x))); xmx=max(max(max(x)));
 zmn=min(min(min(z))); zmx=max(max(max(z)));
-xw=linspace(xmn,xmx,999);
-zw=linspace(zmn,zmx,999);
+xw=linspace(xmn,xmx,1e3);
+zw=linspace(zmn,zmx,1e3);
 [xw,yw,zw]=ndgrid(xw,0,zw);
 [~,~,~,xw,yw,zw] = cube(al,xw,yw,zw);
 
@@ -110,5 +110,15 @@ iy = 0.5 * (ny+1);
 
 vmg = sqrt(u.^2+v.^2+w.^2);
 
-profXY(u  ,iz,izw,0.5,'u'  ,'$$v_x$$',xw,yw,x,y,I0)
-profXY(tkK,iz,izw,1.0,'tkK','$$k$$'  ,xw,yw,x,y,I0)
+profXY(u  ,iz,izw,0.2,'u'  ,'$$v_x$$',al,xw,yw,x,y,I0)
+profXY(tkK,iz,izw,1.0,'tkK','$$k$$'  ,al,xw,yw,x,y,I0)
+
+
+
+%=============================================================
+% streamlines plots
+% overlay profiles from different x-locations
+% find location of stagnation point, reattchment point
+%=============================================================
+
+
