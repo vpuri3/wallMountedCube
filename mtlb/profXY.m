@@ -20,7 +20,7 @@ xq = x + scale*q;
 if(al==45) casename='WMC45'; end;
 if(al==90) casename='WMC90'; end;
 %------------------------------
-figure;
+%figure;
 fig=gcf;ax=gca; hold on;grid on;
 % title
 title([casename,' ',qtyname,' Profile' ],'fontsize',14);
@@ -32,11 +32,11 @@ ylabel('$$y$$');
 
 daspect([1,1,1]);
 
-xlim([-11.00,26.00]); ylim([  0.00,05.00]);
-set(fig,'position',[585,1e3,2000,250])
+%xlim([-11.00,26.00]); ylim([  0.00,05.00]);
+%set(fig,'position',[585,1e3,2000,250])
 
 % zoom
-xlim([-5,5]); ylim([0,2]);
+%xlim([-5,5]); ylim([0,2]);
 set(fig,'position',[585,1e3,1000,250])
 
 % legend
@@ -46,8 +46,8 @@ set(fig,'position',[585,1e3,1000,250])
 p=plot(xw,yw,'k-.','linewidth',1.5);
 p.HandleVisibility='off';
 
-for i=1:3:size(x,1)
-	p=plot(xq(i,:),y(i,:),'r-','linewidth',1.0);
+for i=1:1:size(x,1)
+	p=plot(xq(i,:),y(i,:),'ro','linewidth',1.0);
 	p.HandleVisibility='off';
 end
 p.HandleVisibility='on';
