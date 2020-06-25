@@ -46,6 +46,10 @@ vN=U(:,2);
 wN=U(:,3);
 pN=U(:,4);
 
+uuN=tk(:,1);
+vvN=tk(:,2);
+wwN=tk(:,3);
+
 kN = 0.5 * sum(tk')';
 
 I1=         1:nx1*ny1*nz1 ; I1=reshape(I1,[nx1,ny1,nz1]);
@@ -77,9 +81,9 @@ M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C1CT.xls');
 xE1=M(:,1)*xfactor;
 yE1=M(:,2)*xfactor; % z -> y
 uE1=M(:,3)*ufactor;
-upE1=M(:,4)*ufactor;
+uuE1=M(:,4)*ufactor;
 vE1=M(:,5)*ufactor; % w -> v
-vpE1=M(:,6)*ufactor; % w -> v
+vvE1=M(:,6)*ufactor; % w -> v
 kE1=M(:,7)*ufactor*ufactor;
 knormE1=M(:,8)*ufactor;
 sqrtHE1=M(:,9)*ufactor;
@@ -89,8 +93,14 @@ zE1=xE1*0;
 %----------
 % figs
 %----------
+
+k1E1 = 0.5*(uuE1.*uuE1+vvE1.*vvE1);
+k1N  = 0.5*(uuN .*uuN +vvN .*vvN );
+
 profXY2(uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,0.2,'u','$$v_x$$',al,xw,yw);
-profXY2(kN(I1),xN(I1),yN(I1),kE1,xE1,yE1,1.0,'k','$$k$$',al,xw,yw);
+profXY2(kN(I1),xN(I1),yN(I1),kE1,xE1,yE1,2.0,'k','$$k$$',al,xw,yw);
+profXY2(k1N(I1),xN(I1),yN(I1),k1E1,xE1,yE1,2.0,'k11','$$k$$',al,xw,yw);
+profXY2(kN(I1) ,xN(I1),yN(I1),k1E1,xE1,yE1,2.0,'k10','$$k$$',al,xw,yw);
 %=======================================================
 % vertical centerline plane
 %=======================================================
@@ -117,9 +127,9 @@ M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C1GF.xls');
 xE2=M(:,1)*xfactor;
 zE2=M(:,2)*xfactor; % y -> z
 uE2=M(:,3)*ufactor;
-upE2=M(:,4)*ufactor;
+uuE2=M(:,4)*ufactor;
 vE2=M(:,7)*ufactor;  % w -> v
-vpE2=M(:,8)*ufactor; % w -> v
+vvE2=M(:,8)*ufactor; % w -> v
 
 yE2=xE2*0+0.1;
 [xE2,yE2,zE2] = insidecube(al,xE2,yE2,zE2);
