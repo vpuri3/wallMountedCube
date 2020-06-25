@@ -19,10 +19,10 @@ clear;
 al=45;
 %=======================================================
 
-nx1=21; % centerline
+nx1=19; % centerline
 ny1=1e3;
 nz1=1;
-nx2=17; % horizontal
+nx2=23; % horizontal
 ny2=1;
 nz2=1e3;
 
@@ -31,10 +31,10 @@ n=nx1*ny1*nz1 + nx2*ny2*nz2;
 %----------
 % Nek
 %----------
-time=dlmread('ave.dat','',[1 0 1 0]);
-C=dlmread('wmc.his',' ',[1 0 n 2]); % X,Y,Z
-U=dlmread('ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
-tk=dlmread('var.dat','',[1 1 n 3]); % < u' * u' >
+C   =dlmread('./wmc45snyder/wmc.his',' ',[1 0 n 2]); % X,Y,Z
+time=dlmread('./wmc45snyder/ave.dat','' ,[1 0 1 0]);
+U   =dlmread('./wmc45snyder/ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
+tk  =dlmread('./wmc45snyder/var.dat','' ,[1 1 n 3]); % < u' * u' >
 
 xN=C(:,1);
 yN=C(:,2);
@@ -73,26 +73,23 @@ zw=linspace(zmn,zmx,1e0);
 xfactor=1/200;
 ufactor=1/3; % tbd
 
-nx=21;ny=15;
-M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C13C.xls'); pause
-M=reshape(M,[nx,ny,9]);
-xE1=M(:,:,1)*xfactor;
-yE1=M(:,:,2)*xfactor; % z -> y
-uE1=M(:,:,3)*ufactor;
-upE1=M(:,:,4)*ufactor;
-vE1=M(:,:,5)*ufactor; % w -> v
-vpE1=M(:,:,6)*ufactor; % w -> v
-kE1=M(:,:,7)*ufactor;
-knormE1=M(:,:,8)*ufactor;
-sqrtHE1=M(:,:,9)*ufactor;
+M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C13C.xls');
+xE1=M(:,1)*xfactor;
+zE1=M(:,2)*xfactor; % y -> z
+yE1=M(:,3)*xfactor; % z -> y
+uE1=M(:,4)*ufactor;
+upE1=M(:,5)*ufactor;
+wE1=M(:,6)*ufactor;  % v -> w
+wpE1=M(:,7)*ufactor; % v -> w
+wE1=M(:,8)*ufactor;  % w -> v
+wpE1=M(:,9)*ufactor; % w -> v
 
-zE1=xE1*0;
 [xE1,yE1,zE1] = insidecube(al,xE1,yE1,zE1);
 %----------
 % figs
 %----------
 profXY2(uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,0.2,'u','$$v_x$$',al,xw,yw);
-profXY2(kN(I1),xN(I1),yN(I1),kE1,xE1,yE1,1.0,'k','$$k$$',al,xw,yw);
+%profXY2(kN(I1),xN(I1),yN(I1),[],[],[],1.0,'k','$$k$$',al,xw,yw);
 %=======================================================
 % vertical centerline plane
 %=======================================================
@@ -115,15 +112,13 @@ zw=linspace(zmn,zmx,1e0);
 xfactor=1/200;
 ufactor=1/3; % tbd
 
-nx=17;ny=25;
-M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C13GF.xls'); pause
-M=reshape(M,[nx,ny,10]);
-xE2=M(:,:,1)*xfactor;
-zE2=M(:,:,2)*xfactor; % y -> z
-uE2=M(:,:,3)*ufactor;
-upE2=M(:,:,4)*ufactor;
-vE2=M(:,:,7)*ufactor; % w -> v
-vpE2=M(:,:,8)*ufactor; % w -> v
+M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C13GF.xls');
+xE2=M(:,1)*xfactor;
+zE2=M(:,2)*xfactor; % y -> z
+uE2=M(:,3)*ufactor;
+upE2=M(:,4)*ufactor;
+vE2=M(:,7)*ufactor;  % w -> v
+vpE2=M(:,8)*ufactor; % w -> v
 
 yE2=xE2*0+0.1;
 [xE2,yE2,zE2] = insidecube(al,xE2,yE2,zE2);
@@ -131,5 +126,4 @@ yE2=xE2*0+0.1;
 % figs
 %----------
 profXZ2(uN(I2),xN(I2),zN(I2),uE2,xE2,zE2,0.2,'u','$$v_x$$',al,xw,yw,0.1);
-
 

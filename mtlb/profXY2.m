@@ -14,7 +14,7 @@ if(al==90) casename='WMC90'; end;
 %------------------------------
 
 %figure;
-clf;fig=gcf;ax=gca; hold on;grid on;
+figure;fig=gcf;ax=gca; hold on;grid on;
 title([casename,' ',qtyname,' Profile' ],'fontsize',14);
 ax.XScale='linear';
 ax.YScale='linear';
@@ -37,6 +37,7 @@ end
 %p.HandleVisibility='on';
 %p.DisplayName=['Nek'];
 
+%p=plot(xq1,y1,'ko','linewidth',0.2);
 p=plot(xq2,y2,'ro','linewidth',1.0);
 %p.HandleVisibility='on';
 %p.DisplayName=['Snyder, 1994'];

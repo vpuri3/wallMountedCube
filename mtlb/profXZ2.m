@@ -14,7 +14,7 @@ if(al==90) casename='WMC90'; end;
 %------------------------------
 
 %figure;
-clf;fig=gcf;ax=gca; hold on;grid on;
+figure;fig=gcf;ax=gca; hold on;grid on;
 title([casename,' ',qtyname,' Profile, y=',num2str(y)],'fontsize',14);
 ax.XScale='linear';
 ax.YScale='linear';

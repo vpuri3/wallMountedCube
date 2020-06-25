@@ -31,10 +31,10 @@ n=nx1*ny1*nz1 + nx2*ny2*nz2;
 %----------
 % Nek
 %----------
-time=dlmread('ave.dat','',[1 0 1 0]);
-C=dlmread('wmc.his',' ',[1 0 n 2]); % X,Y,Z
-U=dlmread('ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
-tk=dlmread('var.dat','',[1 1 n 3]); % < u' * u' >
+C   =dlmread('./wmc90snyder/wmc.his',' ',[1 0 n 2]); % X,Y,Z
+time=dlmread('./wmc90snyder/ave.dat','' ,[1 0 1 0]);
+U   =dlmread('./wmc90snyder/ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
+tk  =dlmread('./wmc90snyder/var.dat','' ,[1 1 n 3]); % < u' * u' >
 
 xN=C(:,1);
 yN=C(:,2);
@@ -73,18 +73,16 @@ zw=linspace(zmn,zmx,1e0);
 xfactor=1/200;
 ufactor=1/3; % tbd
 
-nx=21;ny=15;
 M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C1CT.xls');
-M=reshape(M,[nx,ny,9]);
-xE1=M(:,:,1)*xfactor;
-yE1=M(:,:,2)*xfactor; % z -> y
-uE1=M(:,:,3)*ufactor;
-upE1=M(:,:,4)*ufactor;
-vE1=M(:,:,5)*ufactor; % w -> v
-vpE1=M(:,:,6)*ufactor; % w -> v
-kE1=M(:,:,7)*ufactor;
-knormE1=M(:,:,8)*ufactor;
-sqrtHE1=M(:,:,9)*ufactor;
+xE1=M(:,1)*xfactor;
+yE1=M(:,2)*xfactor; % z -> y
+uE1=M(:,3)*ufactor;
+upE1=M(:,4)*ufactor;
+vE1=M(:,5)*ufactor; % w -> v
+vpE1=M(:,6)*ufactor; % w -> v
+kE1=M(:,7)*ufactor*ufactor;
+knormE1=M(:,8)*ufactor;
+sqrtHE1=M(:,9)*ufactor;
 
 zE1=xE1*0;
 [xE1,yE1,zE1] = insidecube(al,xE1,yE1,zE1);
@@ -115,15 +113,13 @@ zw=linspace(zmn,zmx,1e0);
 xfactor=1/200;
 ufactor=1/3; % tbd
 
-nx=17;ny=25;
 M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C1GF.xls');
-M=reshape(M,[nx,ny,10]);
-xE2=M(:,:,1)*xfactor;
-zE2=M(:,:,2)*xfactor; % y -> z
-uE2=M(:,:,3)*ufactor;
-upE2=M(:,:,4)*ufactor;
-vE2=M(:,:,7)*ufactor; % w -> v
-vpE2=M(:,:,8)*ufactor; % w -> v
+xE2=M(:,1)*xfactor;
+zE2=M(:,2)*xfactor; % y -> z
+uE2=M(:,3)*ufactor;
+upE2=M(:,4)*ufactor;
+vE2=M(:,7)*ufactor;  % w -> v
+vpE2=M(:,8)*ufactor; % w -> v
 
 yE2=xE2*0+0.1;
 [xE2,yE2,zE2] = insidecube(al,xE2,yE2,zE2);
@@ -131,5 +127,4 @@ yE2=xE2*0+0.1;
 % figs
 %----------
 profXZ2(uN(I2),xN(I2),zN(I2),uE2,xE2,zE2,0.2,'u','$$v_x$$',al,xw,yw,0.1);
-
 

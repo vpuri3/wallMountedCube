@@ -15,10 +15,10 @@ xz=[xx,zz]*M';
 xx=xz(:,1);
 zz=xz(:,2);
 
-tol=1e-8;
+tol=1e-4;
 I = find((abs(xx) < 0.50+tol)...
        & (abs(zz) < 0.50+tol)...
-	   & (yy      < 1.00-tol));
+	   & (yy      < 1.00+tol));
 
 xx(I)=NaN;
 yy(I)=NaN;

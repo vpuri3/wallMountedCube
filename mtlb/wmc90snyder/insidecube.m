@@ -1,1 +1,0 @@
-../insidecube.m
