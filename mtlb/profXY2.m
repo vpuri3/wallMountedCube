@@ -37,7 +37,6 @@ end
 %p.HandleVisibility='on';
 %p.DisplayName=['Nek'];
 
-%p=plot(xq1,y1,'ko','linewidth',0.2);
 p=plot(xq2,y2,'ro','linewidth',1.0);
 %p.HandleVisibility='on';
 %p.DisplayName=['Snyder, 1994'];

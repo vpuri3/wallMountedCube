@@ -98,9 +98,11 @@ k1E1 = 0.5*(uuE1.*uuE1+vvE1.*vvE1);
 k1N  = 0.5*(uuN .*uuN +vvN .*vvN );
 
 profXY2(uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,0.2,'u','$$v_x$$',al,xw,yw);
-profXY2(kN(I1),xN(I1),yN(I1),kE1,xE1,yE1,2.0,'k','$$k$$',al,xw,yw);
-profXY2(k1N(I1),xN(I1),yN(I1),k1E1,xE1,yE1,2.0,'k11','$$k$$',al,xw,yw);
-profXY2(kN(I1) ,xN(I1),yN(I1),k1E1,xE1,yE1,2.0,'k10','$$k$$',al,xw,yw);
+profXY2(kN(I1),xN(I1),yN(I1),kE1,xE1,yE1,1.0,'k','$$k$$',al,xw,yw);
+
+profXY2(k1N(I1),xN(I1),yN(I1),k1E1,xE1,yE1,1.0,'k1Nk1E','k1Nk1E',al,xw,yw);
+profXY2(kN(I1) ,xN(I1),yN(I1),k1E1,xE1,yE1,1.0,'k0Nk1E','k0Nk1E',al,xw,yw);
+%profXY2(kE1,xE1,yE1,k1E1,xE1,yE1,1.0,'kkk','$$k$$',al,xw,yw);
 %=======================================================
 % vertical centerline plane
 %=======================================================
