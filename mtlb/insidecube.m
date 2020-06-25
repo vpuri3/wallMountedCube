@@ -34,9 +34,9 @@ y=reshape(yy,[nx,ny,nz]);
 z=reshape(zz,[nx,ny,nz]);
 
 %-----------------------------------------------------%
-scatter3(xx,yy,zz);
-xlabel('x');
-ylabel('y');
-zlabel('z');
-daspect([1 1 1]);
+%scatter3(xx,yy,zz);
+%xlabel('x');
+%ylabel('y');
+%zlabel('z');
+%daspect([1 1 1]);
 

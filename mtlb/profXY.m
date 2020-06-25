@@ -30,7 +30,7 @@ ax.YScale='linear';
 xlabel(['$$x + $$',qtyname]);
 ylabel('$$y$$');
 
-daspect([1,1,1]);
+daspect([1.5,1,1]);
 
 %xlim([-11.00,26.00]); ylim([  0.00,05.00]);
 %set(fig,'position',[585,1e3,2000,250])

@@ -109,8 +109,8 @@ iy = 0.5 * (ny+1);
 
 vmg = sqrt(u.^2+v.^2+w.^2);
 
-profXY(u  ,iz,izw,0.2,'u'  ,'$$v_x$$',al,xw,yw,x,y,I0)
-profXY(tkK,iz,izw,1.0,'tkK','$$k$$'  ,al,xw,yw,x,y,I0)
+%profXY(u  ,iz,izw,0.2,'u'  ,'$$v_x$$',al,xw,yw,x,y,I0)
+%profXY(tkK,iz,izw,1.0,'tkK','$$k$$'  ,al,xw,yw,x,y,I0)
 
 
 

@@ -18,11 +18,11 @@ z = [];
 if(al==90)
 	% centerline
 
-	x0=[-4;-3;-2;-1.5;-1;-.75;-.6;-.5;-.2;0;.2;.5;.6;.75;1;1.5;2;3;4;6;8];
-	y0=linspace(0,2,ny1);
+	x0=[-4;-3;-2;-1.5;-1;-.75;-.6;-.4;-.2;0;.2;.4;.6;.75;1;1.5;2;3;4;6;8];
+	y0=linspace(0,2.5,1e3);
 	z0=[0];
 	nx1=length(x0);
-	ny1=1e3;
+	ny1=length(y0);
 	nz1=1;
 	[x0,y0,z0] = ndgrid(x0,y0,z0);
 	%[x0,y0,z0] = insidecube(al,x0,y0,z0);
@@ -33,10 +33,10 @@ if(al==90)
 	% ground
 	x0=[-4;-3;-2;-1.5;-1;-.6;-.3;0;.3;.6;1;1.5;2;3;4;6;8];
 	y0=[0.1];
-	z0=linspace(-2.5,2.5,nz2);
+	z0=linspace(-2.5,2.5,1e3);
 	nx2=length(x0);
 	ny2=1;
-	nz2=1e3;
+	nz2=length(z0);
 	[x0,y0,z0] = ndgrid(x0,y0,z0);
 	%[x0,y0,z0] = insidecube(al,x0,y0,z0);
 	x = [x;reshape(x0,[nx2*ny2*nz2,1])];
@@ -47,10 +47,10 @@ elseif(al==45)
 	% centerline
 
 	x0=[-4;-3;-2;-1.5;-1.25;-1;-.805;-.4;0;.4;.805;1;1.25;1.5;2;3;4;6;8];
-	y0=linspace(0,2,ny1);
+	y0=linspace(0,2.5,1e3);
 	z0=[0];
 	nx1=length(x0);
-	ny1=1e3;
+	ny1=length(y0);
 	nz1=1;
 	[x0,y0,z0] = ndgrid(x0,y0,z0);
 	%[x0,y0,z0] = insidecube(al,x0,y0,z0);
@@ -61,10 +61,10 @@ elseif(al==45)
 	% ground
 	x0=[-4;-3;-2;-1.5;-1.25;-1;-.805;-.6;-.4;-.2;0;.2;.4;.6;.805;1;1.25;1.5;2;3;4;6;8];
 	y0=[0.1];
-	z0=linspace(-3.5,3.5,nz2);
+	z0=linspace(-3.5,3.5,1e3);
 	nx2=length(x0);
 	ny2=1;
-	nz2=1e3;
+	nz2=length(z0);
 	[x0,y0,z0] = ndgrid(x0,y0,z0);
 	%[x0,y0,z0] = insidecube(al,x0,y0,z0);
 	x = [x;reshape(x0,[nx2*ny2*nz2,1])];
@@ -73,6 +73,7 @@ elseif(al==45)
 end
 
 %-----------------------------------------------------%
+clf
 scatter3(x,y,z);
 xlabel('x');
 ylabel('y');
