@@ -14,10 +14,10 @@ kscl=2.0;
 
 %=======================================================
 
-nx1=19; % centerline
+nx1=21; % centerline
 ny1=1e3;
 nz1=1;
-nx2=23; % horizontal
+nx2=17; % horizontal
 ny2=1;
 nz2=1e3;
 
@@ -52,25 +52,25 @@ kN1 = 0.5 * sum(tk')';
 %----------
 % Nek Blasius \d_99 = 2.00
 %----------
-C   =dlmread('./wmc90bla2.00/wmc.his',' ',[1 0 n 2]); % X,Y,Z
-time=dlmread('./wmc90bla2.00/ave.dat','' ,[1 0 1 0]);
-U   =dlmread('./wmc90bla2.00/ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
-tk  =dlmread('./wmc90bla2.00/var.dat','' ,[1 1 n 3]); % < u' * u' >
-
-xN2=C(:,1);
-yN2=C(:,2);
-zN2=C(:,3);
-[xN2,yN2,zN2] = insidecube(al,xN2,yN2,zN2);
-
-uN2=U(:,1);
-vN2=U(:,2);
-wN2=U(:,3);
-pN2=U(:,4);
-
-uuN2=tk(:,1);
-vvN2=tk(:,2);
-wwN2=tk(:,3);
-kN2 = 0.5 * sum(tk')';
+%C   =dlmread('./wmc90bla2.00/wmc.his',' ',[1 0 n 2]); % X,Y,Z
+%time=dlmread('./wmc90bla2.00/ave.dat','' ,[1 0 1 0]);
+%U   =dlmread('./wmc90bla2.00/ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
+%tk  =dlmread('./wmc90bla2.00/var.dat','' ,[1 1 n 3]); % < u' * u' >
+%
+%xN2=C(:,1);
+%yN2=C(:,2);
+%zN2=C(:,3);
+%[xN2,yN2,zN2] = insidecube(al,xN2,yN2,zN2);
+%
+%uN2=U(:,1);
+%vN2=U(:,2);
+%wN2=U(:,3);
+%pN2=U(:,4);
+%
+%uuN2=tk(:,1);
+%vvN2=tk(:,2);
+%wwN2=tk(:,3);
+%kN2 = 0.5 * sum(tk')';
 
 %=======================================================
 % vertical centerline plane
@@ -83,8 +83,8 @@ zw=linspace(zmn,zmx,1e0);
 [xw,yw,zw]=ndgrid(xw,0,zw);
 [~,~,~,xw,yw,~] = cube(al,xw,yw,zw);
 
-profXY2(uN1(I1),xN1(I1),yN1(I1),uN2(I1),xN2(I1),yN2(I1),uscl,'BLA-u','$$v_x$$',al,xw,yw,0);
-profXY2(kN1(I1),xN1(I1),yN1(I1),kN2(I1),xN2(I1),yN2(I1),kscl,'BLA-k','$$k$$'  ,al,xw,yw,0);
+profXY2(uN1(I1),xN1(I1),yN1(I1),0,0,0,uscl,'BLA-u','$$v_x$$',al,xw,yw,1);
+profXY2(kN1(I1),xN1(I1),yN1(I1),0,0,0,kscl,'BLA-k','$$k$$'  ,al,xw,yw,1);
 %
 %=======================================================
 % horizontal ground plane
@@ -92,5 +92,5 @@ profXY2(kN1(I1),xN1(I1),yN1(I1),kN2(I1),xN2(I1),yN2(I1),kscl,'BLA-k','$$k$$'  ,a
 
 %[~,~,~,xw,yw,~] = cube(al,xw,yw,zw);
 
-profXZ2(uN1(I2),xN1(I2),zN1(I2),uN2(I2),xN2(I2),zN2(I2),uscl,'BLA-u','$$v_x$$',al,xw,yw,0.1,0);
-profXZ2(kN1(I2),xN1(I2),zN1(I2),kN2(I2),xN2(I2),zN2(I2),kscl,'BLA-k','$$k$$'  ,al,xw,yw,0.1,0);
+profXZ2(uN1(I2),xN1(I2),zN1(I2),0,0,0,uscl,'BLA-u','$$v_x$$',al,xw,yw,0.1,1);
+profXZ2(kN1(I2),xN1(I2),zN1(I2),0,0,0,kscl,'BLA-k','$$k$$'  ,al,xw,yw,0.1,1);
