@@ -1,0 +1,280 @@
+/----------------------------------------------------------\\
+|      _   __ ______ __ __  ______  ____   ____   ____     |
+|     / | / // ____// //_/ / ____/ / __ \\/ __ \\/ __ \\   |
+|    /  |/ // __/  / ,<   /___ \\ / / / // / / // / / /    |
+|   / /|  // /___ / /| | ____/ / / /_/ // /_/ // /_/ /     |
+|  /_/ |_//_____//_/ |_|/_____/  \\___/ \\___/ \\___/      |
+|                                                          |
+|----------------------------------------------------------|
+|                                                          |
+| NEK5000:  Open Source Spectral Element Solver            |
+| COPYRIGHT (c) 2008-2017 UCHICAGO ARGONNE, LLC            |
+| Version:  v17.0                                          |
+| Web:      http://nek5000.mcs.anl.gov                     |
+|                                                          |
+\\----------------------------------------------------------/
+                                                              
+
+ Number of processors:        2048
+ REAL    wdsize      :           8
+ INTEGER wdsize      :           4
+ Timer accuracy      : 7.87E-07
+  
+ Reading /lcrc/project/wall_bounded_flows/vpuri/rb/wmc90-bla0.25/p/wmc.rea                                                                   
+ WARNING: lgmres might be too low!
+ Reading /lcrc/project/wall_bounded_flows/vpuri/rb/wmc90-bla0.25/p/wmc.re2                                                                   
+ mapping elements to processors
+ Reading /lcrc/project/wall_bounded_flows/vpuri/rb/wmc90-bla0.25/p/wmc.ma2                                                                   
+  
+ element load imbalance:            1         146         147
+ done :: mapping    2.9039     sec
+
+  
+  preading mesh 
+  preading bc for ifld           1
+ done :: read .re2 file    7.9     sec
+
+           0  objects found
+ 118   Parameters from file:
+   1      1.00000     p001 DENSITY
+   2     -40000.0     p002 VISCOS
+   4      999.000     p004 # tSTATFREQ
+   5      7.00000     p005 # readSTAT
+   8      1.00000     p008 CONDUCT
+  12     -1.0e-4      p012 DT (fixed if -ve)
+  18      0.50000E-01 p018 GRID < 0 --> # cells on screen
+  21      1.00000E-06 p021 DIVERGENCE      # after using 0 to see
+  22      1.00000E-08 p022 HELMHOLTZ
+  24     0.100000E-01 p024 TOLREL
+  25     0.100009E-01 p025 TOLABS
+  26      1.500000    p026 COURANT/NTAU
+  27      2.000000    p027 TORDER
+  32      0.00000     p032 #BCs in re2 file, if > 0
+  59      1.00000     p059 !=0 --> full Jac. eval. for each el.
+  65      1.00000     p065 #iofiles (eg, 0 or 64); <0 --> sep. dirs
+  66      6.00000     p066 output : <0=ascii, else binary
+  67      6.00000     p067 restart: <0=ascii, else binary
+  93      20.0000     p093 Number of previous pressure solns saved
+  94      3.00000     p094 start projecting velocity after p94 step
+  95      5.00000     p095 start projecting pressure after p95 step
+  99      4.00000     p099 dealiasing: <0--> off/3--> old/4--> new
+ 101      1.00000     p101 Number of additional modes to filter
+ 103      0.01        p103 weight of stabilizing filter (.01)
+  
+ done :: read .rea file    13.528     sec
+
+ nelgt/nelgv/lelt:      300180      300180         393
+ lx1  /lx2  /lx3 :           8           8           8
+ Reset the target Courant number to .5
+ setup mesh topology
+   Right-handed check complete for  300180 elements. OK.
+   setvert3d:   8    38539290   103378170    38539290    38539290
+ call usrsetvert
+ done :: usrsetvert
+
+gs_setup: 10265798 unique labels shared
+   pairwise times (avg, min, max): 0.000302618 0.000216889 0.000375509
+   crystal router                : 0.00243195 0.00237041 0.00249901
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 654323 562964 699716
+   buffer bytes (avg, min, max): 179044 101808 230896
+   setupds time 9.2511E-01 seconds   0  8    38539290      300180
+          12  max multiplicity
+ done :: setup mesh topology
+  
+ call usrdat
+ done :: usrdat
+
+ generate geometry data
+ NOTE: All elements deformed , param(59) ^=0
+ done :: generate geometry data
+  
+ call usrdat2
+ add temp:            2           1           0
+ setup mesh topology
+   Right-handed check complete for  300180 elements. OK.
+   setvert3d:   8    38539290   103378170    38539290    38539290
+ call usrsetvert
+ done :: usrsetvert
+
+gs_setup: 10265798 unique labels shared
+   pairwise times (avg, min, max): 0.000294246 0.0002141 0.000380206
+   crystal router                : 0.00242862 0.00237069 0.00248852
+   used all_to_all method: pairwise
+   handle bytes (avg, min, max): 654323 562964 699716
+   buffer bytes (avg, min, max): 179044 101808 230896
+   setupds time 5.7175E-01 seconds   1  8    38539290      300180
+          12  max multiplicity
+ done :: setup mesh topology
+  
+ done :: usrdat2
+
+ regenerate geometry data           1
+ NOTE: All elements deformed , param(59) ^=0
+ done :: regenerate geometry data           1
+  
+ verify mesh topology
+  -10.0000000000000        25.0000000000000       Xrange
+  0.000000000000000E+000   5.00000000000000       Yrange
+  -5.00000000000000        5.00000000000000       Zrange
+ done :: verify mesh topology
+  
+ IFTRAN   = T
+ IFFLOW   = T
+ IFHEAT   = T
+ IFSPLIT  = T
+ IFLOMACH = F
+ IFUSERVP = F
+ IFUSERMV = F
+ IFPERT   = F
+ IFADJ    = F
+ IFSTRS   = F
+ IFCHAR   = F
+ IFCYCLIC = F
+ IFAXIS   = F
+ IFMVBD   = F
+ IFMELT   = F
+ IFNEKNEK = F
+ IFSYNC   = F
+   
+ IFVCOR   = F
+ IFINTQ   = F
+ IFGEOM   = F
+ IFSURT   = F
+ IFWCNO   = F
+   
+ IFTMSH for field           1    =  F
+ IFADVC for field           1    =  T
+ IFNONL for field           1    =  F
+   
+ IFTMSH for field           2    =  T
+ IFADVC for field           2    =  T
+ IFNONL for field           2    =  F
+   
+ Dealiasing enabled, lxd=           8
+ verify mesh topology
+  -10.0000000000000        25.0000000000000       Xrange
+  0.000000000000000E+000   5.00000000000000       Yrange
+  -5.00000000000000        5.00000000000000       Zrange
+ done :: verify mesh topology
+  
+ call usrdat3
+ done :: usrdat3
+
+ set initial conditions
+ Checking restart options: avgwmc0.f00007                                                                                                                      
+ nekuic (1) for ifld            1
+ nekuic (1) for ifld            2
+ Reading checkpoint data 
+       FILE:
+ avgwmc0.f00007                                                                 
+                                                      
+
+        0  1.5000E+00 done :: Read checkpoint data
+                              avg data-throughput =   217.5MBps
+                              io-nodes =  2048
+
+ xyz min    -10.000       0.0000      -5.0000    
+ uvwpt min -0.76674     -0.69071      -1.3844     -0.20749     -0.12662E+06
+ xyz max     25.000       5.0000       5.0000    
+ uvwpt max   1.5092       1.3267       1.2630       1.1145      0.20969E+07
+ Restart: recompute geom. factors.
+ regenerate geometry data           1
+ NOTE: All elements deformed , param(59) ^=0
+ done :: regenerate geometry data           1
+  
+ done :: set initial conditions
+  
+gridpoints unique/tot:     103378170    153692160
+  dofs:             102703230             103335330
+  
+ Initial time: 0.1500000E+01
+ Initialization successfully completed    38.270     sec
+
+ nsteps=0 -> skip time loop
+ running solver in post processing mode
+
+ call userchk
+      0   1.5000000E+00   9.8481782E-01  -6.4199591E-05   1.2379558E-04   6.0030017E-01   1.0900903E-01   2.4794085E-02   3.4496487E-02   3.3632164E-02   1.5091614E+00   1.3266774E+00   1.3844264E+00   1.1144563E+00 e2
+ Loading standard averages...
+ Reading checkpoint data 
+       FILE:
+ avgwmc0.f00007                                                                 
+                                                      
+
+        0  1.5000E+00 done :: Read checkpoint data
+                              avg data-throughput = 21085.5MBps
+                              io-nodes =  2048
+
+ uvwpt min -0.76674     -0.69071      -1.3844     -0.20749     -0.12662E+06
+ uvwpt max   1.5092       1.3267       1.2630       1.1145      0.33270E+07
+ Reading statistics for atime:    1.50000000001400     
+ Reading checkpoint data 
+       FILE:
+ rmswmc0.f00007                                                                 
+                                                      
+
+        0  1.5000E+00 done :: Read checkpoint data
+                              avg data-throughput =   178.9MBps
+                              io-nodes =  2048
+
+ uvwpt min   0.0000       0.0000       0.0000       0.0000       0.0000    
+ uvwpt max   2.2778       1.7601       1.9170       1.2420      0.11069E+14
+ Reading statistics for atime:    1.50000000001400     
+ Reading checkpoint data 
+       FILE:
+ rm2wmc0.f00007                                                                 
+                                                      
+
+        0  1.5000E+00 done :: Read checkpoint data
+                              avg data-throughput =   212.3MBps
+                              io-nodes =  2048
+
+ uvwpt min -0.47587     -0.75189     -0.87381       0.0000       0.0000    
+ uvwpt max  0.80826      0.69013      0.74977       1.2420      0.11069E+14
+ Reading statistics for atime:    1.50000000001400     
+ Calculating uiuj...
+ Outpost:
+ dump history points
+ reading history points
+ found        53102  points
+ WARNING: point not within mesh xy[z]: ! -4.6000000E-01  0.0000000E+00 -4.8000000E-01
+ WARNING: point not within mesh xy[z]: ! -4.0000000E-01  0.0000000E+00 -4.8000000E-01
+ WARNING: point not within mesh xy[z]: ! -3.4000000E-01  0.0000000E+00 -4.8000000E-01
+ WARNING: point not within mesh xy[z]: ! -2.8000000E-01  0.0000000E+00 -4.8000000E-01
+ WARNING: point not within mesh xy[z]: ! -2.2000000E-01  0.0000000E+00 -4.8000000E-01
+ Rewriting file: ave.dat
+ dump history points
+ Rewriting file: var.dat
+ dump history points
+ Rewriting file: cov.dat
+ in comp_wallShear(...)
+ vsc,dsty  2.500000000000000E-005   1.00000000000000     
+ area: 3.54000000E+02
+Mdrag: 3.51519851E-01
+Tmavg: 9.92993930E-04
+Ufavg: 3.15118062E-02
+ dump history points
+ Rewriting file: wsh.dat
+ done :: userchk
+
+        0  1.5000E+00 Write checkpoint
+       FILE:
+ /lcrc/project/wall_bounded_flows/vpuri/rb/wmc90-bla0.25/p/wmc0.f00001          
+                                                      
+
+        0  1.5000E+00 done :: Write checkpoint
+                              file size =     471.E+01MB
+                              avg data-throughput =   174.8MB/s
+                              io-nodes =  2048
+
+  
+run successful: dying ...
+  
+  
+total elapsed time             :   1.37284E+02 sec
+total solver time w/o IO       :   0.00000E+00 sec
+time/timestep                  :   0.00000E+00 sec
+avg throughput per timestep    :   0.00000E+00 gridpts/CPUs
+total max memory usage         :   8.02990E+02 GB
+

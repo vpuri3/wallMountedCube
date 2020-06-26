@@ -16,16 +16,16 @@ y = [];
 z = [];
 
 % volume
-xmn = -10; xmx = 25; nx = 301; % n* odd
-ymn =   0; ymx =  5; ny =  50;
-zmn =  -2; zmx =  2; nz =  03;
+xmn = -4; xmx = 8; nx = 201; % n* odd
+ymn =  0; ymx = 1; ny =   2;
+zmn = -3; zmx = 3; nz = 101;
 
 x0 = linspace(xmn,xmx,nx);
-y0 = geomspace(ymn,ymx,ny,1.05);
+y0 = geomspace(ymn,ymx,ny,1);
 z0 = linspace(zmn,zmx,nz);
 [x0,y0,z0] = ndgrid(x0,y0,z0);
 
-[x0,y0,z0,~,~,~]=cube(al,x0,y0,z0);
+%[x0,y0,z0,~,~,~]=cube(al,x0,y0,z0);
 
 x = [x;reshape(x0,[nx*ny*nz,1])];
 y = [y;reshape(y0,[nx*ny*nz,1])];

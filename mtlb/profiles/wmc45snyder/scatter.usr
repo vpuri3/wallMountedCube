@@ -1,0 +1,293 @@
+C-----------------------------------------------------------------------
+c
+c
+c
+C-----------------------------------------------------------------------
+      subroutine comp_uplus(ux,uy,uz,bctyp,ifld)
+      include 'SIZE'
+      include 'TOTAL'
+
+      real ux(lx1,ly1,lz1,lelv) ! Velocity field
+     $    ,uy(lx1,ly1,lz1,lelv)
+     $    ,uz(lx1,ly1,lz1,lelv)
+
+      integer ifld
+      character*3 bctyp
+c
+      real Nx(lx1,ly1,lz1,lelv) ! face normal  X
+     $    ,Ny(lx1,ly1,lz1,lelv) !              Y
+     $    ,Nz(lx1,ly1,lz1,lelv) !              Z 
+     $    ,Tx(lx1,ly1,lz1,lelv) ! shear stress X-comp
+     $    ,Ty(lx1,ly1,lz1,lelv) !              Y   
+     $    ,Tz(lx1,ly1,lz1,lelv) !              Z
+     $    ,Tm(lx1,ly1,lz1,lelv) !              Mag    
+     $    ,uf(lx1,ly1,lz1,lelv) ! face friction vel
+     $    ,up(lx1,ly1,lz1,lelv) ! U-Plus
+     $    ,yp(lx1,ly1,lz1,lelv) ! Y-Plus
+c
+     $    ,utn(lx1,ly1,lz1,lelv) ! tangential velocity mag
+     $    ,d  (lx1,ly1,lz1,lelv) ! distance to face
+
+      integer nel,ntot
+      real n1 ,n2 ,n3
+      real u,v,w,un,ufr,Tmg,vsc,dsty
+      logical iifxyo,iifvo,iifpo,iifto ! for outposting
+
+      if(nid.eq.0) write(6,*) 'in comp_uplus(...)'
+c
+      nel  = nelfld(ifld)
+      ntot = lx1*ly1*lz1*nel
+      vsc   = vdiff(lx1,ly1,lz1,nelt,1)
+      dsty  = param(1)
+c
+      call rzero(utn,ntot)
+      call rzero(up ,ntot)
+c
+      call get_faceNormal(Nx,Ny,Nz,bctyp,ifld)
+
+      call comp_wallShear(Tx,Ty,Tz,Tm,uf,yp,ux,uy,uz,bctyp)
+
+      ! distance in direction parallel to idir
+      call cheap_dist(d,ifld,bctyp)
+
+      ! scatter face data into domain
+      call sctr(Nx,d,bctyp,ifld)
+      call sctr(Ny,d,bctyp,ifld)
+      call sctr(Nz,d,bctyp,ifld)
+      call sctr(Tm,d,bctyp,ifld)
+      call sctr(uf,d,bctyp,ifld)
+      call sctr(yp,d,bctyp,ifld)
+c
+      ! compute u-plus, y-plus
+      do i=1,ntot
+         u   = ux(i,1,1,1)
+         v   = uy(i,1,1,1)
+         w   = uz(i,1,1,1)
+         n1  = Nx(i,1,1,1)
+         n2  = Ny(i,1,1,1)
+         n3  = Nz(i,1,1,1)
+         Tmg = Tm(i,1,1,1)
+         ufr = uf(i,1,1,1)
+c
+         un = u*n1 + v*n2 + w*n3         ! mag of normal component
+         un = u*u  + v*v  + w*w - un*un
+         un = sqrt(un)
+         utn(i,1,1,1) = un               ! mag of tangential component
+c
+         up(i,1,1,1) = utn(i,1,1,1)/ufr
+         yp(i,1,1,1) = d  (i,1,1,1)*ufr/vsc
+      enddo
+
+      ! Outpost
+
+      iifxyo = ifxyo
+      iifvo  = ifvo
+      iifpo  = ifpo
+      iifto  = ifto
+c
+      ifxyo = .true.
+      ifvo  = .true.
+      ifpo  = .false.
+      ifto  = .true.
+c
+      call outpost(d,yp,uf,pr,Tm,'upl')
+c
+      ifxyo = iifxyo
+      ifvo  = iifvo
+      ifpo  = iifpo
+      ifto  = iifto
+c
+      return
+      end
+c-----------------------------------------------------------------------
+c
+c scatter boundary data in adjacent elements
+c
+c-----------------------------------------------------------------------
+      subroutine sctr(g,d,b,ifld)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      real g(lx1,ly1,lz1,lelt) ! field to project
+      real d(lx1,ly1,lz1,lelt) ! distance to wall
+      character*3 b
+      integer ifld
+
+      integer nel,n,nface
+      integer i ,j ,k ,e,f,ipass
+     $       ,i0,j0,k0
+     $       ,i1,j1,k1
+     $       ,ii,jj,kk
+      real tol
+
+      nel  = nelfld(ifld)
+      n    = lx1*ly1*lz1*nel
+      tol  = 1e-12
+
+c distance to BC
+c     call rzero(d,n)
+c     call cheap_dist(d,ifld,b)
+
+c project data in coordinate direction
+
+      do ipass=1,100
+        do e=1,nel
+        do k=1,lz1
+        do j=1,ly1
+        do i=1,lx1
+          if(d(i,j,k,e).lt.tol) goto 111 ! wall point - do nothing
+          i0=max(  1,i-1)                ! bounding box
+          j0=max(  1,j-1)
+          k0=max(  1,k-1)
+          i1=min(lx1,i+1)
+          j1=min(ly1,j+1)
+          k1=min(lz1,k+1)
+          call sctr_idx(ii,jj,kk,i0,j0,k0,i1,j1,k1,i,j,k,e,d)
+          g(i,j,k,e) = g(ii,jj,kk,e)
+ 111      continue
+        enddo
+        enddo
+        enddo
+        enddo
+c       call fgslib_gs_op(gsh_fld(ifld),g,1,4,0) ! max over all elements
+      enddo
+
+      ifvo  = .true.
+      ifpo  = .false.
+      ifto  = .false.
+      ifxyo = .true.
+c     call outpost(d,g,vz,pr,t,'dst')
+
+      return
+      end
+c-----------------------------------------------------------------------
+      subroutine sctr_idx(ii,jj,kk,i0,j0,k0,i1,j1,k1,i,j,k,e,d)
+      implicit none
+      include 'SIZE'
+      include 'TOTAL'
+
+      integer i ,j ,k ,e
+     $       ,ii,jj,kk
+     $       ,i0,j0,k0
+     $       ,i1,j1,k1
+
+      real d(lx1,ly1,lz1,lelv),dd
+
+      ii = i0
+      jj = j
+      kk = k
+      dd = d(ii,jj,kk,e)
+
+      if(dd.gt.d(i1,j,k,e)) then
+        ii = i1
+        jj = j
+        kk = k
+        dd = d(ii,jj,kk,e)
+      endif
+      if(dd.gt.d(i,j0,k,e)) then
+        ii = i
+        jj = j0
+        kk = k
+        dd = d(ii,jj,kk,e)
+      endif
+      if(dd.gt.d(i,j1,k,e)) then
+        ii = i
+        jj = j1
+        kk = k
+        dd = d(ii,jj,kk,e)
+      endif
+      if(dd.gt.d(i,j,k0,e)) then
+        ii = i
+        jj = j 
+        kk = k0
+        dd = d(ii,jj,kk,e)
+      endif
+      if(dd.gt.d(i,j,k1,e)) then
+        ii = i
+        jj = j 
+        kk = k1
+        dd = d(ii,jj,kk,e)
+      endif
+
+      return
+      end
+c-----------------------------------------------------------------------
+c
+c cheap distance with projection - only within first element
+c
+c-----------------------------------------------------------------------
+c     subroutine cheap_dist_with_proj(d,b,ifld)
+c     implicit none
+c     include 'SIZE'
+c     include 'TOTAL'
+
+c     real d(lx1,ly1,lz1,lelt) ! distance to wall
+c     character*3 b
+c     integer ifld
+
+c     real x0,y0,z0
+c     integer nel,n,nface
+c     integer i ,j ,k ,e,f,ipass
+c    $       ,i0,j0,k0
+c    $       ,i1,j1,k1
+c    $       ,ii,jj,kk
+c     real tol
+
+c     nel  = nelfld(ifld)
+c     n    = lx1*ly1*lz1*nel
+c     tol  = 1e-12
+
+c     call rzero(d,n)
+
+c     ! get face info (initialize skpdat array)
+c     call dsset(nx1,ny1,nz1)
+
+c     do e=1,nelv
+c     do f=1,nxzf
+c       if (cbc(f,e,ifld).eq.bctyp) then
+c         iface  = eface1(f)   ! surface to volume shifts
+c         js1    = skpdat(1,iface)
+c         jf1    = skpdat(2,iface)
+c         jskip1 = skpdat(3,iface)
+c         js2    = skpdat(4,iface)
+c         jf2    = skpdat(5,iface)
+c         jskip2 = skpdat(6,iface)
+
+c         k = 0
+c         do j2=js2,jf2,jskip2
+c         do j1=js1,jf1,jskip1
+c           k = k + 1
+
+c           nx = unx(k,1,f,e)      ! face normal X-comp
+c           ny = uny(k,1,f,e)      !             Y
+c           nz = unz(k,1,f,e)      !             Z
+c
+c           x0 = xm1(k,1,f,e)
+c           y0 = ym1(k,1,f,e)
+c           z0 = zm1(k,1,f,e)
+c
+c           ! get i0,j1,di based on f
+c
+c           do i=i0,i1,di
+c             d(j1+i,j2,1,e) = ((xm1(j1+i,j2,1,e) - x0) * nx
+c    $                          (ym1(j1+i,j2,1,e) - y0) * ny
+c    $                          (zm1(j1+i,j2,1,e) - z0) * nz)
+c           enddo
+c
+c         enddo
+c         enddo
+
+c       endif
+c     enddo
+c     enddo
+c
+c     ifvo  = .true.
+c     ifpo  = .false.
+c     ifto  = .false.
+c     ifxyo = .true.
+c     call outpost(d,vy,vz,pr,t,'dst')
+
+c     return
+c     end
+c-----------------------------------------------------------------------

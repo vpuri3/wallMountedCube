@@ -1,0 +1,2 @@
+slurmstepd: error: Unable to create TMPDIR [/tmp]: File exists
+slurmstepd: error: Setting TMPDIR to /tmp

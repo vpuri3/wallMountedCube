@@ -1,18 +1,18 @@
 %
 %=============================================================
-function wmcPost(al,Re)
+function wmcPost
 %=============================================================
 format compact; format shorte;
 
 dsty=1;
-visc=1/Re;
+%visc=1/Re;
 
 %=============================================================
 % numbering
 
-nx=301; % parse wmc.his
-ny=50;
-nz=3;
+nx=201; % parse wmc.his
+ny=2;
+nz=101;
 nl=50;
 nv=50;
 n = nx*ny*nz + 4*nl*nv + nl*nl;
@@ -29,14 +29,13 @@ II = I0(:,1,:);              II = reshape(II,[nx,nz]);    % ground
 %=============================================================
 % reading data
 
-time = dlmread('wsh.dat','',[1 0 1 0]);
+time=dlmread('wmc45bla0.25/wsh.dat','' ,[1 0 1 0]);
+C   =dlmread('wmc45bla0.25/wmc.his',' ',[1 0 n 2]); % X,Y,Z
+U   =dlmread('wmc45bla0.25/ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
+W   =dlmread('wmc45bla0.25/wsh.dat','' ,[1 1 n 5]); % Tm,uf,Tx,Tu.Tz
 
-C=dlmread('wmc.his',' ',[1 0 n 2]); % X,Y,Z
-U=dlmread('ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
-W=dlmread('wsh.dat','' ,[1 1 n 5]); % Tm,uf,Tx,Tu.Tz
-
-cv=dlmread('cov.dat','',[1 1 n 3]); % uv, vw, wu
-tk=dlmread('var.dat','',[1 1 n 3]); % < u' * u' >
+%cv=dlmread('cov.dat','',[1 1 n 3]); % uv, vw, wu
+%tk=dlmread('var.dat','',[1 1 n 3]); % < u' * u' >
 
 %cn=dlmread('cn1.dat','',[1 1 n 3]); % convective term
 %pr=dlmread('pr1.dat','',[1 1 n 3]); % production
@@ -74,7 +73,7 @@ Tx=W(:,3);
 Ty=W(:,4);
 Tz=W(:,5);
 
-tkK = 0.5 * sum(tk')';
+%tkK = 0.5 * sum(tk')';
 
 %cnK = 0.5 * sum(cn')';
 %prK = 0.5 * sum(pr')';
@@ -90,24 +89,24 @@ tkK = 0.5 * sum(tk')';
 % cube surfaces
 
 %wmc_wall(Tm,'$$|\tau|$$',x,y,z,II,I1,I2,I3,I4,I5);
-%wmc_wall(uf,'$$u_f$$'   ,x,y,z,II,I1,I2,I3,I4,I5);
+wmc_wall(uf,'$$u_f$$'   ,x,y,z,II,I1,I2,I3,I4,I5);
 
 %=============================================================
 % geometry
-xmn=min(min(min(x))); xmx=max(max(max(x)));
-zmn=min(min(min(z))); zmx=max(max(max(z)));
-xw=linspace(xmn,xmx,1e3);
-zw=linspace(zmn,zmx,1e3);
-[xw,yw,zw]=ndgrid(xw,0,zw);
-[~,~,~,xw,yw,zw] = cube(al,xw,yw,zw);
+%xmn=min(min(min(x))); xmx=max(max(max(x)));
+%zmn=min(min(min(z))); zmx=max(max(max(z)));
+%xw=linspace(xmn,xmx,1e3);
+%zw=linspace(zmn,zmx,1e3);
+%[xw,yw,zw]=ndgrid(xw,0,zw);
+%[~,~,~,xw,yw,zw] = cube(al,xw,yw,zw);
 
 %=============================================================
 % profile
 
-iz = 0.5 * (nz+1); izw= 0.5 * (999+1); % centerline
-iy = 0.5 * (ny+1);
-
-vmg = sqrt(u.^2+v.^2+w.^2);
+%iz = 0.5 * (nz+1); izw= 0.5 * (999+1); % centerline
+%iy = 0.5 * (ny+1);
+%
+%vmg = sqrt(u.^2+v.^2+w.^2);
 
 %profXY(u  ,iz,izw,0.2,'u'  ,'$$v_x$$',al,xw,yw,x,y,I0)
 %profXY(tkK,iz,izw,1.0,'tkK','$$k$$'  ,al,xw,yw,x,y,I0)

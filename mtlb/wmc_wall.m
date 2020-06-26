@@ -7,7 +7,7 @@ set(fig,'position',[750,0,750,1000])
 hold on;grid on;
 %------------------------------
 subplot(4,2,[1,2]);
-surf(x(I0),z(I0),f(I0)); shading interp; colorbar; view(2);
+surf(x(I0),z(I0),f(I0)); shading interp; colorbar; view(2);daspect([1,1,1]);
 title(['ground - surface 0'],'fontsize',14); xlabel('x'); ylabel('z');
 hcb=colorbar; title(hcb,qty,'interpreter','latex','fontsize',14);
 %------------------------------
@@ -36,7 +36,7 @@ surf(x(I5),z(I5),f(I5)); shading interp; colorbar; view(2);
 title(['cube top - surface 5'],'fontsize',14); xlabel('x'); ylabel('z');
 hcb=colorbar; title(hcb,qty,'interpreter','latex','fontsize',14);
 %------------------------------
-%figname=[cname,'-','mesh'];
-%saveas(fig,figname,'jpeg');
+figname=[cname,'-','mesh'];
+saveas(fig,figname,'jpeg');
 
 end
