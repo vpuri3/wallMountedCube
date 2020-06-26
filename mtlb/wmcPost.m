@@ -29,10 +29,10 @@ II = I0(:,1,:);              II = reshape(II,[nx,nz]);    % ground
 %=============================================================
 % reading data
 
-time=dlmread('wmc45bla0.25/wsh.dat','' ,[1 0 1 0]);
-C   =dlmread('wmc45bla0.25/wmc.his',' ',[1 0 n 2]); % X,Y,Z
-U   =dlmread('wmc45bla0.25/ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
-W   =dlmread('wmc45bla0.25/wsh.dat','' ,[1 1 n 5]); % Tm,uf,Tx,Tu.Tz
+time=dlmread('wmc90bla0.25/wsh.dat','' ,[1 0 1 0]);
+C   =dlmread('wmc90bla0.25/wmc.his',' ',[1 0 n 2]); % X,Y,Z
+U   =dlmread('wmc90bla0.25/ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
+W   =dlmread('wmc90bla0.25/wsh.dat','' ,[1 1 n 5]); % Tm,uf,Tx,Tu.Tz
 
 %cv=dlmread('cov.dat','',[1 1 n 3]); % uv, vw, wu
 %tk=dlmread('var.dat','',[1 1 n 3]); % < u' * u' >
