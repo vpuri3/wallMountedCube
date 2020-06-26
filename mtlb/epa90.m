@@ -49,6 +49,7 @@ pN=U(:,4);
 uuN=tk(:,1);
 vvN=tk(:,2);
 wwN=tk(:,3);
+k1N=0.75*(uuN+vvN); % good proxy for TKE
 
 kN = 0.5 * sum(tk')';
 
@@ -84,9 +85,7 @@ uE1=M(:,3)*ufactor;
 uuE1=M(:,4)*ufactor;
 vE1=M(:,5)*ufactor; % w -> v
 vvE1=M(:,6)*ufactor; % w -> v
-kE1=M(:,7)*ufactor*ufactor;
-knormE1=M(:,8)*ufactor;
-sqrtHE1=M(:,9)*ufactor;
+kE1 = 0.75*(uuE1.*uuE1+vvE1.*vvE1);
 
 zE1=xE1*0;
 [xE1,yE1,zE1] = insidecube(al,xE1,yE1,zE1);
@@ -94,15 +93,10 @@ zE1=xE1*0;
 % figs
 %----------
 
-k1E1 = 0.5*(uuE1.*uuE1+vvE1.*vvE1);
-k1N  = 0.5*(uuN .*uuN +vvN .*vvN );
 
-profXY2(uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,0.2,'u','$$v_x$$',al,xw,yw);
-profXY2(kN(I1),xN(I1),yN(I1),kE1,xE1,yE1,1.0,'k','$$k$$',al,xw,yw);
-
-profXY2(k1N(I1),xN(I1),yN(I1),k1E1,xE1,yE1,1.0,'k1Nk1E','k1Nk1E',al,xw,yw);
-profXY2(kN(I1) ,xN(I1),yN(I1),k1E1,xE1,yE1,1.0,'k0Nk1E','k0Nk1E',al,xw,yw);
-%profXY2(kE1,xE1,yE1,k1E1,xE1,yE1,1.0,'kkk','$$k$$',al,xw,yw);
+profXY2( uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,0.2,'u','$$v_x$$',al,xw,yw);
+profXY2(k1N(I1),xN(I1),yN(I1),kE1,xE1,yE1,1.0,'k','$$k$$'  ,al,xw,yw);
+%
 %=======================================================
 % vertical centerline plane
 %=======================================================
@@ -130,13 +124,15 @@ xE2=M(:,1)*xfactor;
 zE2=M(:,2)*xfactor; % y -> z
 uE2=M(:,3)*ufactor;
 uuE2=M(:,4)*ufactor;
-vE2=M(:,7)*ufactor;  % w -> v
-vvE2=M(:,8)*ufactor; % w -> v
+wE2=M(:,7)*ufactor;  % v -> w
+wwE2=M(:,8)*ufactor; % v -> w
+kE2 = 0.75*(uuE2.*uuE2+wwE2.*wwE2);
 
 yE2=xE2*0+0.1;
 [xE2,yE2,zE2] = insidecube(al,xE2,yE2,zE2);
 %----------
 % figs
 %----------
-profXZ2(uN(I2),xN(I2),zN(I2),uE2,xE2,zE2,0.2,'u','$$v_x$$',al,xw,yw,0.1);
+profXZ2( uN(I2),xN(I2),zN(I2),uE2,xE2,zE2,0.2,'u','$$v_x$$',al,xw,yw,0.1);
+profXZ2(k1N(I2),xN(I2),zN(I2),kE2,xE2,zE2,1.0,'k','$$k$$'  ,al,xw,yw,0.1);
 

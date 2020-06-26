@@ -21,7 +21,7 @@ ax.YScale='linear';
 xlabel(['$$x + $$',qtyname]);
 ylabel('$$y$$');
 
-daspect([1.5,1,1]);
+daspect([1,1,1]);
 set(fig,'position',[585,1e3,1000,250])
 
 % bottom wall
@@ -32,6 +32,7 @@ p.HandleVisibility='off';
 %p=plot(xq1,y1,'ko','linewidth',1.0);
 for i=1:1:size(xq1,1)
 	p=plot(xq1(i,:),y1(i,:),'b-','linewidth',1.0);
+	%p=plot(xq2(i,:),y2(i,:),'r-','linewidth',1.0);
 	%p.HandleVisibility='off';
 end
 %p.HandleVisibility='on';
