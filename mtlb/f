@@ -1,0 +1,9 @@
+#!/bin/bash
+
+scp $BWD/rb/wmc45-bla0.25/p/ ./wmc45bla0.25/
+scp $BWD/rb/wmc45-bla2.00/p/ ./wmc45bla2.00/
+scp $BWD/rb/wmc45-snyder/p/  ./wmc45snyder/
+
+scp $BWD/rb/wmc90-bla0.25/p/ ./wmc90bla0.25/
+scp $BWD/rb/wmc90-bla2.00/p/ ./wmc90bla2.00/
+scp $BWD/rb/wmc90-snyder/p/  ./wmc90snyder/

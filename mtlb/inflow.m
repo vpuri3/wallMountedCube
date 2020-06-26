@@ -84,7 +84,7 @@ p=plot(xbl2,y,'k-','linewidth',1.5);
 p.DisplayName='Blasius, $$\delta_{99}=2.00h$$';
 
 p=plot(xepa,y,'b-','linewidth',1.5);
-p.DisplayName='Snyder, 1984';
+p.DisplayName='Snyder, 1994';
 
 legend('show');
 

@@ -96,8 +96,8 @@ zE1=xE1*0;
 % figs
 %----------
 
-profXY2( uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,uscl,'u','$$v_x$$',al,xw,yw);
-profXY2(k1N(I1),xN(I1),yN(I1),kE1,xE1,yE1,kscl,'k','$$k$$'  ,al,xw,yw);
+profXY2( uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,uscl,'SNY-u','$$v_x$$',al,xw,yw,1);
+profXY2(k1N(I1),xN(I1),yN(I1),kE1,xE1,yE1,kscl,'SNY-k','$$k$$'  ,al,xw,yw,1);
 %
 %=======================================================
 % horizontal ground plane
@@ -130,6 +130,6 @@ yE2=xE2*0+0.1;
 %----------
 % figs
 %----------
-profXZ2( uN(I2),xN(I2),zN(I2),uE2,xE2,zE2,uscl,'u','$$v_x$$',al,xw,yw,0.1);
-profXZ2(k1N(I2),xN(I2),zN(I2),kE2,xE2,zE2,kscl,'k','$$k$$'  ,al,xw,yw,0.1);
+profXZ2( uN(I2),xN(I2),zN(I2),uE2,xE2,zE2,uscl,'SNY-u','$$v_x$$',al,xw,yw,0.1,1);
+profXZ2(k1N(I2),xN(I2),zN(I2),kE2,xE2,zE2,kscl,'SNY-k','$$k$$'  ,al,xw,yw,0.1,1);
 

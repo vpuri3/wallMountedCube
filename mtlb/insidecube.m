@@ -15,7 +15,7 @@ xz=[xx,zz]*M';
 xx=xz(:,1);
 zz=xz(:,2);
 
-tol=9e-2;
+tol=1e-2;
 I = find((abs(xx) < 0.50+tol)...
        & (abs(zz) < 0.50+tol)...
 	   & (yy      < 1.00+tol));
