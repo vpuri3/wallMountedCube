@@ -36,7 +36,7 @@ surf(x(I5),z(I5),f(I5)); shading interp; colorbar; view(2);
 title(['cube top - surface 5'],'fontsize',14); xlabel('x'); ylabel('z');
 hcb=colorbar; title(hcb,qty,'interpreter','latex','fontsize',14);
 %------------------------------
-figname=[cname,'-','mesh'];
-saveas(fig,figname,'jpeg');
+%figname=[''];
+%saveas(fig,figname,'jpeg');
 
 end

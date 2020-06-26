@@ -1,0 +1,42 @@
+#!/bin/bash
+
+##knl_nekk casename nodes hours minutes
+
+rm -f slurm-*.out $1.error $1.out $1.batch SESSION.NAME
+
+proj="WALL_BOUNDED_FLOWS"
+ppn=64
+nproc=$(($ppn * $2))
+
+echo "submitting job $1 on $2 nodes ($ppn ppn) for $3 hours and $4 minutes on project $proj"
+
+echo   "#!/bin/bash"                             >  $1.batch
+echo   "#SBATCH -N $2"                           >> $1.batch
+echo   "#SBATCH --ntasks-per-node=$ppn"          >> $1.batch
+echo   "#SBATCH --time="$3":"$4":00"             >> $1.batch
+echo   "#SBATCH -C knl,quad,cache"               >> $1.batch
+echo   "#SBATCH -p knlall"                       >> $1.batch
+echo   "#SBATCH -A "$proj""                      >> $1.batch
+#echo   "#SBATCH --output=logfile"                >> $1.batch
+echo   "#SBATCH --error="$1".error"              >> $1.batch
+
+echo   "export I_MPI_FABRICS=shm:tmi"            >> $1.batch
+#echo   "export I_MPI_OFI_PROVIDER=psm2"          >> $1.batch
+echo   "export I_MPI_EXTRA_FILESYSTEM=1"         >> $1.batch
+echo   "export I_MPI_EXTRA_FILESYSTEM_LIST=gpfs" >> $1.batch
+
+echo   "echo "$1"     >   SESSION.NAME"          >> $1.batch
+echo   "echo $(pwd)'/' >> SESSION.NAME"          >> $1.batch
+echo   "rm -f ioinfo logfile"                    >> $1.batch
+
+#echo   "which mpiifort >> logfile"               >> $1.batch                    
+
+echo   "srun ./nek5000"                          >> $1.batch
+#echo   "srun -n "$nproc" ./nek5000"              >> $1.batch
+#echo   "mpirun numactl --membind=1 ./nek5000"    >> $1.batch
+
+#echo   "exit 0;"                                 >> $1.batch
+
+sbatch $1.batch
+sleep 3
+squeue -u $(whoami)

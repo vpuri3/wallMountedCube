@@ -81,7 +81,7 @@ zw=linspace(zmn,zmx,1e0);
 xfactor=1/200;
 ufactor=1/3; % tbd
 
-M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C13C.xls');
+M=readmatrix('~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C13C.xls');
 xE1=M(:,1)*xfactor;
 zE1=M(:,2)*xfactor; % y -> z
 yE1=M(:,3)*xfactor; % z -> y
@@ -117,7 +117,7 @@ profXY2(k1N(I1),xN(I1),yN(I1),kE1,xE1,yE1,kscl,'SNY-k','$$k$$'  ,al,xw,yw,1);
 xfactor=1/200;
 ufactor=1/3; % tbd
 
-M=readmatrix('~/Nek5000/run/wmc/mtlb/EPA_WindTunnel/EP3C13GF.xls');
+M=readmatrix('~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C13GF.xls');
 xE2=M(:,1)*xfactor;
 zE2=M(:,2)*xfactor; % y -> z
 uE2=M(:,3)*ufactor;
