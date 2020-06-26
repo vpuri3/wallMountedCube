@@ -17,6 +17,10 @@
 %=======================================================
 clear;
 al=45;
+
+uscl=0.5;
+kscl=2.0;
+
 %=======================================================
 
 nx1=19; % centerline
@@ -93,8 +97,8 @@ kE1=0.75*(uuE1.*uuE1+vvE1.*vvE1);
 %----------
 % figs
 %----------
-profXY2( uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,0.5,'u','$$v_x$$',al,xw,yw);
-profXY2(k1N(I1),xN(I1),yN(I1),kE1,xE1,yE1,2.0,'k','$$k$$'  ,al,xw,yw);
+profXY2( uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,uscl,'u','$$v_x$$',al,xw,yw);
+profXY2(k1N(I1),xN(I1),yN(I1),kE1,xE1,yE1,kscl,'k','$$k$$'  ,al,xw,yw);
 %
 %=======================================================
 % horizontal ground plane
@@ -127,5 +131,5 @@ yE2=xE2*0+0.1;
 %----------
 % figs
 %----------
-profXZ2(uN(I2) ,xN(I2),zN(I2),uE2,xE2,zE2,0.5,'u','$$v_x$$',al,xw,yw,0.1);
-profXZ2(k1N(I2),xN(I2),zN(I2),kE2,xE2,zE2,2.0,'k','$$k$$'  ,al,xw,yw,0.1);
+profXZ2(uN(I2) ,xN(I2),zN(I2),uE2,xE2,zE2,uscl,'u','$$v_x$$',al,xw,yw,0.1);
+profXZ2(k1N(I2),xN(I2),zN(I2),kE2,xE2,zE2,kscl,'k','$$k$$'  ,al,xw,yw,0.1);
