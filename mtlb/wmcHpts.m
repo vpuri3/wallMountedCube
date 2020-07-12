@@ -16,9 +16,9 @@ y = [];
 z = [];
 
 % volume
-xmn = -4; xmx = 8; nx = 201; % n* odd
-ymn =  0; ymx = 1; ny =   2;
-zmn = -3; zmx = 3; nz = 101;
+xmn = -1; xmx =10; nx = 201; % n* odd
+ymn =  0; ymx = 2; ny =  21;
+zmn = -3; zmx = 3; nz =  21;
 
 x0 = linspace(xmn,xmx,nx);
 y0 = geomspace(ymn,ymx,ny,1);

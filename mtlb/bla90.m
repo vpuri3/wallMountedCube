@@ -9,8 +9,8 @@
 clear;
 al=90;
 
-uscl=0.5;
-kscl=2.0;
+uscl=0.2;
+kscl=1.0;
 
 %=======================================================
 
@@ -90,7 +90,17 @@ profXY2(kN1(I1),xN1(I1),yN1(I1),0,0,0,kscl,'BLA-k','$$k$$'  ,al,xw,yw,1);
 % horizontal ground plane
 %=======================================================
 
-%[~,~,~,xw,yw,~] = cube(al,xw,yw,zw);
+%----------
+% geometry
+%----------
+xx=linspace(-0.5,0.5,1e2)';
+xw=[xx      ;0*xx+0.5;flip(xx);0*xx-0.5];
+zw=[0*xx-0.5;xx      ;0*xx+0.5;flip(xx)];
+a=al*pi/180;
+M=[cos(a),-sin(a);sin(a),cos(a)];
+xz=[xw,zw]*M';
+xw=xz(:,1);
+zw=xz(:,2);
 
-profXZ2(uN1(I2),xN1(I2),zN1(I2),0,0,0,uscl,'BLA-u','$$v_x$$',al,xw,yw,0.1,1);
-profXZ2(kN1(I2),xN1(I2),zN1(I2),0,0,0,kscl,'BLA-k','$$k$$'  ,al,xw,yw,0.1,1);
+profXZ2(uN1(I2),xN1(I2),zN1(I2),0,0,0,uscl,'BLA-u','$$v_x$$',al,xw,zw,0.1,1);
+profXZ2(kN1(I2),xN1(I2),zN1(I2),0,0,0,kscl,'BLA-k','$$k$$'  ,al,xw,zw,0.1,1);

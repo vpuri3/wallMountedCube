@@ -20,11 +20,11 @@ if(al==90) casename='WMC90'; end;
 
 %figure;
 figure;fig=gcf;ax=gca; hold on;grid on;
-title([casename,' ',qtyname,' Profile' ],'fontsize',14);
+%title([casename,' ',qtyname,' Profile' ],'fontsize',14);
 ax.XScale='linear';
 ax.YScale='linear';
-xlabel(['$$x + $$',qtyname]);
-ylabel('$$y$$');
+xlabel(['$$x/h + $$',qtyname]);
+ylabel('$$y/h$$');
 
 daspect([1,1,1]);
 set(fig,'position',[585,1e3,1000,250])
@@ -38,18 +38,19 @@ p.HandleVisibility='off';
 for i=1:1:size(xq1,1)
 	           p=plot(xq1(i,:),y1(i,:),'b-','linewidth',1.0);
 	if(flg==0) p=plot(xq2(i,:),y2(i,:),'r-','linewidth',1.0); end;
-	%p.HandleVisibility='off';
+	p.HandleVisibility='off';
 end
-%p.HandleVisibility='on';
-%p.DisplayName=['Nek'];
+p.HandleVisibility='on';
+p.DisplayName=['WMC',num2str(al)];
 
 if(flg==1) p=plot(xq2,y2,'ro','linewidth',1.0); end;
-%p.HandleVisibility='on';
-%p.DisplayName=['Snyder, 1994'];
+p.HandleVisibility='on';
+p.DisplayName=['Snyder, 1994'];
 
-%lgd=legend('location','southeast');lgd.FontSize=14;
+lgd=legend('location','northeast');lgd.FontSize=14;
 %------------------------------
 figname=[casename,'-XY-',qty];
-saveas(fig,figname,'jpeg');
+exportgraphics(fig,[figname,'.png'],'resolution',300);
+%saveas(fig,figname,'png');
 %------------------------------
 end

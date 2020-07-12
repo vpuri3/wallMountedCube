@@ -20,8 +20,8 @@ zw=linspace(-0  ,0,1 );
 % profile
 
 y=linspace(0,2,ny);
-x=-2+0*y;
-z=   0*y;
+x=-1.75+0*y;
+z=      0*y;
 
 I0=1:ny; I0=reshape(I0,[1,ny,1]);
 
@@ -59,12 +59,12 @@ xepa = x + uepa;
 figure;
 fig=gcf;ax=gca; hold on;grid on;
 % title
-title(['Inflow Velocity Profile'],'fontsize',14);
+%title(['Inflow Velocity Profile'],'fontsize',14);
 % ax
 ax.XScale='linear';
 ax.YScale='linear';
-xlabel(['$$x + v_x$$']);
-ylabel('$$y$$');
+xlabel(['$$x/h + v_x$$']);
+ylabel('$$y/h$$');
 
 daspect([1,1,1]);
 xlim([-2.00,1.00]);%ylim([0.00,2.00]);
@@ -77,19 +77,25 @@ xlim([-2.00,1.00]);%ylim([0.00,2.00]);
 p=plot(xw,yw,'k-.','linewidth',1.5);
 p.HandleVisibility='off';
 
-p=plot(xbl1,y,'r-','linewidth',1.5);
+p=plot(xbl1,y,'r-.','linewidth',1.5);
 p.DisplayName='Blasius, $$\delta_{99}=0.25h$$';
 
-p=plot(xbl2,y,'k-','linewidth',1.5);
+p=plot(xbl2,y,'r--','linewidth',1.5);
 p.DisplayName='Blasius, $$\delta_{99}=2.00h$$';
 
 p=plot(xepa,y,'b-','linewidth',1.5);
 p.DisplayName='Snyder, 1994';
 
+% reference arrow
+q=quiver(-1.75,1,1,0,1,'k','linewidth',2);
+q.HandleVisibility='off';
+text(-1.75,1.05,'reference U','fontsize',14);
+
 legend('show');
 
 %------------------------------
-figname=['uin'];
-saveas(fig,figname,'jpeg');
+figname=['uin-full'];
+exportgraphics(fig,[figname,'.png'],'resolution',300);
+%saveas(fig,figname,'jpeg');
 %------------------------------
 

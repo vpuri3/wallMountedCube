@@ -1,6 +1,6 @@
 %
 %=============================================================
-function wmcPost
+function wmcPost(al)
 %=============================================================
 format compact; format shorte;
 
@@ -11,8 +11,8 @@ dsty=1;
 % numbering
 
 nx=201; % parse wmc.his
-ny=2;
-nz=101;
+ny=21;
+nz=21;
 nl=50;
 nv=50;
 n = nx*ny*nz + 4*nl*nv + nl*nl;
@@ -28,14 +28,14 @@ II = I0(:,1,:);              II = reshape(II,[nx,nz]);    % ground
 
 %=============================================================
 % reading data
+dir=['wmc',num2str(al),'snyder/'];
 
-time=dlmread('wmc90bla0.25/wsh.dat','' ,[1 0 1 0]);
-C   =dlmread('wmc90bla0.25/wmc.his',' ',[1 0 n 2]); % X,Y,Z
-U   =dlmread('wmc90bla0.25/ave.dat','' ,[1 1 n 4]); % vx,vy,vz,pr
-W   =dlmread('wmc90bla0.25/wsh.dat','' ,[1 1 n 5]); % Tm,uf,Tx,Tu.Tz
-
-%cv=dlmread('cov.dat','',[1 1 n 3]); % uv, vw, wu
-%tk=dlmread('var.dat','',[1 1 n 3]); % < u' * u' >
+time=dlmread([dir,'wsh.dat'],'' ,[1 0 1 0]);
+C   =dlmread([dir,'wmc.his'],' ',[1 0 n 2]); % X,Y,Z
+U   =dlmread([dir,'ave.dat'],'' ,[1 1 n 4]); % vx,vy,vz,pr
+W   =dlmread([dir,'wsh.dat'],'' ,[1 1 n 5]); % Tm,uf,Tx,Tu.Tz
+cv  =dlmread([dir,'cov.dat'],'',[1 1 n 3]); % uv, vw, wu
+tk  =dlmread([dir,'var.dat'],'',[1 1 n 3]); % < u' * u' >
 
 %cn=dlmread('cn1.dat','',[1 1 n 3]); % convective term
 %pr=dlmread('pr1.dat','',[1 1 n 3]); % production
@@ -58,6 +58,9 @@ W   =dlmread('wmc90bla0.25/wsh.dat','' ,[1 1 n 5]); % Tm,uf,Tx,Tu.Tz
 %['area=' ,num2str(area) ];
 %=============================================================
 
+Re = 40e3;
+visc = 1/Re;
+
 x=C(:,1);
 y=C(:,2);
 z=C(:,3);
@@ -73,7 +76,10 @@ Tx=W(:,3);
 Ty=W(:,4);
 Tz=W(:,5);
 
-%tkK = 0.5 * sum(tk')';
+yp = 1 ./ (visc ./ uf);
+yp(yp<1e-9)=NaN;yp=log(yp)/log(10);
+
+tkK = 0.5 * sum(tk')';
 
 %cnK = 0.5 * sum(cn')';
 %prK = 0.5 * sum(pr')';
@@ -86,10 +92,48 @@ Tz=W(:,5);
 %imK = 0.5 * sum(im')';
 
 %=============================================================
+% transects
+xx=x(I0);
+yy=y(I0);
+zz=z(I0);
+uu=u(I0);
+kk=tkK(I0);
+
+uin = (yy/1.0).^0.16;
+
+udef = (uu-uin) ./ uin;
+
+iz=(nz+1)/2;
+iy=(13:2:21)';
+
+figure; fig=gcf;ax=gca; hold on;grid on;
+ax.XScale='linear';
+ax.YScale='linear';
+xlabel(['$$x/h$$']);
+ylabel('$$v_x/v_x(y)$$');
+
+%daspect([2,100,1]);
+set(fig,'position',[585,1e3,1200,300])
+xlim([-1,10]);
+ll='rgbck';
+for i=1:1:size(iy,1)
+	p=plot(xx(:,iy(i),iz),udef(:,iy(i),iz),ll(i),'linewidth',2.0);
+	p.DisplayName=['$$y=$$',num2str(yy(1,iy(i),iz)),'$$h$$'];
+end
+lgd=legend('location','southeast');lgd.FontSize=14;
+
+%------------------------------
+figname=['WMC',num2str(al),'-utrans'];
+exportgraphics(fig,[figname,'.png'],'resolution',300);
+%saveas(fig,figname,'jpeg');
+%------------------------------
+
+%=============================================================
 % cube surfaces
 
-wmc_wall(Tm,'$$|\tau|$$',x,y,z,II,I1,I2,I3,I4,I5);
-wmc_wall(uf,'$$u_f$$'   ,x,y,z,II,I1,I2,I3,I4,I5);
+%wmcWall(Tm,'$$|\tau|$$',x,y,z,II,I1,I2,I3,I4,I5);
+%wmcWall(uf,'$$u_f$$'   ,x,y,z,II,I1,I2,I3,I4,I5);
+%wmcWall(yp,'$$y^+$$'   ,x,y,z,II,I1,I2,I3,I4,I5);
 
 %=============================================================
 % geometry

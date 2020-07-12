@@ -20,36 +20,37 @@ if(al==90) casename='WMC90'; end;
 
 %figure;
 figure;fig=gcf;ax=gca; hold on;grid on;
-title([casename,' ',qtyname,' Profile, y=',num2str(y)],'fontsize',14);
+%title([casename,' ',qtyname,' Profile, y=',num2str(y)],'fontsize',14);
 ax.XScale='linear';
 ax.YScale='linear';
-xlabel(['$$x + $$',qtyname]);
-ylabel('$$z$$');
+xlabel(['$$x/h + $$',qtyname]);
+ylabel('$$z/h$$');
 
 daspect([1,1,1]);
 set(fig,'position',[585,1e3,1e3,500])
 
-% bottom wall
-%p=plot(xw,yw,'k-.','linewidth',1.5);
-%p.HandleVisibility='off';
+% cube
+p=plot(xw,zw,'k-.','linewidth',1.5);
+p.HandleVisibility='off';
 
 % quantity 1
 %p=plot(xq1,y1,'ko','linewidth',1.0);
 for i=1:1:size(xq1,1)
 	           p=plot(xq1(i,:),z1(i,:),'b-','linewidth',1.0);
 	if(flg==0) p=plot(xq2(i,:),z2(i,:),'r-','linewidth',1.0); end;
-	%p.HandleVisibility='off';
+	p.HandleVisibility='off';
 end
-%p.HandleVisibility='on';
-%p.DisplayName=['Nek'];
+p.HandleVisibility='on';
+p.DisplayName=['WMC',num2str(al)];
 
 if(flg==1) p=plot(xq2,z2,'ro','linewidth',1.0); end;
-%p.HandleVisibility='on';
-%p.DisplayName=['Snyder, 1994'];
+p.HandleVisibility='on';
+p.DisplayName=['Snyder, 1994'];
 
-%lgd=legend('location','southeast');lgd.FontSize=14;
+lgd=legend('location','northeast');lgd.FontSize=14;
 %------------------------------
 figname=[casename,'-XZ-',qty];
-saveas(fig,figname,'jpeg');
+exportgraphics(fig,[figname,'.png'],'resolution',300);
+%saveas(fig,figname,'jpeg');
 %------------------------------
 end

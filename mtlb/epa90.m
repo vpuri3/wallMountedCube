@@ -79,7 +79,7 @@ zw=linspace(zmn,zmx,1e0);
 % units: length (mm), vel (m/s)
 %----------
 xfactor=1/200;
-ufactor=1/3; % tbd
+ufactor=1/3;
 
 M=readmatrix('~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C1CT.xls');
 xE1=M(:,1)*xfactor;
@@ -104,9 +104,16 @@ profXY2(k1N(I1),xN(I1),yN(I1),kE1,xE1,yE1,kscl,'SNY-k','$$k$$'  ,al,xw,yw,1);
 %=======================================================
 
 %----------
-% geometry  /todo
+% geometry
 %----------
-%[~,~,~,xw,yw,~] = cube(90,xw,yw,zw);
+xx=linspace(-0.5,0.5,1e2)';
+xw=[xx      ;0*xx+0.5;flip(xx);0*xx-0.5];
+zw=[0*xx-0.5;xx      ;0*xx+0.5;flip(xx)];
+a=al*pi/180;
+M=[cos(a),-sin(a);sin(a),cos(a)];
+xz=[xw,zw]*M';
+xw=xz(:,1);
+zw=xz(:,2);
 
 %----------
 % Snyder
@@ -130,6 +137,5 @@ yE2=xE2*0+0.1;
 %----------
 % figs
 %----------
-profXZ2( uN(I2),xN(I2),zN(I2),uE2,xE2,zE2,uscl,'SNY-u','$$v_x$$',al,xw,yw,0.1,1);
-profXZ2(k1N(I2),xN(I2),zN(I2),kE2,xE2,zE2,kscl,'SNY-k','$$k$$'  ,al,xw,yw,0.1,1);
-
+profXZ2( uN(I2),xN(I2),zN(I2),uE2,xE2,zE2,uscl,'SNY-u','$$v_x$$',al,xw,zw,0.1,1);
+profXZ2(k1N(I2),xN(I2),zN(I2),kE2,xE2,zE2,kscl,'SNY-k','$$k$$'  ,al,xw,zw,0.1,1);
