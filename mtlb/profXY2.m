@@ -26,6 +26,9 @@ ax.YScale='linear';
 xlabel(['$$x/h + $$',qtyname]);
 ylabel('$$y/h$$');
 
+xlim([-4.5,8.5]);
+ylim([ 0.0,2.2]);
+
 daspect([1,1,1]);
 set(fig,'position',[585,1e3,1000,250])
 
@@ -50,7 +53,7 @@ p.DisplayName=['Snyder, 1994'];
 lgd=legend('location','northeast');lgd.FontSize=14;
 %------------------------------
 figname=[casename,'-XY-',qty];
-%exportgraphics(fig,[figname,'.png'],'resolution',300);
-saveas(fig,figname,'png');
+exportgraphics(fig,[figname,'.png'],'resolution',300);
+%saveas(fig,figname,'png');
 %------------------------------
 end

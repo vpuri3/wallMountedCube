@@ -26,6 +26,9 @@ ax.YScale='linear';
 xlabel(['$$x/h + $$',qtyname]);
 ylabel('$$z/h$$');
 
+xlim([-4.5,8.5]);
+ylim([-2.0,2.0]);
+
 daspect([1,1,1]);
 set(fig,'position',[585,1e3,1e3,500])
 

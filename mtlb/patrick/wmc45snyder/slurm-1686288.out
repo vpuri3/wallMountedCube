@@ -18,7 +18,7 @@
  Number of processors:        2048
  REAL    wdsize      :           8
  INTEGER wdsize      :           4
- Timer accuracy      : 1.19E-06
+ Timer accuracy      : 9.78E-07
   
  Reading /lcrc/project/wall_bounded_flows/vpuri/rb/wmc45-snyder/p/wmc.rea                                                                    
  Reading /lcrc/project/wall_bounded_flows/vpuri/rb/wmc45-snyder/p/wmc.re2                                                                    
@@ -26,12 +26,12 @@
  Reading /lcrc/project/wall_bounded_flows/vpuri/rb/wmc45-snyder/p/wmc.ma2                                                                    
   
  element load imbalance:            1         183         184
- done :: mapping    1.5795     sec
+ done :: mapping    1.6542     sec
 
   
   preading mesh 
   preading bc for ifld           1
- done :: read .re2 file    1.8     sec
+ done :: read .re2 file    2.6     sec
 
            0  objects found
  118   Parameters from file:
@@ -62,7 +62,7 @@
  101      1.00000     p101 Number of additional modes to filter
  103      0.01        p103 weight of stabilizing filter (.01)
   
- done :: read .rea file    3.9715     sec
+ done :: read .rea file    4.8863     sec
 
  nelgt/nelgv/lelt:      376392      376392         247
  lx1  /lx2  /lx3 :           8           8           8
@@ -74,12 +74,12 @@
  done :: usrsetvert
 
 gs_setup: 12238910 unique labels shared
-   pairwise times (avg, min, max): 0.000360059 0.000298405 0.000441504
-   crystal router                : 0.00303633 0.00295191 0.00312591
+   pairwise times (avg, min, max): 0.000358206 0.000268102 0.000440907
+   crystal router                : 0.00301616 0.00293591 0.00309892
    used all_to_all method: pairwise
    handle bytes (avg, min, max): 808291 700052 873868
    buffer bytes (avg, min, max): 211523 112208 290528
-   setupds time 1.1437E+00 seconds   0  8    48369834      376392
+   setupds time 1.2628E+00 seconds   0  8    48369834      376392
           16  max multiplicity
  done :: setup mesh topology
   
@@ -99,12 +99,12 @@ gs_setup: 12238910 unique labels shared
  done :: usrsetvert
 
 gs_setup: 12238910 unique labels shared
-   pairwise times (avg, min, max): 0.000344426 0.000269294 0.000431395
-   crystal router                : 0.00302148 0.00294418 0.00311761
+   pairwise times (avg, min, max): 0.000350789 0.000254703 0.000445008
+   crystal router                : 0.00300592 0.00292451 0.0030812
    used all_to_all method: pairwise
    handle bytes (avg, min, max): 808291 700052 873868
    buffer bytes (avg, min, max): 211523 112208 290528
-   setupds time 7.4344E-01 seconds   1  8    48369834      376392
+   setupds time 7.3724E-01 seconds   1  8    48369834      376392
           16  max multiplicity
  done :: setup mesh topology
   
@@ -172,7 +172,7 @@ gs_setup: 12238910 unique labels shared
                                                       
 
         0  1.8000E+01 done :: Read checkpoint data
-                              avg data-throughput =  3405.9MBps
+                              avg data-throughput =  3197.8MBps
                               io-nodes =  2048
 
  xyz min    -10.000       0.0000      -5.0000    
@@ -190,7 +190,7 @@ gridpoints unique/tot:     129670506    192712704
   dofs:             128843946             129604818
   
  Initial time: 0.1800000E+02
- Initialization successfully completed    8.5580     sec
+ Initialization successfully completed    9.5030     sec
 
  nsteps=0 -> skip time loop
  running solver in post processing mode
@@ -204,7 +204,7 @@ gridpoints unique/tot:     129670506    192712704
                                                       
 
         0  1.8000E+01 done :: Read checkpoint data
-                              avg data-throughput = 15120.8MBps
+                              avg data-throughput = 21376.6MBps
                               io-nodes =  2048
 
  uvwpt min -0.66426      -1.0058      -2.2532      -2.3649       0.0000    
@@ -216,7 +216,7 @@ gridpoints unique/tot:     129670506    192712704
                                                       
 
         0  1.8000E+01 done :: Read checkpoint data
-                              avg data-throughput =  5315.7MBps
+                              avg data-throughput =  3405.7MBps
                               io-nodes =  2048
 
  uvwpt min   0.0000       0.0000       0.0000       0.0000       0.0000    
@@ -228,7 +228,7 @@ gridpoints unique/tot:     129670506    192712704
                                                       
 
         0  1.8000E+01 done :: Read checkpoint data
-                              avg data-throughput =  5062.4MBps
+                              avg data-throughput =  4232.5MBps
                               io-nodes =  2048
 
  uvwpt min  -1.2690      -1.4894      -1.3094      -2.3649       0.0000    
@@ -238,9 +238,12 @@ gridpoints unique/tot:     129670506    192712704
  Outpost:
  dump history points
  reading history points
- found         4000  points
+ found         5000  points
+ Rewriting file: ave.dat
  dump history points
+ Rewriting file: var.dat
  dump history points
+ Rewriting file: cov.dat
  in comp_wallShear(...)
  vsc,dsty  2.500000000000000E-005   1.00000000000000     
  area: 3.54000000E+02
@@ -248,6 +251,7 @@ Mdrag: 3.57541417E-01
 Tmavg: 1.01000400E-03
 Ufavg: 3.17805602E-02
  dump history points
+ Rewriting file: wsh.dat
  done :: userchk
 
         0  1.8000E+01 Write checkpoint
@@ -257,16 +261,16 @@ Ufavg: 3.17805602E-02
 
         0  1.8000E+01 done :: Write checkpoint
                               file size =     517.E+01MB
-                              avg data-throughput =    89.8MB/s
+                              avg data-throughput =    82.6MB/s
                               io-nodes =  2048
 
   
 run successful: dying ...
   
   
-total elapsed time             :   7.13313E+01 sec
+total elapsed time             :   7.80986E+01 sec
 total solver time w/o IO       :   0.00000E+00 sec
 time/timestep                  :   0.00000E+00 sec
 avg throughput per timestep    :   0.00000E+00 gridpts/CPUs
-total max memory usage         :   6.48165E+02 GB
+total max memory usage         :   6.48213E+02 GB
 

@@ -18,7 +18,7 @@
  Number of processors:        2048
  REAL    wdsize      :           8
  INTEGER wdsize      :           4
- Timer accuracy      : 1.00E-06
+ Timer accuracy      : 6.91E-07
   
  Reading /lcrc/project/wall_bounded_flows/vpuri/rb/wmc90-snyder/p/wmc.rea                                                                    
  WARNING: lgmres might be too low!
@@ -27,12 +27,12 @@
  Reading /lcrc/project/wall_bounded_flows/vpuri/rb/wmc90-snyder/p/wmc.ma2                                                                    
   
  element load imbalance:            1         146         147
- done :: mapping    1.4628     sec
+ done :: mapping    1.4616     sec
 
   
   preading mesh 
   preading bc for ifld           1
- done :: read .re2 file    1.7     sec
+ done :: read .re2 file    1.9     sec
 
            0  objects found
  118   Parameters from file:
@@ -61,7 +61,7 @@
  101      1.00000     p101 Number of additional modes to filter
  103      0.01        p103 weight of stabilizing filter (.01)
   
- done :: read .rea file    4.6647     sec
+ done :: read .rea file    4.9344     sec
 
  nelgt/nelgv/lelt:      300180      300180         393
  lx1  /lx2  /lx3 :           8           8           8
@@ -73,12 +73,12 @@
  done :: usrsetvert
 
 gs_setup: 10265798 unique labels shared
-   pairwise times (avg, min, max): 0.000302754 0.000218391 0.000390506
-   crystal router                : 0.00240962 0.00234711 0.0024766
+   pairwise times (avg, min, max): 0.000309104 0.000220418 0.0004035
+   crystal router                : 0.00241152 0.00235131 0.002476
    used all_to_all method: pairwise
    handle bytes (avg, min, max): 654323 562964 699716
    buffer bytes (avg, min, max): 179044 101808 230896
-   setupds time 9.2932E-01 seconds   0  8    38539290      300180
+   setupds time 1.0476E+00 seconds   0  8    38539290      300180
           12  max multiplicity
  done :: setup mesh topology
   
@@ -98,12 +98,12 @@ gs_setup: 10265798 unique labels shared
  done :: usrsetvert
 
 gs_setup: 10265798 unique labels shared
-   pairwise times (avg, min, max): 0.000298716 0.000211 0.000374794
-   crystal router                : 0.00242042 0.0023654 0.00248599
+   pairwise times (avg, min, max): 0.000300503 0.000227189 0.000382209
+   crystal router                : 0.00241824 0.0023536 0.00247891
    used all_to_all method: pairwise
    handle bytes (avg, min, max): 654323 562964 699716
    buffer bytes (avg, min, max): 179044 101808 230896
-   setupds time 5.7895E-01 seconds   1  8    38539290      300180
+   setupds time 5.6835E-01 seconds   1  8    38539290      300180
           12  max multiplicity
  done :: setup mesh topology
   
@@ -171,7 +171,7 @@ gs_setup: 10265798 unique labels shared
                                                       
 
         0  3.0000E+01 done :: Read checkpoint data
-                              avg data-throughput =   878.8MBps
+                              avg data-throughput =  2666.9MBps
                               io-nodes =  2048
 
  xyz min    -10.000       0.0000      -5.0000    
@@ -189,7 +189,7 @@ gridpoints unique/tot:     103378170    153692160
   dofs:             102703230             103335330
   
  Initial time: 0.3000000E+02
- Initialization successfully completed    10.894     sec
+ Initialization successfully completed    9.1083     sec
 
  nsteps=0 -> skip time loop
  running solver in post processing mode
@@ -203,7 +203,7 @@ gridpoints unique/tot:     103378170    153692160
                                                       
 
         0  3.0000E+01 done :: Read checkpoint data
-                              avg data-throughput = 16350.1MBps
+                              avg data-throughput = 16462.4MBps
                               io-nodes =  2048
 
  uvwpt min -0.63460     -0.47633      -1.1963       0.0000       0.0000    
@@ -215,7 +215,7 @@ gridpoints unique/tot:     103378170    153692160
                                                       
 
         0  3.0000E+01 done :: Read checkpoint data
-                              avg data-throughput =  4082.1MBps
+                              avg data-throughput =  3526.3MBps
                               io-nodes =  2048
 
  uvwpt min   0.0000       0.0000       0.0000       0.0000       0.0000    
@@ -227,7 +227,7 @@ gridpoints unique/tot:     103378170    153692160
                                                       
 
         0  3.0000E+01 done :: Read checkpoint data
-                              avg data-throughput =  3763.3MBps
+                              avg data-throughput =  3914.4MBps
                               io-nodes =  2048
 
  uvwpt min -0.35303     -0.68242     -0.67027       0.0000       0.0000    
@@ -237,12 +237,9 @@ gridpoints unique/tot:     103378170    153692160
  Outpost:
  dump history points
  reading history points
- found         4000  points
- Rewriting file: ave.dat
+ found         5000  points
  dump history points
- Rewriting file: var.dat
  dump history points
- Rewriting file: cov.dat
  in comp_wallShear(...)
  vsc,dsty  2.500000000000000E-005   1.00000000000000     
  area: 3.54000000E+02
@@ -250,7 +247,6 @@ Mdrag: 3.18565964E-01
 Tmavg: 8.99903853E-04
 Ufavg: 2.99983975E-02
  dump history points
- Rewriting file: wsh.dat
  done :: userchk
 
         0  3.0000E+01 Write checkpoint
@@ -260,16 +256,16 @@ Ufavg: 2.99983975E-02
 
         0  3.0000E+01 done :: Write checkpoint
                               file size =     471.E+01MB
-                              avg data-throughput =    70.3MB/s
+                              avg data-throughput =    72.1MB/s
                               io-nodes =  2048
 
   
 run successful: dying ...
   
   
-total elapsed time             :   8.33895E+01 sec
+total elapsed time             :   8.05073E+01 sec
 total solver time w/o IO       :   0.00000E+00 sec
 time/timestep                  :   0.00000E+00 sec
 avg throughput per timestep    :   0.00000E+00 gridpts/CPUs
-total max memory usage         :   8.03015E+02 GB
+total max memory usage         :   8.03125E+02 GB
 

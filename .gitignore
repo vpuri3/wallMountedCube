@@ -1,4 +1,5 @@
 *.DS_Store
+*.pdf
 *0.f000*
 *.fld*
 *nek5000*

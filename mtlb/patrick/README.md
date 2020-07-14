@@ -11,7 +11,8 @@ Origin of the coordinate system is the center of the ground surface of the cube.
 
 
 ### Inflow
-uInflow = (z/1.0).^0.16
+$$uInflow = (z/1.0).^0.16$$
+
 => The flow characteristic velocity is uInflow(z=1) = 1
 
 ### Files

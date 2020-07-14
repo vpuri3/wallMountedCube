@@ -13,7 +13,7 @@ y = [];
 z = [];
 
 % centerline
-x0=[3;6;8];
+x0=[-4;3;6;8];
 y0=linspace(0.0,3.0,1e3);
 z0=[0];
 nx1=length(x0);
@@ -25,7 +25,7 @@ y = [y;reshape(y0,[nx1*ny1*nz1,1])];
 z = [z;reshape(z0,[nx1*ny1*nz1,1])];
 
 % transect
-x0=linspace(-4,10,1e3);
+x0=linspace(-4,20,1e3);
 if    (al==45) y0=[1.5];
 elseif(al==90) y0=[1.6];
 end
@@ -45,7 +45,6 @@ xlabel('x');
 ylabel('y');
 zlabel('z');
 daspect([1 1 1]);
-
 %-----------------------------------------------------%
 % create file casename.his
 format long
