@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH -N 32
+#SBATCH --ntasks-per-node=64
+#SBATCH --time=0:20:00
+#SBATCH -C knl,quad,cache
+#SBATCH -p knlall
+#SBATCH -A wall_bounded_flows
+export I_MPI_FABRICS=shm:tmi
+export I_MPI_EXTRA_FILESYSTEM=1
+export I_MPI_EXTRA_FILESYSTEM_LIST=gpfs
+echo wmc     >   SESSION.NAME
+echo /lcrc/project/wall_bounded_flows/vpuri/rb/wmc90-snyder/p'/' >> SESSION.NAME
+rm -f ioinfo logfile
+srun ./nek5000

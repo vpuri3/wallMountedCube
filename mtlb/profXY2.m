@@ -50,7 +50,7 @@ p.DisplayName=['Snyder, 1994'];
 lgd=legend('location','northeast');lgd.FontSize=14;
 %------------------------------
 figname=[casename,'-XY-',qty];
-exportgraphics(fig,[figname,'.png'],'resolution',300);
-%saveas(fig,figname,'png');
+%exportgraphics(fig,[figname,'.png'],'resolution',300);
+saveas(fig,figname,'png');
 %------------------------------
 end

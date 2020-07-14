@@ -4,8 +4,9 @@ function wmcPost(al)
 %=============================================================
 format compact; format shorte;
 
+Re=40e3;
 dsty=1;
-%visc=1/Re;
+visc=1/Re;
 
 %=============================================================
 % numbering
