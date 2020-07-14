@@ -13,7 +13,7 @@ All lengths are normalized by cube height, H
 
 # Inflow
 uInflow = (z/1.0).^0.16
-=> The flow characteristic velocity is uInflow(y=1) = 1
+=> The flow characteristic velocity is uInflow(z=1) = 1
 
 # Files
 WMC45dat1.csv - WMC45 vertical profiles at X=3H,6H,8H
