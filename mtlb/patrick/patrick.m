@@ -65,81 +65,60 @@ kN = 0.5 * sum(tk')';
 
 I1=         1:nx1*ny1*nz1 ; I1=reshape(I1,[nx1,ny1,nz1]);
 I2=I1(end)+(1:nx2*ny2*nz2); I2=reshape(I2,[nx2,ny2,nz2]);
+I1ref0=I1(1,0.5*ny1  );
+I1ref1=I1(1,0.5*ny1+1);
+I2ref=I2(1);
 
 %=======================================================
 % vertical centerline plane
 %=======================================================
 
-%----------
-% geometry 
-%----------
-xmn=-4; xmx=10;
-zmn=-0; zmx=0;
-xw=linspace(xmn,xmx,1e3);
-zw=linspace(zmn,zmx,1e0);
-[xw,yw,zw]=ndgrid(xw,0,zw);
-[~,~,~,xw,yw,~] = cube(al,xw,yw,zw);
-
-%----------
-% Snyder
-% columns: x,z,u,u',w,w',TKE,TKE/UBARSQ,sqrt(H)
-% units: length (mm), vel (m/s)
-%----------
-xfactor=1/200;
-ufactor=1/3; % tbd
-
-if(al==45)
-	fil=['~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C13C.xls'];
-	M=readmatrix(fil);
-	xE1=M(:,1)*xfactor;
-	zE1=M(:,2)*xfactor; % y -> z
-	yE1=M(:,3)*xfactor; % z -> y
-	uE1=M(:,4)*ufactor;
-	uuE1=M(:,5)*ufactor;
-	wE1=M(:,6)*ufactor;  % v -> w
-	wwE1=M(:,7)*ufactor; % v -> w
-	vE1=M(:,8)*ufactor;  % w -> v
-	vvE1=M(:,9)*ufactor; % w -> v
-	kE1=0.75*(uuE1.*uuE1+vvE1.*vvE1);
-	
-elseif(al==90)
-	fil=['~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C1CT.xls'];
-	M=readmatrix('~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C1CT.xls');
-	xE1=M(:,1)*xfactor;
-	yE1=M(:,2)*xfactor; % z -> y
-	zE1=xE1*0;
-	uE1=M(:,3)*ufactor;
-	uuE1=M(:,4)*ufactor;
-	vE1=M(:,5)*ufactor; % w -> v
-	vvE1=M(:,6)*ufactor; % w -> v
-	kE1 = 0.75*(uuE1.*uuE1+vvE1.*vvE1);
-end
-[xE1,yE1,zE1] = insidecube(al,xE1,yE1,zE1);
-%----------
-% figs
-%----------
+%xmn=-4; xmx=10;
+%zmn=-0; zmx=0;
+%xw=linspace(xmn,xmx,1e3);
+%zw=linspace(zmn,zmx,1e0);
+%[xw,yw,zw]=ndgrid(xw,0,zw);
+%[~,~,~,xw,yw,~] = cube(al,xw,yw,zw);
+%
+%xfactor=1/200;
+%ufactor=1/3; % tbd
+%
+%if(al==45)
+%	fil=['~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C13C.xls'];
+%	M=readmatrix(fil);
+%	xE1=M(:,1)*xfactor;
+%	zE1=M(:,2)*xfactor; % y -> z
+%	yE1=M(:,3)*xfactor; % z -> y
+%	uE1=M(:,4)*ufactor;
+%	uuE1=M(:,5)*ufactor;
+%	wE1=M(:,6)*ufactor;  % v -> w
+%	wwE1=M(:,7)*ufactor; % v -> w
+%	vE1=M(:,8)*ufactor;  % w -> v
+%	vvE1=M(:,9)*ufactor; % w -> v
+%	kE1=0.75*(uuE1.*uuE1+vvE1.*vvE1);
+%	
+%elseif(al==90)
+%	fil=['~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C1CT.xls'];
+%	M=readmatrix('~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C1CT.xls');
+%	xE1=M(:,1)*xfactor;
+%	yE1=M(:,2)*xfactor; % z -> y
+%	zE1=xE1*0;
+%	uE1=M(:,3)*ufactor;
+%	uuE1=M(:,4)*ufactor;
+%	vE1=M(:,5)*ufactor; % w -> v
+%	vvE1=M(:,6)*ufactor; % w -> v
+%	kE1 = 0.75*(uuE1.*uuE1+vvE1.*vvE1);
+%end
+%[xE1,yE1,zE1] = insidecube(al,xE1,yE1,zE1);
 %profXY2( uN(I1),xN(I1),yN(I1),uE1,xE1,yE1,uscl,'SNY-u','$$v_x$$',al,xw,yw,1);
 %profXY2(k1N(I1),xN(I1),yN(I1),kE1,xE1,yE1,kscl,'SNY-k','$$k$$'  ,al,xw,yw,1);
 %
-%=======================================================
-% streamwise transect
-%=======================================================
-%figure;fig=gcf;ax=gca; hold on;grid on;
-%ax.XScale='linear';
-%ax.YScale='linear';
-%xlabel(['$$x$$']);
-%ylabel('$$v_x$$');
-%plot(xN(I2),uN(I2),'r-','linewidth',2.0);
-
 %=======================================================
 % create CSV file for Patrick
 %=======================================================
 cHeader={'x','y','z','u','v','w','uu','vv','ww'};
 casename=['WMC',num2str(al)];
 format long
-%----------
-% dat1
-%----------
 I1=reshape(I1',[4e3,1]);
 A = [ xN(I1), zN(I1), yN(I1)...
     , uN(I1), wN(I1), vN(I1)...
@@ -147,9 +126,6 @@ A = [ xN(I1), zN(I1), yN(I1)...
 T = array2table(A);
 T.Properties.VariableNames(1:9)={'x','y','z','u','v','w','uu','vv','ww'}
 writetable(T,[casename,'dat1','.csv']);
-%----------
-% dat2
-%----------
 A = [ xN(I2), zN(I2), yN(I2)...
     , uN(I2), wN(I2), vN(I2)...
     ,uuN(I2),wwN(I2),vvN(I2)];
