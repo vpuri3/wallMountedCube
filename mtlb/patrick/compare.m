@@ -192,24 +192,22 @@ elseif(al==90) uE1=uE1 / uE1(1,end-6);
 end
 uN =uN  / uN(I1ref);
 
-% figure
+% profile
 nS=size(xE1,1);
 SS=[1,nS-3,nS-1,nS];
 
+cc='rgbk';
 for i=1:nx1
 	figure;fig=gcf;ax=gca; hold on;grid on;
 	ax.XScale='linear';  ax.YScale='linear';
 	xlabel(['$$v_x$$']); ylabel('$$y$$');
 	xlim([0,1.2]);       ylim([0,2.0]);
-	cc='rgbk';
 
-	II =I1(i,:); II0=II(1);
-	p=plot(uN(II),yN(II),['-',cc(1)],'linewidth',2);
-	p.DisplayName=['Nek x=',num2str(xN(II0))];
+	p=plot(uN(I1(i,:)),yN(I1(i,:)),['-',cc(1)],'linewidth',2);
+	p.DisplayName=['Nek x=',num2str(xN(I1(i,1)))];
 	
-	nx=SS(i);
-	p=plot(uE1(nx,:),yE1(nx,:),['-o',cc(2)],'linewidth',2);
-	p.DisplayName=['Sny x=',num2str(xN(II0))];
+	p=plot(uE1(SS(i),:),yE1(SS(i),:),['-o',cc(2)],'linewidth',2);
+	p.DisplayName=['EPA x=',num2str(xN(I1(i,1)))];
 
 	p=plot(uQ1(i,:),yQ,['-',cc(3)],'linewidth',2);
 	p.DisplayName=['QUIC x=',num2str(xxQ(i))];
@@ -219,10 +217,40 @@ for i=1:nx1
 
 	title(['WMC',num2str(al),' x-velocity at x=',num2str(xxQ(i))]);
 	legend('show','location','northwest');
-	figname=['WMC',num2str(al),'x',num2str(i)];
+	figname=['WMC',num2str(al),'xvel_x',num2str(i)];
 	saveas(fig,figname,'png');
 end
 
+% deficit
+nS=size(xE1,1);
+SS=[1,nS-3,nS-1,nS];
+
+for i=2:nx1
+	figure;fig=gcf;ax=gca; hold on;grid on;
+	ax.XScale='linear';  ax.YScale='linear';
+	xlabel(['$$v_x$$']); ylabel('$$y$$');
+	%xlim([0,1.2]);
+	ylim([0,2.0]);
+	cc='rgbk';
+
+	II =I1(i,:); II0=II(1);
+	p=plot(uN(I1(i,:))-uN(I1(1,:)),yN(I1(i,:)),['-',cc(1)],'linewidth',2);
+	p.DisplayName=['Nek x=',num2str(xN(I1(i,1)))];
+	
+	p=plot(uE1(SS(i),:)-uE1(SS(1),:),yE1(SS(i),:),['-o',cc(2)],'linewidth',2);
+	p.DisplayName=['EPA x=',num2str(xN(II0))];
+
+	p=plot(uQ1(i,:)-uQ1(1,:),yQ,['-',cc(3)],'linewidth',2);
+	p.DisplayName=['QUIC x=',num2str(xxQ(i))];
+
+	p=plot(uN1(:,i)-uN1(:,1),yN1,['-',cc(4)],'linewidth',2);
+	p.DisplayName=['Nalu x=',num2str(xN1(i))];
+
+	title(['WMC',num2str(al),' x-velocity deficit at x=',num2str(xxQ(i))]);
+	legend('show','location','northwest');
+	figname=['WMC',num2str(al),'xvel_deficit_x',num2str(i)];
+	saveas(fig,figname,'png');
+end
 %=======================================================
 % streamwise transect
 %=======================================================
@@ -230,7 +258,7 @@ end
 uE1=uE1 / uE1(1,end-2);
 uN =uN  / uN (I2ref);
 
-% figure
+% profile
 figure;fig=gcf;ax=gca; hold on;grid on;
 ax.XScale='linear';
 ax.YScale='linear';
@@ -241,7 +269,7 @@ p=plot(xN(I2),uN(I2),['-',cc(1)],'linewidth',2.0);
 p.DisplayName=['Nek, y=',num2str(yN(I2ref))];
 
 p=plot(xE1(:,end-2),uE1(:,end-2),['o',cc(2)],'linewidth',2);
-p.DisplayName=['Sny, y=',num2str(yE1(1,end-2))];
+p.DisplayName=['EPA, y=',num2str(yE1(1,end-2))];
 
 p=plot(xQ,uQ2,['-',cc(3)],'linewidth',2);
 p.DisplayName=['QUIC'];
@@ -254,6 +282,34 @@ p.DisplayName=['wall'];
 title(['WMC',num2str(al),'streamwise transect x-velocity']);
 legend('show');
 %
-figname=['WMC',num2str(al),'streamwise'];
+figname=['WMC',num2str(al),'xvel_','streamwise'];
+saveas(fig,figname,'png');
+
+
+% deficit
+figure;fig=gcf;ax=gca; hold on;grid on;
+ax.XScale='linear';
+ax.YScale='linear';
+xlabel(['$$x$$']);
+ylabel('$$v_x$$');
+
+p=plot(xN(I2),uN(I2)-1,['-',cc(1)],'linewidth',2.0);
+p.DisplayName=['Nek, y=',num2str(yN(I2ref))];
+
+p=plot(xE1(:,end-2),uE1(:,end-2)-1,['o',cc(2)],'linewidth',2);
+p.DisplayName=['EPA, y=',num2str(yE1(1,end-2))];
+
+p=plot(xQ,uQ2-1,['-',cc(3)],'linewidth',2);
+p.DisplayName=['QUIC'];
+
+p=plot(xN2,uN2-1,['-',cc(4)],'linewidth',2);
+p.DisplayName=['Nalu'];
+
+p=plot(xw,yw*0.02,'k-.','linewidth',2);
+p.DisplayName=['wall'];
+title(['WMC',num2str(al),'streamwise transect x-velocity deficit']);
+legend('show');
+%
+figname=['WMC',num2str(al),'xvel_deficit_','streamwise'];
 saveas(fig,figname,'png');
 %=======================================================
