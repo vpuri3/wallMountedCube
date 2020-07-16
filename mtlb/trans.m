@@ -19,11 +19,8 @@ y=[1.2,1.4,1.6,1.8,2.0]; y=[y;y];
 %=============================================================
 % plotting
 
-figure;
-fig=gcf;ax=gca; hold on;grid on;
-% title
+figure;fig=gcf;ax=gca; hold on;grid on;
 %title(['Inflow Velocity Profile'],'fontsize',14);
-% ax
 ax.XScale='linear';
 ax.YScale='linear';
 xlabel(['$$x/h$$']);

@@ -166,6 +166,13 @@ c     implicit none
       character*3 bctyp
       real l2_temp(lx1,ly1,lz1,lelv)
 
+      real Tx(lx1,ly1,lz1,lelt)
+      real Ty(lx1,ly1,lz1,lelt)
+      real Tz(lx1,ly1,lz1,lelt)
+      real Tm(lx1,ly1,lz1,lelt)
+      real uf(lx1,ly1,lz1,lelt)
+      real yp(lx1,ly1,lz1,lelt)
+
       ifto  = .false.
       ifxyo = .false.
 
@@ -177,9 +184,9 @@ c     implicit none
 
       call standard_incomp_calc(int(readSTAT),.true.)
 
-c     bctyp = 'W  '
-c     call comp_wallShear(Tx,Ty,Tz,Tm,uf,yp,uavg,vavg,wavg,bctyp)
-c     call sample(Tm,uf,Tx,Ty,Tz,'wsh','Tm ','uf ','Tx ','Ty ','Tz ')
+      bctyp = 'W  '
+      call comp_wallShear(Tx,Ty,Tz,Tm,uf,yp,uavg,vavg,wavg,bctyp)
+      call sample(Tm,uf,Tx,Ty,Tz,'wsh','Tm ','uf ','Tx ','Ty ','Tz ')
 c     call comp_uplus(uavg,vavg,wavg,bctyp,ifld)
 
 c     call lambda2(l2_temp)
