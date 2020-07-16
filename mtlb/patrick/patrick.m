@@ -121,21 +121,21 @@ I2ref=I2(1);
 u1ref=uN(I1ref);
 u2ref=uN(I2ref);
 
-uN(I1)=uN(I1)/u1ref;
-vN(I1)=vN(I1)/u1ref;
-wN(I1)=wN(I1)/u1ref;
+ uN= uN/u1ref;
+ vN= vN/u1ref;
+ wN= wN/u1ref;
 
-uuN(I1)=uuN(I1)/(u1ref^2);
-vvN(I1)=vvN(I1)/(u1ref^2);
-wwN(I1)=wwN(I1)/(u1ref^2);
+uuN=uuN/(u1ref^2);
+vvN=vvN/(u1ref^2);
+wwN=wwN/(u1ref^2);
 
-uN(I2)=uN(I2)/u2ref;
-vN(I2)=vN(I2)/u2ref;
-wN(I2)=wN(I2)/u2ref;
-
-uuN(I2)=uuN(I2)/(u2ref^2);
-vvN(I2)=vvN(I2)/(u2ref^2);
-wwN(I2)=wwN(I2)/(u2ref^2);
+%uN(I2)=uN(I2)/u2ref;
+%vN(I2)=vN(I2)/u2ref;
+%wN(I2)=wN(I2)/u2ref;
+%
+%uuN(I2)=uuN(I2)/(u2ref^2);
+%vvN(I2)=vvN(I2)/(u2ref^2);
+%wwN(I2)=wwN(I2)/(u2ref^2);
 
 cHeader={'x','y','z','u','v','w','uu','vv','ww'};
 casename=['WMC',num2str(al)];
