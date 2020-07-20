@@ -72,9 +72,9 @@ uN(I2)=uN(I2)/u1ref; uuN(I2)=uuN(I2)/(u1ref^2);
 vN(I2)=vN(I2)/u1ref; vvN(I2)=vvN(I2)/(u1ref^2);
 wN(I2)=wN(I2)/u1ref; wwN(I2)=wwN(I2)/(u1ref^2);
 
-uN(I3)=uN(I3)./u3ref; uuN(I3)=uuN(I3)./(u3ref.^2);
-vN(I3)=vN(I3)./u3ref; vvN(I3)=vvN(I3)./(u3ref.^2);
-wN(I3)=wN(I3)./u3ref; wwN(I3)=wwN(I3)./(u3ref.^2);
+uN(I3)=uN(I3)./u1ref; uuN(I3)=uuN(I3)./(u1ref.^2);
+vN(I3)=vN(I3)./u1ref; vvN(I3)=vvN(I3)./(u1ref.^2);
+wN(I3)=wN(I3)./u1ref; wwN(I3)=wwN(I3)./(u1ref.^2);
 
 % TKE
 k1N=0.75*(uuN+vvN); % good proxy for TKE
@@ -145,7 +145,6 @@ zw=xz(:,2);
 % units: length (mm), vel (m/s)
 %----------
 xfactor=1/200;
-ufactor=1/3; % tbd
 
 M=readmatrix('~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C13GF.xls');
 xE2=M(:,1)*xfactor;
@@ -157,16 +156,6 @@ wwE2=M(:,8)*ufactor; % v -> w
 kE2=0.75*(uuE2.*uuE2+wwE2.*wwE2);
 
 yE2=xE2*0+0.1;
-
-%M=readmatrix('~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C13UV.xls');
-%xE2=M(:,1)*xfactor;
-%zE2=M(:,2)*xfactor; % y -> z
-%yE2=M(:,3)*xfactor; % z -> y
-%uE2=M(:,4)*ufactor;
-%uuE2=M(:,5)*ufactor;
-%wE2=M(:,12)*ufactor;  % v -> w
-%wwE2=M(:,13)*ufactor; % v -> w
-%kE2=0.75*(uuE2.*uuE2+wwE2.*wwE2);
 
 [xE2,yE2,zE2] = insidecube(al,xE2,yE2,zE2);
 %----------
@@ -203,10 +192,10 @@ vvE3 = reshape(vvE1,[10,19]); vvE3=vvE3((7:10)',:);
 wwE3 = reshape(wwE1,[10,19]); wwE3=wwE3((7:10)',:);
 
 % normalization
-u3ref = uE3(:,1);
-uE3=uE3./u3ref; uuE3=uuE3./(u3ref);
-vE3=vE3./u3ref; vvE3=vvE3./(u3ref);
-wE3=wE3./u3ref; wwE3=wwE3./(u3ref);
+%u3ref = uE3(:,1);
+%uE3=uE3./u3ref; uuE3=uuE3./u3ref;
+%vE3=vE3./u3ref; vvE3=vvE3./u3ref;
+%wE3=wE3./u3ref; wwE3=wwE3./u3ref;
 
 kE3=0.75*(uuE3.*uuE3+vvE3.*vvE3);
 
@@ -238,10 +227,11 @@ for i=1:ny3
 end
 p=plot(xw,yw,'k-.','linewidth',2);
 p.DisplayName=['wall'];
+legend('show');
 %------------------------------
-figname=['trans',num2str(al)];
+figname=['WMC',num2str(al),'trans'];
 %exportgraphics(fig,[figname,'.png'],'resolution',300);
-%saveas(fig,figname,'jpeg');
+saveas(fig,figname,'png');
 %------------------------------
 %
 % velocity profile
@@ -262,32 +252,34 @@ for i=1:ny3
 	p.HandleVisibility='on';
 	p.DisplayName=['$$y=$$',num2str(yE3(i,1))];
 end
+legend('show');
 %------------------------------
-figname=['WMC',num2str(al),'-utrans'];
+figname=['WMC',num2str(al),'trans_u'];
 %exportgraphics(fig,[figname,'.png'],'resolution',300);
-%saveas(fig,figname,'jpeg');
+saveas(fig,figname,'png');
 %------------------------------
 %
 % TKE profile
 %
-%figure;fig=gcf;ax=gca; hold on;grid on;
-%ax.XScale='linear';
-%ax.YScale='log';
-%xlabel(['$$x/h$$']);
-%ylabel('$$k$$');
-%
-%set(fig,'position',[585,1e3,1200,300])
-%for i=1:ny3
-% 	p=plot(xN(I3(:,i)),k1N(I3(:,i)),['-',ll(i)],'linewidth',2.0);
-% 	p.HandleVisibility='on';
-% 	p.DisplayName=['Nek $$y=$$',num2str(yE3(i,1))];
-%
-%	p=plot(xE3(i,:),kE3(i,:),['o',ll(i)],'linewidth',2.0);
-%	p.HandleVisibility='on';
-%	p.DisplayName=['$$y=$$',num2str(yE3(i,1))];
-%end
+figure;fig=gcf;ax=gca; hold on;grid on;
+ax.XScale='linear';
+ax.YScale='log';
+xlabel(['$$x/h$$']);
+ylabel('$$k$$');
+
+set(fig,'position',[585,1e3,1200,300])
+for i=1:ny3
+ 	p=plot(xN(I3(:,i)),k1N(I3(:,i)),['-',ll(i)],'linewidth',2.0);
+ 	p.HandleVisibility='on';
+ 	p.DisplayName=['Nek $$y=$$',num2str(yE3(i,1))];
+
+	p=plot(xE3(i,:),kE3(i,:),['o',ll(i)],'linewidth',2.0);
+	p.HandleVisibility='on';
+	p.DisplayName=['EPA $$y=$$',num2str(yE3(i,1))];
+end
+legend('show');
 %------------------------------
-%figname=['WMC',num2str(al),'-ktrans'];
+figname=['WMC',num2str(al),'trans_k'];
 %exportgraphics(fig,[figname,'.png'],'resolution',300);
-%saveas(fig,figname,'jpeg');
+saveas(fig,figname,'png');
 %------------------------------
