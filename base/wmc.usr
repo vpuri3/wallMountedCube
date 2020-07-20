@@ -377,14 +377,14 @@ c-----------------------------------------------------------------------
          w0 = ( y - (y_in-y_buf) )
      &      / ((y_in+y_buf) - (y_in-y_buf))
          w1 = 1.0 - w0
-         ux = w0*ux_in + w1*ux_mid
+         ux = w1*ux_in + w0*ux_mid
       elseif(y .LE. y_out-y_buf) then       
          ux = ux_mid
       elseif(y .LE. y_out+y_buf) then
          w0 = ( y - (y_out-y_buf) )
      &      / ((y_out+y_buf) - (y_out-y_buf))
          w1 = 1.0 - w0
-         ux = w0*ux_mid + w1*ux_out
+         ux = w1*ux_mid + w0*ux_out
       else
          ux = ux_out
       endif
