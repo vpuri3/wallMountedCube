@@ -37,7 +37,8 @@ I_mid = (y<(y_out-y_buf))         - I_ibf - I_in;
 I_obf = (y<(y_out+y_buf)) - I_mid - I_ibf - I_in;
 I_out = (y>(y_out+y_buf));
 
-u =     I_in  .* ux_in ; u = u + I_ibf .* (w1i.*ux_in  + w0i.*ux_mid);
+u =     I_in  .* ux_in ;
+u = u + I_ibf .* (w1i.*ux_in  + w0i.*ux_mid);
 u = u + I_mid .* ux_mid;
 u = u + I_obf .* (w1o.*ux_mid + w0o.*ux_out);
 u = u + I_out .* ux_out;
