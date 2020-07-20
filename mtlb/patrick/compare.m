@@ -61,14 +61,20 @@ pN=U(:,4);
 uuN=tk(:,1);
 vvN=tk(:,2);
 wwN=tk(:,3);
-k1N=0.75*(uuN+vvN); % good proxy for TKE
-kN = 0.5 * sum(tk')';
 
 I1=         1:nx1*ny1*nz1 ; I1=reshape(I1,[nx1,ny1,nz1]);
 I2=I1(end)+(1:nx2*ny2*nz2); I2=reshape(I2,[nx2,ny2,nz2]);
 I1ref=I1(1,334);
 I2ref=I2(1);
 
+uNref = uN(I1ref);
+
+uN=uN/uNref; uuN=uuN/(uNref^2);
+vN=vN/uNref; vvN=vvN/(uNref^2);
+wN=wN/uNref; wwN=wwN/(uNref^2);
+
+k1N=0.75*(uuN+vvN); % good proxy for TKE
+kN = 0.5 * sum(tk')';
 %=======================================================
 % EPA
 %=======================================================
@@ -89,7 +95,6 @@ zw=linspace(zmn,zmx,1e0);
 % units: length (mm), vel (m/s)
 %----------
 xfactor=1/200;
-ufactor=1/3; % tbd
 
 if(al==45)
 	fil=['~/Nek5000/run/wmc/mtlb/profiles/EPA_WindTunnel/EP3C13C.xls'];
@@ -97,7 +102,11 @@ if(al==45)
 	xE1=M(:,1)*xfactor;
 	zE1=M(:,2)*xfactor; % y -> z
 	yE1=M(:,3)*xfactor; % z -> y
-	uE1=M(:,4)*ufactor;
+	uE1=M(:,4);
+
+	ufactor=1/uE1(5);
+
+	uE1=uE1*ufactor;
 	uuE1=M(:,5)*ufactor;
 	wE1=M(:,6)*ufactor;  % v -> w
 	wwE1=M(:,7)*ufactor; % v -> w
@@ -111,6 +120,10 @@ elseif(al==90)
 	xE1=M(:,1)*xfactor;
 	yE1=M(:,2)*xfactor; % z -> y
 	zE1=xE1*0;
+	uE1=M(:,3);
+	
+	ufactor = 1/uE1(169); % /todo
+
 	uE1=M(:,3)*ufactor;
 	uuE1=M(:,4)*ufactor;
 	vE1=M(:,5)*ufactor; % w -> v
@@ -125,15 +138,39 @@ if(al==45)
 	z=zeros(5,1);
 	xE1=[xE1(1:80);z;xE1(81:85);z;xE1(86:90);z;xE1(91:end)];
 	yE1=[yE1(1:80);z;yE1(81:85);z;yE1(86:90);z;yE1(91:end)];
+	zE1=[zE1(1:80);z;zE1(81:85);z;zE1(86:90);z;zE1(91:end)];
+	
 	uE1=[uE1(1:80);z;uE1(81:85);z;uE1(86:90);z;uE1(91:end)];
+	vE1=[vE1(1:80);z;vE1(81:85);z;vE1(86:90);z;vE1(91:end)];
+	wE1=[wE1(1:80);z;wE1(81:85);z;wE1(86:90);z;wE1(91:end)];
+
+	uuE1=[uuE1(1:80);z;uuE1(81:85);z;uuE1(86:90);z;uuE1(91:end)];
+	vvE1=[vvE1(1:80);z;vvE1(81:85);z;vvE1(86:90);z;vvE1(91:end)];
+	%wwE1=[wwE1(1:80);z;wwE1(81:85);z;wwE1(86:90);z;wwE1(91:end)];
 
 	xE1 = reshape(xE1,[10,19]);xE1=xE1';
 	yE1 = reshape(yE1,[10,19]);yE1=yE1';
+	zE1 = reshape(zE1,[10,19]);zE1=zE1';
+
 	uE1 = reshape(uE1,[10,19]);uE1=uE1';
+	vE1 = reshape(vE1,[10,19]);vE1=vE1';
+	%wE1 = reshape(wE1,[10,19]);wE1=wE1';
+
+	uuE1 = reshape(uuE1,[10,19]);uuE1=uuE1';
+	vvE1 = reshape(vvE1,[10,19]);vvE1=vvE1';
+	%wwE1 = reshape(wwE1,[10,19]);wwE1=wwE1';
 elseif(al==90)
 	xE1 = reshape(xE1,[21,15]); % [nx,ny]
 	yE1 = reshape(yE1,[21,15]);
+	zE1 = reshape(zE1,[21,15]);
+
 	uE1 = reshape(uE1,[21,15]);
+	vE1 = reshape(vE1,[21,15]);
+	%wE1 = reshape(wE1,[21,15]);
+
+	uuE1 = reshape(uuE1,[21,15]);
+	vvE1 = reshape(vvE1,[21,15]);
+	%wwE1 = reshape(wwE1,[21,15]);
 end
 
 %=======================================================
@@ -187,16 +224,19 @@ uQ2=uQ2 / (0.5*(uQ2(110) +uQ2(111) ));
 % vertical profiles
 %=======================================================
 % normalization
-if(al==45)     uE1=uE1 / uE1(1,end-5);
-elseif(al==90) uE1=uE1 / uE1(1,end-6);
-end
-uN =uN  / uN(I1ref);
+%if(al==45)     uE1ref = uE1(1,end-5);
+%elseif(al==90) uE1ref = uE1(1,end-6);
+%end
+%uE1 = uE1 / uE1ref;
+%vE1 = vE1 / uE1ref;
+%wE1 = wE1 / uE1ref;
 
 % profile
 nS=size(xE1,1);
 SS=[1,nS-3,nS-1,nS];
 
 cc='rgbk';
+if(0)
 for i=1:nx1
 	figure;fig=gcf;ax=gca; hold on;grid on;
 	ax.XScale='linear';  ax.YScale='linear';
@@ -217,10 +257,32 @@ for i=1:nx1
 
 	title(['WMC',num2str(al),' x-velocity at x=',num2str(xxQ(i))]);
 	legend('show','location','northwest');
-	figname=['WMC',num2str(al),'xvel_x',num2str(i)];
+	figname=['WMC',num2str(al),'u_x',num2str(i)];
+	saveas(fig,figname,'png');
+end
+end
+
+% tke
+kE1=0.75*(uuE1.^2+vvE1.^2);
+for i=1:nx1
+	figure;fig=gcf;ax=gca; hold on;grid on;
+	ax.XScale='linear';  ax.YScale='linear';
+	xlabel(['$$k$$']); ylabel('$$y$$');
+	ylim([0,2.0]);
+
+	p=plot(kN(I1(i,:)),yN(I1(i,:)),['-',cc(1)],'linewidth',2);
+	p.DisplayName=['Nek x=',num2str(xN(I1(i,1)))];
+	
+	p=plot(kE1(SS(i),:),yE1(SS(i),:),['-o',cc(2)],'linewidth',2);
+	p.DisplayName=['EPA x=',num2str(xN(I1(i,1)))];
+
+	title(['WMC',num2str(al),' k at x=',num2str(xxQ(i))]);
+	legend('show','location','northwest');
+	figname=['WMC',num2str(al),'k_x',num2str(i)];
 	saveas(fig,figname,'png');
 end
 
+if(0)
 % deficit
 nS=size(xE1,1);
 SS=[1,nS-3,nS-1,nS];
@@ -248,17 +310,19 @@ for i=2:nx1
 
 	title(['WMC',num2str(al),' x-velocity deficit at x=',num2str(xxQ(i))]);
 	legend('show','location','northwest');
-	figname=['WMC',num2str(al),'xvel_deficit_x',num2str(i)];
+	figname=['WMC',num2str(al),'u_deficit_x',num2str(i)];
 	saveas(fig,figname,'png');
+end
 end
 %=======================================================
 % streamwise transect
 %=======================================================
 % normalization
-uE1=uE1 / uE1(1,end-2);
-uN =uN  / uN (I2ref);
+%uE1=uE1 / uE1(1,end-2);
+%uN =uN  / uN (I2ref);
 
 % profile
+if(0)
 figure;fig=gcf;ax=gca; hold on;grid on;
 ax.XScale='linear';
 ax.YScale='linear';
@@ -282,11 +346,34 @@ p.DisplayName=['wall'];
 title(['WMC',num2str(al),'streamwise transect x-velocity']);
 legend('show');
 %
-figname=['WMC',num2str(al),'xvel_','streamwise'];
+figname=['WMC',num2str(al),'u_','streamwise'];
+saveas(fig,figname,'png');
+end
+
+% tke
+figure;fig=gcf;ax=gca; hold on;grid on;
+ax.XScale='linear';
+ax.YScale='linear';
+xlabel(['$$x$$']);
+ylabel('$$v_x$$');
+
+p=plot(xN(I2),kN(I2),['-',cc(1)],'linewidth',2.0);
+p.DisplayName=['Nek, y=',num2str(yN(I2ref))];
+
+p=plot(xE1(:,end-2),kE1(:,end-2),['o',cc(2)],'linewidth',2);
+p.DisplayName=['EPA, y=',num2str(yE1(1,end-2))];
+
+%p=plot(xw,yw*0.02,'k-.','linewidth',2);
+%p.DisplayName=['wall'];
+title(['WMC',num2str(al),'streamwise transect TKE']);
+legend('show');
+%
+figname=['WMC',num2str(al),'k_','streamwise'];
 saveas(fig,figname,'png');
 
 
 % deficit
+if(0)
 figure;fig=gcf;ax=gca; hold on;grid on;
 ax.XScale='linear';
 ax.YScale='linear';
@@ -310,6 +397,7 @@ p.DisplayName=['wall'];
 title(['WMC',num2str(al),'streamwise transect x-velocity deficit']);
 legend('show');
 %
-figname=['WMC',num2str(al),'xvel_deficit_','streamwise'];
+figname=['WMC',num2str(al),'u_deficit_','streamwise'];
 saveas(fig,figname,'png');
+end
 %=======================================================
