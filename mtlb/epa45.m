@@ -61,20 +61,10 @@ I2=I1(end)+(1:nx2*ny2*nz2); I2=reshape(I2,[nx2,ny2,nz2]);
 I3=I2(end)+(1:nx3*ny3*nz3); I3=reshape(I3,[nx3,ny3,nz3]);
 
 % normalization
-I1ref=I1(1,401); u1ref=uN(I1ref); % profiles (centerline and ground)
-I3ref=I3(1,:);   u3ref=uN(I3ref)'; % transects
-
-uN(I1)=uN(I1)/u1ref; uuN(I1)=uuN(I1)/(u1ref^2);
-vN(I1)=vN(I1)/u1ref; vvN(I1)=vvN(I1)/(u1ref^2);
-wN(I1)=wN(I1)/u1ref; wwN(I1)=wwN(I1)/(u1ref^2);
-
-uN(I2)=uN(I2)/u1ref; uuN(I2)=uuN(I2)/(u1ref^2);
-vN(I2)=vN(I2)/u1ref; vvN(I2)=vvN(I2)/(u1ref^2);
-wN(I2)=wN(I2)/u1ref; wwN(I2)=wwN(I2)/(u1ref^2);
-
-uN(I3)=uN(I3)./u1ref; uuN(I3)=uuN(I3)./(u1ref.^2);
-vN(I3)=vN(I3)./u1ref; vvN(I3)=vvN(I3)./(u1ref.^2);
-wN(I3)=wN(I3)./u1ref; wwN(I3)=wwN(I3)./(u1ref.^2);
+%I1ref=I1(1,401); u1ref=uN(I1ref);
+%uN=uN/u1ref; uuN=uuN/(u1ref^2);
+%vN=vN/u1ref; vvN=vvN/(u1ref^2);
+%wN=wN/u1ref; wwN=wwN/(u1ref^2);
 
 % TKE
 k1N=0.75*(uuN+vvN); % good proxy for TKE
@@ -190,12 +180,6 @@ wwE1=[wwE1(1:80);z;wwE1(81:85);z;wwE1(86:90);z;wwE1(91:end)];
 uuE3 = reshape(uuE1,[10,19]); uuE3=uuE3((7:10)',:);
 vvE3 = reshape(vvE1,[10,19]); vvE3=vvE3((7:10)',:);
 wwE3 = reshape(wwE1,[10,19]); wwE3=wwE3((7:10)',:);
-
-% normalization
-%u3ref = uE3(:,1);
-%uE3=uE3./u3ref; uuE3=uuE3./u3ref;
-%vE3=vE3./u3ref; vvE3=vvE3./u3ref;
-%wE3=wE3./u3ref; wwE3=wwE3./u3ref;
 
 kE3=0.75*(uuE3.*uuE3+vvE3.*vvE3);
 
